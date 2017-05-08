@@ -77,7 +77,7 @@ var styles = StyleSheet.create({
 
   map: {
     position: 'absolute',
-    // flex: 2,
+    flex: 2,
     top: 0,
     left: 0,
     right: 0,
@@ -141,5 +141,5 @@ var styles = StyleSheet.create({
   
 })
 
-module.exports = styles
+module.exports = styles;
 module.exports.constants = constants;

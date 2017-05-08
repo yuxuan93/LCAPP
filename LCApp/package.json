@@ -13,7 +13,7 @@
     "react-native": "0.43.2",
     "react-native-datepicker": "^1.4.7",
     "react-native-gifted-form": "0.0.13",
-    "react-native-maps": ">=0.14.0",
+    "react-native-maps": ">=0.12.4",
     "react-native-prompt-android": "0.0.5",
     "react-native-router-flux": "3.38.0"
   },
