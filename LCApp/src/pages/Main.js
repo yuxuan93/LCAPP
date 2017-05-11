@@ -184,7 +184,8 @@ export default class Main extends Component {
     return (
       <View style={styles.container}>
 
-        <View style={styles.body}>
+        <View style={styles.body, {flexDirection: 'row',
+        justifyContent: 'flex-end'}}>
           <View style={accountStyles.email_container}>
             <Text style={accountStyles.email_text}>{this.state.user.email}</Text>
           </View>

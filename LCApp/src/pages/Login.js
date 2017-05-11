@@ -8,7 +8,6 @@ import {
   ActivityIndicator
 } from 'react-native';
 import React, {Component} from 'react';
-import Signup from './Signup';
 import Main from './Main';
 import AdminMain from './AdminMain';
 
@@ -49,9 +48,7 @@ export default class Login extends Component {
         <TouchableHighlight onPress={this.getPriviledges.bind(this)} style={styles.primaryButton}>
           <Text style={styles.primaryButtonText}>Login</Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this.goToSignup.bind(this)} style={styles.transparentButton}>
-          <Text style={styles.transparentButtonText}>New here?</Text>
-        </TouchableHighlight>
+        
       </View>;
 
     // A simple UI with a toolbar, and content below it.
