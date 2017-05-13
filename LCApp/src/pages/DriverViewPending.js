@@ -21,6 +21,7 @@ import ListItem from '../components/ListItem';
 
 //import AddJob from './AddJob';
 import DriverViewAccepted from './DriverViewAccepted';
+import DriverViewCollected from './DriverViewCollected';
 import DriverViewCompleted from './DriverViewCompleted';
 
 import StatusBar from '../components/StatusBar';
@@ -58,7 +59,7 @@ export default class DriverViewPending extends Component {
     return (
       <View style={styles.container}>
 
-        <StatusBar title="New Jobs"/>
+        <StatusBar title="Pending Jobs"/>
 
         <ListView dataSource={this.state.dataSource} 
                   renderRow={this._renderItem.bind(this)}
@@ -67,6 +68,7 @@ export default class DriverViewPending extends Component {
         <View style={{flex:1, flexDirection:'row', justifyContent:'space-between', alignItems:'flex-end'}}>
          <ActionButton title="Pending"/>
           <ActionButton2 title="Accepted" onPress={this.goToDriverViewAccepted.bind(this)}/>
+          <ActionButton2 title="Collected" onPress={this.goToDriverViewCollected.bind(this)}/>    
           <ActionButton2 title="Completed" onPress={this.goToDriverViewCompleted.bind(this)}/>    
         </View>
       </View>
@@ -148,6 +150,7 @@ export default class DriverViewPending extends Component {
       }  
     }
 
+// GO TO
     goToDriverViewAccepted(){
     this.props.navigator.push({
       component: DriverViewAccepted
@@ -159,6 +162,14 @@ export default class DriverViewPending extends Component {
       component: DriverViewCompleted
     });
   }
+
+  goToDriverViewCollected(){
+    this.props.navigator.push({
+      component: DriverViewCollected
+    });
+  }
+
+
 
   _acceptJob(item){
     this.itemsRef.child(item.key).update({                          

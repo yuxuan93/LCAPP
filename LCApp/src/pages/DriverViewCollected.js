@@ -1,3 +1,4 @@
+// This page will display 'Pending' jobs assigned to the driver
 
 
 console.disableYellowBox = true;
@@ -14,19 +15,21 @@ import {
  } from 'react-native';
 // import {Actions} from 'react-native-router-flux';
 
+import Login from './Login';
+import styles from '../styles/styles.js';
+import ListItem from '../components/ListItem';
+
+//import AddJob from './AddJob';
+import DriverViewPending from './DriverViewPending';
+import DriverViewAccepted from './DriverViewAccepted';
+import DriverViewCompleted from './DriverViewCompleted';
+
 import StatusBar from '../components/StatusBar';
 import ActionButton from '../components/ActionButton';
 import ActionButton2 from '../components/ActionButton2';
 
-import ListItem from '../components/ListItem';
-import styles from '../styles/styles.js';
 
-import DriverViewPending from './DriverViewPending';
-import DriverViewAccepted from './DriverViewAccepted';
-import DriverViewCollected from './DriverViewCollected';
-
-
-export default class DriverViewCompleted extends Component {
+export default class DriverViewCollected extends Component {
 
   constructor(props) {
     super(props);
@@ -56,7 +59,7 @@ export default class DriverViewCompleted extends Component {
     return (
       <View style={styles.container}>
 
-        <StatusBar title="Completed Jobs"/>
+        <StatusBar title="Collected Jobs"/>
 
         <ListView dataSource={this.state.dataSource} 
                   renderRow={this._renderItem.bind(this)}
@@ -65,8 +68,8 @@ export default class DriverViewCompleted extends Component {
         <View style={{flex:1, flexDirection:'row', justifyContent:'space-between', alignItems:'flex-end'}}>
           <ActionButton2 title="Pending" onPress={this.goToDriverViewPending.bind(this)}/>
           <ActionButton2 title="Accepted" onPress={this.goToDriverViewAccepted.bind(this)}/>
-          <ActionButton2 title="Collected" onPress={this.goToDriverViewCollected.bind(this)}/>
-          <ActionButton title="Completed"/>          
+          <ActionButton title="Collected"/>
+          <ActionButton2 title="Completed" onPress={this.goToDriverViewCompleted.bind(this)}/>    
         </View>
       </View>
 
@@ -79,7 +82,7 @@ export default class DriverViewCompleted extends Component {
       // get children as an array
       var items = [];
       snap.forEach((child) => {
-        if(child.val().status=='Completed' && child.val().driver==this.state.user.email){
+        if(child.val().status=='Collected' && child.val().driver==this.state.user.email){
           items.push({
             name: child.val().name, 
             contactNo:child.val().contactNo,
@@ -128,7 +131,8 @@ export default class DriverViewCompleted extends Component {
             //Do we need to display the completed date of the job?
             ,
           [
-            {text: 'Uncomplete', onPress: () => this._cfmUncomplete(item)},
+            {text: 'Accept', onPress: () => this._acceptJob(item)},
+            // {text: 'Reject', onPress: (text) => console.log('Cancel')}
 
             {text: 'Cancel', onPress: (text) => console.log('Cancel')}
           ],
@@ -136,7 +140,7 @@ export default class DriverViewCompleted extends Component {
         );
       };
 
-      if(item.status=='Completed' && item.driver==this.state.user.email){
+      if(item.status=='Collected' && item.driver==this.state.user.email){
         return (
           <ListItem item={item} onPress={onPress}/>
         );
@@ -147,51 +151,35 @@ export default class DriverViewCompleted extends Component {
     }
 
 
+    // NAVIGATION
 
-    // GO TO
     goToDriverViewPending(){
       this.props.navigator.push({
         component: DriverViewPending
       });
     }
 
-  
     goToDriverViewAccepted(){
-      this.props.navigator.push({
-        component: DriverViewAccepted
-      });
-    }
+    this.props.navigator.push({
+      component: DriverViewAccepted
+    });
+  }
 
-    goToDriverViewCollected(){
-      this.props.navigator.push({
-        component: DriverViewCollected
-      });
-    }
-
-
+  goToDriverViewCompleted(){
+    this.props.navigator.push({
+      component: DriverViewCompleted
+    });
+  }
 
 
-     // Prompt confirmation of deletion
-_cfmUncomplete(item){
-  Alert.alert(
-    'Are you sure you want to uncomplete '+ item.title +'?',
-    'Address: '+ item.title +'\ncontactNo: '+item.contactNo + '\nThere will be consequences.',
-    [
 
-      //{text: 'Navigate', onPress: (text) => Linking.openURL('https://maps.google.com?q='+item.address)},
-      {text: 'Uncomplete', onPress: (text) => this._uncomplete(item)},
-      {text: 'Cancel', onPress: (text) => console.log('Cancel')}
-    ],
-    'default'
-  );
-}
+  _acceptJob(item){
+    this.itemsRef.child(item.key).update({                          
+                          status: 'Accepted', driver: this.state.user.email})
 
-// Change the job status back to unassigned
-  _uncomplete(item){
-    this.itemsRef.child(item._key).update({status: 'accepted', invoiceNo:''})
+    ToastAndroid.show('A job has been accepted !', ToastAndroid.LONG);
 
-    ToastAndroid.show('The Job has been un-completed!', ToastAndroid.LONG);
-
+    
     this.setState({selectedMarker: this.defaultMarker})
 
   }

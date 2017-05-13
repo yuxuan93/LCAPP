@@ -36,6 +36,7 @@ import {
 } from 'react-native';
 
 import DriverViewPending from './DriverViewPending';
+import DriverViewCollected from './DriverViewCollected';
 import DriverViewCompleted from './DriverViewCompleted';
 
 export default class DriverViewAccepted extends Component {
@@ -77,6 +78,7 @@ export default class DriverViewAccepted extends Component {
         <View style={{flex:1, flexDirection:'row', justifyContent:'space-between', alignItems:'flex-end'}}>
          <ActionButton2 title="Pending" onPress={this.goToDriverViewPending.bind(this)}/>
           <ActionButton title="Accepted" />
+          <ActionButton2 title="Collected" onPress={this.goToDriverViewCollected.bind(this)}/>
           <ActionButton2 title="Completed" onPress={this.goToDriverViewCompleted.bind(this)}/> 
         </View>
       </View>
@@ -159,20 +161,28 @@ export default class DriverViewAccepted extends Component {
       }  
     }
 
-   // Go to the pending page
+
+
+    // GO TO
+   
   goToDriverViewPending(){
     this.props.navigator.push({
       component: DriverViewPending
     });
   }
-
   
-  // Go to view completed page
   goToDriverViewCompleted(){
     this.props.navigator.push({
       component: DriverViewCompleted
     });
   }
+
+  goToDriverViewCollected(){
+    this.props.navigator.push({
+      component: DriverViewCollected
+    });
+  }
+
 
      // Prompt confirmation of deletion
 _cfmUncomplete(item){
