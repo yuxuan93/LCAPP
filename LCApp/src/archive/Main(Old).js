@@ -47,7 +47,7 @@ const accountStyles = StyleSheet.create({
 
 
 
-export default class Main extends Component {
+export default class Main2 extends Component {
   constructor(props) {
     super(props);
 

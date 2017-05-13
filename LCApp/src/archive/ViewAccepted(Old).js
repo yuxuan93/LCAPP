@@ -36,7 +36,7 @@ import {
 import Main from './Main';
 import ViewCompleted from './ViewCompleted';
 
-export default class ViewAccepted extends Component {
+export default class ViewAccepted2 extends Component {
   constructor(props) {
     super(props);
 

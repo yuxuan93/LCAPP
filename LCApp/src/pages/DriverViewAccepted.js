@@ -1,19 +1,16 @@
+// This page will display 'accepted' jobs pertaining to the driver
+
+console.ignoredYellowBox = ['Warning: ReactNative.createElement'];
 
 
-console.disableYellowBox = true;
+import Geocoder from '../Geocoder';
+Geocoder.setApiKey('AIzaSyBge0_uc7Iqv0ZxisNFabbxflD6PBm2Sm8');
+import prompt from 'react-native-prompt-android';
 
-import React, { Component, PropTypes } from 'react';
-import { 
-  View, 
-  Text, 
-  TouchableHighlight, 
-  TextInput, 
-  Alert, 
-  ListView, 
-  ToastAndroid,
- } from 'react-native';
+import React, {Component, PropTypes} from 'react';
 // import {Actions} from 'react-native-router-flux';
-
+import firebase from '../../modules/firebase.js';
+import MapView , {Marker} from 'react-native-maps';
 import StatusBar from '../components/StatusBar';
 import ActionButton from '../components/ActionButton';
 import ActionButton2 from '../components/ActionButton2';
@@ -21,40 +18,66 @@ import ActionButton2 from '../components/ActionButton2';
 import ListItem from '../components/ListItem';
 import styles from '../styles/styles.js';
 
-import Main from './Main';
-import ViewAccepted from './ViewAccepted';
+import {
+  AppRegistry,
+  ListView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableHighlight,
+  Alert,
+  TextInput, 
+  Navigator,
+  Button,
+  Linking,
+  TouchableOpacity,
+  ToastAndroid,
+  ScrollView,
+} from 'react-native';
 
-export default class ViewCompleted extends Component {
+import DriverViewPending from './DriverViewPending';
+import DriverViewCompleted from './DriverViewCompleted';
 
+export default class DriverViewAccepted extends Component {
   constructor(props) {
     super(props);
+
+    this.itemsRef = this.props.firebaseApp.database().ref("jobs");
+    
     this.state = {
+      user: this.props.firebaseApp.auth().currentUser,
+      loading: true,      
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
-      })
-    };
-    this.itemsRef = this.props.firebaseApp.database().ref("jobs");
+      }),
+    }
 
   }
 
   componentDidMount() {
     this.listenForItems(this.itemsRef);
+    // const userData = this.props.firebaseApp.auth().currentUser;
+    this.setState({
+      // user: userData,
+      loading: false
+    });
   }
 
   render() {
     return (
       <View style={styles.container}>
 
-        <StatusBar title="Completed Jobs"/>
+        <StatusBar title="Accepted Jobs"/>
 
         <ListView dataSource={this.state.dataSource} 
                   renderRow={this._renderItem.bind(this)}
                   style={styles.listview} enableEmptySections={true}/>
         
+
         <View style={{flex:1, flexDirection:'row', justifyContent:'space-between', alignItems:'flex-end'}}>
-          <ActionButton2 title="Main" onPress={this.goToMain.bind(this)}/>
-          <ActionButton2 title="ViewAccepted" onPress={this.goToViewAccepted.bind(this)}/>
-          <ActionButton title="ViewCompleted"/>          
+         <ActionButton2 title="Pending" onPress={this.goToDriverViewPending.bind(this)}/>
+          <ActionButton title="Accepted" />
+          <ActionButton2 title="Completed" onPress={this.goToDriverViewCompleted.bind(this)}/> 
         </View>
       </View>
 
@@ -67,7 +90,7 @@ export default class ViewCompleted extends Component {
       // get children as an array
       var items = [];
       snap.forEach((child) => {
-        if(child.val().status=='completed'){
+        if(child.val().status=='Accepted' && child.val().driver==this.state.user.email){
           items.push({
             name: child.val().name, 
             contactNo:child.val().contactNo,
@@ -95,6 +118,8 @@ export default class ViewCompleted extends Component {
     });
   }
 
+
+  // Each item on press, will trigger alert
    _renderItem(item) {
 
       const onPress = () => {
@@ -124,7 +149,7 @@ export default class ViewCompleted extends Component {
         );
       };
 
-      if(item.status=='completed'){
+      if(item.status=='Accepted' && item.driver==this.state.user.email){
         return (
           <ListItem item={item} onPress={onPress}/>
         );
@@ -134,19 +159,20 @@ export default class ViewCompleted extends Component {
       }  
     }
 
-    goToMain(){
-      this.props.navigator.push({
-        component: Main
-      });
-    }
+   // Go to the pending page
+  goToDriverViewPending(){
+    this.props.navigator.push({
+      component: DriverViewPending
+    });
+  }
 
   
-
-    goToViewAccepted(){
-      this.props.navigator.push({
-        component: ViewAccepted
-      });
-    }
+  // Go to view completed page
+  goToDriverViewCompleted(){
+    this.props.navigator.push({
+      component: DriverViewCompleted
+    });
+  }
 
      // Prompt confirmation of deletion
 _cfmUncomplete(item){
@@ -154,7 +180,6 @@ _cfmUncomplete(item){
     'Are you sure you want to uncomplete '+ item.title +'?',
     'Address: '+ item.title +'\ncontactNo: '+item.contactNo + '\nThere will be consequences.',
     [
-
       //{text: 'Navigate', onPress: (text) => Linking.openURL('https://maps.google.com?q='+item.address)},
       {text: 'Uncomplete', onPress: (text) => this._uncomplete(item)},
       {text: 'Cancel', onPress: (text) => console.log('Cancel')}
@@ -173,4 +198,6 @@ _cfmUncomplete(item){
 
   }
 
+
 }
+

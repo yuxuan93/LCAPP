@@ -11,7 +11,7 @@ import {
 
 // import {Scene, Router} from 'react-native-router-flux';
 
-import Main from './src/pages/Main';
+import DriverViewPending from './src/pages/DriverViewPending';
 //import AddJob from './src/pages/AddJob';
 //import ViewAccepted from './src/pages/ViewAccepted';
 //import ViewCompleted from './src/pages/ViewCompleted';
@@ -80,7 +80,7 @@ class LCApp extends Component {
                 this.setState({page: AdminMain});
               }
               else if(child.val().priviledge=='driver'){
-                this.setState({page: Main});
+                this.setState({page: DriverViewPending});
               }
             }
             
