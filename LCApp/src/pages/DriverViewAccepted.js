@@ -143,9 +143,11 @@ export default class DriverViewAccepted extends Component {
             //Do we need to display the completed date of the job?
             ,
           [
-            {text: 'Uncomplete', onPress: () => this._cfmUncomplete(item)},
+            {text: 'Cancel', onPress: (text) => console.log('Cancel')},          
+            {text: 'Delete', onPress: () => this._popupRejectionReasonInput(item)},
+            // {text: 'Navigate', onPress: (text) => Linking.openURL('https://maps.google.com?q='+item.address)},
+            {text: 'Collected!', onPress: () => this._showInvoicePrompt(item)}
 
-            {text: 'Cancel', onPress: (text) => console.log('Cancel')}
           ],
           'default'
         );
@@ -184,29 +186,104 @@ export default class DriverViewAccepted extends Component {
   }
 
 
-     // Prompt confirmation of deletion
-_cfmUncomplete(item){
-  Alert.alert(
-    'Are you sure you want to uncomplete '+ item.title +'?',
-    'Address: '+ item.title +'\ncontactNo: '+item.contactNo + '\nThere will be consequences.',
+//ACTIONS
+
+_rejectJob(item, reason){
+
+    this.itemsRef.child(item._key).update({status: 'Rejected', reason: reason})
+
+    ToastAndroid.show('A job has been deleted!', ToastAndroid.LONG);
+    
+    this.setState({selectedMarker: this.defaultMarker})
+
+  }
+
+  _popupRejectionReasonInput(item){
+     prompt(
+      // 'What is the problem?',
+      'What\'s the reason for deleting ' + item.name +'?',
+      'Note there will be demerit points awarded if the reason is invalid.',
+      [
+       {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+       {text: 'OK', onPress: reason => this._rejectJob(item, reason)},
+      ],
+      {
+          type: 'default',
+          cancelable: false,
+          defaultValue: '',
+          placeholder: 'Reason?'
+      }
+    );
+  }
+
+
+// Prompt for invoice
+_showInvoicePrompt(item){
+  prompt(
+    'Enter invoice number',
+    null,
     [
-      //{text: 'Navigate', onPress: (text) => Linking.openURL('https://maps.google.com?q='+item.address)},
-      {text: 'Uncomplete', onPress: (text) => this._uncomplete(item)},
-      {text: 'Cancel', onPress: (text) => console.log('Cancel')}
+     {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+     {text: 'OK', onPress: invoiceNo => this._showAmtPrompt(item,invoiceNo)},
     ],
-    'default'
+    {
+        type: 'default',
+        cancelable: false,
+        defaultValue: '',
+        placeholder: 'XXXX XXXX XXXX'
+    }
+  );
+}
+// Prompt for invoice
+_showAmtPrompt(item, invoiceNo){
+  prompt(
+    'Enter amount collected.',
+    null,
+    [
+     {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+     {text: 'OK', onPress: amt => this._collectJob(item, invoiceNo, amt)},
+    ],
+    {
+        type: 'default',
+        cancelable: false,
+        defaultValue: '',
+        placeholder: ''
+    }
   );
 }
 
-// Change the job status back to unassigned
-  _uncomplete(item){
-    this.itemsRef.child(item._key).update({status: 'accepted', invoiceNo:''})
+// Update the job as complete in database
+  _collectJob(item, invoiceNo, amt){
+    this.itemsRef.child(item._key).update({status: 'Collected', invoiceNo: invoiceNo, amount: amt})
 
-    ToastAndroid.show('The Job has been un-completed!', ToastAndroid.LONG);
+    ToastAndroid.show('The job has been collected !', ToastAndroid.LONG);
 
     this.setState({selectedMarker: this.defaultMarker})
 
   }
+//      // Prompt confirmation of deletion
+// _cfmUncomplete(item){
+//   Alert.alert(
+//     'Are you sure you want to uncomplete '+ item.title +'?',
+//     'Address: '+ item.title +'\ncontactNo: '+item.contactNo + '\nThere will be consequences.',
+//     [
+//       //{text: 'Navigate', onPress: (text) => Linking.openURL('https://maps.google.com?q='+item.address)},
+//       {text: 'Uncomplete', onPress: (text) => this._uncomplete(item)},
+//       {text: 'Cancel', onPress: (text) => console.log('Cancel')}
+//     ],
+//     'default'
+//   );
+// }
+
+// // Change the job status back to unassigned
+//   _uncomplete(item){
+//     this.itemsRef.child(item._key).update({status: 'accepted', invoiceNo:''})
+
+//     ToastAndroid.show('The Job has been un-completed!', ToastAndroid.LONG);
+
+//     this.setState({selectedMarker: this.defaultMarker})
+
+//   }
 
 
 }

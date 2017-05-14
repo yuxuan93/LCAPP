@@ -188,7 +188,7 @@ _cfmUncomplete(item){
 
 // Change the job status back to unassigned
   _uncomplete(item){
-    this.itemsRef.child(item._key).update({status: 'accepted', invoiceNo:''})
+    this.itemsRef.child(item._key).update({status: 'Collected'})
 
     ToastAndroid.show('The Job has been un-completed!', ToastAndroid.LONG);
 

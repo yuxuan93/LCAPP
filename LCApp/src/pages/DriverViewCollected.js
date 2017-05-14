@@ -131,10 +131,11 @@ export default class DriverViewCollected extends Component {
             //Do we need to display the completed date of the job?
             ,
           [
-            {text: 'Accept', onPress: () => this._acceptJob(item)},
             // {text: 'Reject', onPress: (text) => console.log('Cancel')}
 
-            {text: 'Cancel', onPress: (text) => console.log('Cancel')}
+            {text: 'Cancel', onPress: (text) => console.log('Cancel')},
+            {text: 'Navigate', onPress: (text) => Linking.openURL('https://maps.google.com?q='+item.address)},
+            {text: 'Complete', onPress: () => this._completePrompt(item)}
           ],
           'default'
         );
@@ -172,16 +173,30 @@ export default class DriverViewCollected extends Component {
   }
 
 
+  // ACTIONS
+   _completePrompt(item){
+      Alert.alert(
+        'Are you sure you want to complete '+ item.name +'?',
+        null,
+        [
+          {text: 'Cancel', onPress: (text) => console.log('Cancel')},
+          {text: 'Complete', onPress: (text) => this._completeJob(item)}
+        ],
+        'default'
+      ); 
 
-  _acceptJob(item){
-    this.itemsRef.child(item.key).update({                          
-                          status: 'Accepted', driver: this.state.user.email})
+  }
 
-    ToastAndroid.show('A job has been accepted !', ToastAndroid.LONG);
+
+  _completeJob(item){
+    this.itemsRef.child(item._key).update({status: 'Completed', driver: this.state.user.email})
+
+    ToastAndroid.show('The job has been completed!', ToastAndroid.LONG);
 
     
     this.setState({selectedMarker: this.defaultMarker})
 
   }
+
 
 }

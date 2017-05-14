@@ -18,6 +18,7 @@ import {
 import Login from './Login';
 import styles from '../styles/styles.js';
 import ListItem from '../components/ListItem';
+import prompt from 'react-native-prompt-android';
 
 //import AddJob from './AddJob';
 import DriverViewAccepted from './DriverViewAccepted';
@@ -131,10 +132,10 @@ export default class DriverViewPending extends Component {
             //Do we need to display the completed date of the job?
             ,
           [
-            {text: 'Accept', onPress: () => this._acceptJob(item)},
-            // {text: 'Reject', onPress: (text) => console.log('Cancel')}
+            {text: 'Cancel', onPress: (text) => console.log(text)},
+            {text: 'Reject', onPress: () => this._popupRejectionReasonInput(item)},
+            {text: 'Accept', onPress: () => this._acceptJob(item)}
 
-            {text: 'Cancel', onPress: (text) => console.log('Cancel')}
           ],
           'default'
         );
@@ -171,15 +172,43 @@ export default class DriverViewPending extends Component {
 
 
 
+  // ACTIONS
   _acceptJob(item){
-    this.itemsRef.child(item.key).update({                          
-                          status: 'Accepted', driver: this.state.user.email})
+    this.itemsRef.child(item._key).update({                          
+                          status: 'Accepted'})
 
     ToastAndroid.show('A job has been accepted !', ToastAndroid.LONG);
-
     
     this.setState({selectedMarker: this.defaultMarker})
 
+  }
+
+  _rejectJob(item, reason){
+
+    this.itemsRef.child(item._key).update({                          
+                          status: 'Rejected', reason: reason})
+
+    ToastAndroid.show('A job has been rejected !', ToastAndroid.LONG);
+    
+    this.setState({selectedMarker: this.defaultMarker})
+
+  }
+
+  _popupRejectionReasonInput(item){
+     prompt(
+      'You have decided to reject ' + item.name +'. What is the reason?',
+      null,
+      [
+       {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+       {text: 'OK', onPress: reason => this._rejectJob(item, reason)},
+      ],
+      {
+          type: 'default',
+          cancelable: false,
+          defaultValue: '',
+          placeholder: ''
+      }
+    );
   }
 
 }
