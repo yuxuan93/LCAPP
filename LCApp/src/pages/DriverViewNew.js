@@ -14,8 +14,8 @@ import {
   ToastAndroid,
  } from 'react-native';
 // import {Actions} from 'react-native-router-flux';
+import StatusBar from '../components/StatusBar';
 
-import Login from './Login';
 import styles from '../styles/styles.js';
 import ListItem from '../components/ListItem';
 import prompt from 'react-native-prompt-android';
@@ -25,7 +25,7 @@ import DriverViewAccepted from './DriverViewAccepted';
 import DriverViewCollected from './DriverViewCollected';
 import DriverViewCompleted from './DriverViewCompleted';
 
-import StatusBar from '../components/StatusBar';
+import Login from './Login';
 import ActionButton from '../components/ActionButton';
 import ActionButton2 from '../components/ActionButton2';
 
@@ -60,7 +60,18 @@ export default class DriverViewNew extends Component {
     return (
       <View style={styles.container}>
 
-        <StatusBar title="New Jobs"/>
+        <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+          <TouchableHighlight style={{padding: 15}}>
+            <Text style={styles.primaryButtonText}>            </Text>
+          </TouchableHighlight>
+          <Text style={styles.navbarTitle}>New Jobs</Text>          
+
+          <TouchableHighlight onPress={this.logout.bind(this)} style={{margin: 0, padding: 15, backgroundColor: '#808080'}}>
+            <Text style={styles.primaryButtonText}>Logout</Text>
+          </TouchableHighlight>
+        </View>
+
+
 
         <ListView dataSource={this.state.dataSource} 
                   renderRow={this._renderItem.bind(this)}
@@ -213,6 +224,15 @@ export default class DriverViewNew extends Component {
           placeholder: ''
       }
     );
+  }
+
+  logout() {
+    // logout, once that is complete, return the user to the login screen.
+    this.props.firebaseApp.auth().signOut().then(() => {
+      this.props.navigator.push({
+        component: Login
+      });
+    });
   }
 
 }

@@ -36,6 +36,7 @@ import {
 
 } from 'react-native';
 
+import Login from './Login';
 import DriverViewNew from './DriverViewNew';
 import DriverViewCollected from './DriverViewCollected';
 import DriverViewCompleted from './DriverViewCompleted';
@@ -69,7 +70,16 @@ export default class DriverViewAccepted extends Component {
     return (
       <View style={styles.container}>
 
-        <StatusBar title="Accepted Jobs"/>
+        <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+          <TouchableHighlight style={{padding: 15}}>
+            <Text style={styles.primaryButtonText}>            </Text>
+          </TouchableHighlight>
+          <Text style={styles.navbarTitle}>Accepted Jobs</Text>          
+
+          <TouchableHighlight onPress={this.logout.bind(this)} style={{margin: 0, padding: 15, backgroundColor: '#808080'}}>
+            <Text style={styles.primaryButtonText}>Logout</Text>
+          </TouchableHighlight>
+        </View>
 
         <ListView dataSource={this.state.dataSource} 
                   renderRow={this._renderItem.bind(this)}
@@ -304,6 +314,16 @@ _showTimePrompt(item,invoiceNo,amt,date){
 
     this.setState({selectedMarker: this.defaultMarker})
 
+  }
+
+
+  logout() {
+    // logout, once that is complete, return the user to the login screen.
+    this.props.firebaseApp.auth().signOut().then(() => {
+      this.props.navigator.push({
+        component: Login
+      });
+    });
   }
 //      // Prompt confirmation of deletion
 // _cfmUncomplete(item){

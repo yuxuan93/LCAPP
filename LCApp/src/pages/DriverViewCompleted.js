@@ -23,6 +23,8 @@ import ListItem from '../components/ListItem';
 import styles from '../styles/styles.js';
 
 import prompt from 'react-native-prompt-android';
+
+import Login from './Login';
 import DriverViewNew from './DriverViewNew';
 import DriverViewAccepted from './DriverViewAccepted';
 import DriverViewCollected from './DriverViewCollected';
@@ -58,7 +60,16 @@ export default class DriverViewCompleted extends Component {
     return (
       <View style={styles.container}>
 
-        <StatusBar title="Completed Jobs"/>
+        <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+          <TouchableHighlight style={{padding: 15}}>
+            <Text style={styles.primaryButtonText}>            </Text>
+          </TouchableHighlight>
+          <Text style={styles.navbarTitle}>Completed Jobs</Text>          
+
+          <TouchableHighlight onPress={this.logout.bind(this)} style={{margin: 0, padding: 15, backgroundColor: '#808080'}}>
+            <Text style={styles.primaryButtonText}>Logout</Text>
+          </TouchableHighlight>
+        </View>
 
         <ListView dataSource={this.state.dataSource} 
                   renderRow={this._renderItem.bind(this)}
@@ -206,6 +217,16 @@ _cfmUncomplete(item){
 
     this.setState({selectedMarker: this.defaultMarker})
 
+  }
+
+
+  logout() {
+    // logout, once that is complete, return the user to the login screen.
+    this.props.firebaseApp.auth().signOut().then(() => {
+      this.props.navigator.push({
+        component: Login
+      });
+    });
   }
 
 }
