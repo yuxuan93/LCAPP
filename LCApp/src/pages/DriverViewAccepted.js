@@ -36,7 +36,7 @@ import {
 
 } from 'react-native';
 
-import DriverViewPending from './DriverViewPending';
+import DriverViewNew from './DriverViewNew';
 import DriverViewCollected from './DriverViewCollected';
 import DriverViewCompleted from './DriverViewCompleted';
 
@@ -77,7 +77,7 @@ export default class DriverViewAccepted extends Component {
         
 
         <View style={{flex:1, flexDirection:'row', justifyContent:'space-between', alignItems:'flex-end'}}>
-         <ActionButton2 title="Pending" onPress={this.goToDriverViewPending.bind(this)}/>
+         <ActionButton2 title="New" onPress={this.goToDriverViewNew.bind(this)}/>
           <ActionButton title="Accepted" />
           <ActionButton2 title="Collected" onPress={this.goToDriverViewCollected.bind(this)}/>
           <ActionButton2 title="Completed" onPress={this.goToDriverViewCompleted.bind(this)}/> 
@@ -172,9 +172,9 @@ export default class DriverViewAccepted extends Component {
 
     // GO TO
    
-  goToDriverViewPending(){
+  goToDriverViewNew(){
     this.props.navigator.push({
-      component: DriverViewPending
+      component: DriverViewNew
     });
   }
   

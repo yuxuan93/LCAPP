@@ -8,7 +8,7 @@ import {
   ActivityIndicator
 } from 'react-native';
 import React, {Component} from 'react';
-import DriverViewPending from './DriverViewPending';
+import DriverViewNew from './DriverViewNew';
 import AdminMain from './AdminMain';
 
 import styles from '../styles/styles.js';
@@ -82,7 +82,7 @@ export default class Login extends Component {
         }
         else if(this.state.priviledge=='driver'){
           this.props.navigator.push({
-            component: DriverViewPending
+            component: DriverViewNew
           });
         }
       }

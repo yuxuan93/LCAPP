@@ -23,7 +23,7 @@ import ListItem from '../components/ListItem';
 import styles from '../styles/styles.js';
 
 import prompt from 'react-native-prompt-android';
-import DriverViewPending from './DriverViewPending';
+import DriverViewNew from './DriverViewNew';
 import DriverViewAccepted from './DriverViewAccepted';
 import DriverViewCollected from './DriverViewCollected';
 
@@ -65,7 +65,7 @@ export default class DriverViewCompleted extends Component {
                   style={styles.listview} enableEmptySections={true}/>
         
         <View style={{flex:1, flexDirection:'row', justifyContent:'space-between', alignItems:'flex-end'}}>
-          <ActionButton2 title="Pending" onPress={this.goToDriverViewPending.bind(this)}/>
+          <ActionButton2 title="New" onPress={this.goToDriverViewNew.bind(this)}/>
           <ActionButton2 title="Accepted" onPress={this.goToDriverViewAccepted.bind(this)}/>
           <ActionButton2 title="Collected" onPress={this.goToDriverViewCollected.bind(this)}/>
           <ActionButton title="Completed"/>          
@@ -157,9 +157,9 @@ export default class DriverViewCompleted extends Component {
 
 
     // GO TO
-    goToDriverViewPending(){
+    goToDriverViewNew(){
       this.props.navigator.push({
-        component: DriverViewPending
+        component: DriverViewNew
       });
     }
 

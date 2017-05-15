@@ -1,4 +1,4 @@
-// This page will display 'Pending' jobs assigned to the driver
+// This page will display 'Collected' jobs assigned to the driver
 
 
 console.disableYellowBox = true;
@@ -22,7 +22,7 @@ import styles from '../styles/styles.js';
 import ListItem from '../components/ListItem';
 
 //import AddJob from './AddJob';
-import DriverViewPending from './DriverViewPending';
+import DriverViewNew from './DriverViewNew';
 import DriverViewAccepted from './DriverViewAccepted';
 import DriverViewCompleted from './DriverViewCompleted';
 
@@ -69,7 +69,7 @@ export default class DriverViewCollected extends Component {
                   style={styles.listview} enableEmptySections={true}/>
         
         <View style={{flex:1, flexDirection:'row', justifyContent:'space-between', alignItems:'flex-end'}}>
-          <ActionButton2 title="Pending" onPress={this.goToDriverViewPending.bind(this)}/>
+          <ActionButton2 title="New" onPress={this.goToDriverViewNew.bind(this)}/>
           <ActionButton2 title="Accepted" onPress={this.goToDriverViewAccepted.bind(this)}/>
           <ActionButton title="Collected"/>
           <ActionButton2 title="Completed" onPress={this.goToDriverViewCompleted.bind(this)}/>    
@@ -165,9 +165,9 @@ export default class DriverViewCollected extends Component {
 
     // NAVIGATION
 
-    goToDriverViewPending(){
+    goToDriverViewNew(){
       this.props.navigator.push({
-        component: DriverViewPending
+        component: DriverViewNew
       });
     }
 

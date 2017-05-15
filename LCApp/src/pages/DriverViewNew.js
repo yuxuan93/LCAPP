@@ -1,4 +1,4 @@
-// This page will display 'Pending' jobs assigned to the driver
+// This page will display 'New' jobs assigned to the driver
 
 
 console.disableYellowBox = true;
@@ -30,7 +30,7 @@ import ActionButton from '../components/ActionButton';
 import ActionButton2 from '../components/ActionButton2';
 
 
-export default class DriverViewPending extends Component {
+export default class DriverViewNew extends Component {
 
   constructor(props) {
     super(props);
@@ -60,14 +60,14 @@ export default class DriverViewPending extends Component {
     return (
       <View style={styles.container}>
 
-        <StatusBar title="Pending Jobs"/>
+        <StatusBar title="New Jobs"/>
 
         <ListView dataSource={this.state.dataSource} 
                   renderRow={this._renderItem.bind(this)}
                   style={styles.listview} enableEmptySections={true}/>
         
         <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'flex-end', alignContent: 'center'}}>
-         <ActionButton title="Pending"/>
+         <ActionButton title="New"/>
           <ActionButton2 title="Accepted" onPress={this.goToDriverViewAccepted.bind(this)}/>
           <ActionButton2 title="Collected" onPress={this.goToDriverViewCollected.bind(this)}/>    
           <ActionButton2 title="Completed" onPress={this.goToDriverViewCompleted.bind(this)}/>    
@@ -83,7 +83,7 @@ export default class DriverViewPending extends Component {
       // get children as an array
       var items = [];
       snap.forEach((child) => {
-        if(child.val().status=='Pending' && child.val().driver==this.state.user.email){
+        if(child.val().status=='New' && child.val().driver==this.state.user.email){
           items.push({
             jobId: child.val().jobId,
             name: child.val().name, 
@@ -145,7 +145,7 @@ export default class DriverViewPending extends Component {
         );
       };
 
-      if(item.status=='Pending' && item.driver==this.state.user.email){
+      if(item.status=='New' && item.driver==this.state.user.email){
         return (
           <ListItem item={item} onPress={onPress}/>
         );
