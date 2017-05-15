@@ -12,6 +12,8 @@ import {
   Alert, 
   ListView, 
   ToastAndroid,
+  Linking,
+
  } from 'react-native';
 // import {Actions} from 'react-native-router-flux';
 
@@ -24,6 +26,7 @@ import DriverViewPending from './DriverViewPending';
 import DriverViewAccepted from './DriverViewAccepted';
 import DriverViewCompleted from './DriverViewCompleted';
 
+import prompt from 'react-native-prompt-android';
 import StatusBar from '../components/StatusBar';
 import ActionButton from '../components/ActionButton';
 import ActionButton2 from '../components/ActionButton2';
@@ -84,9 +87,10 @@ export default class DriverViewCollected extends Component {
       snap.forEach((child) => {
         if(child.val().status=='Collected' && child.val().driver==this.state.user.email){
           items.push({
+            jobId: child.val().jobId,            
             name: child.val().name, 
             contactNo:child.val().contactNo,
-            title: child.val().address + " " + child.val().postalCode,
+            address: child.val().address + " " + child.val().postalCode,
             turnaround: child.val().turnaround, //Show
             type: child.val().type, 
             item: child.val().item,
@@ -94,6 +98,8 @@ export default class DriverViewCollected extends Component {
             email: child.val().email, 
             preferredPickupDate: child.val().preferredPickupDate, //Show
             preferredPickupTime: child.val().preferredPickupTime, //Show 
+            preferredReturnDate: child.val().preferredReturnDate, //Show
+            preferredReturnTime: child.val().preferredReturnTime, //Show 
             status: child.val().status,
             invoiceNo: child.val().invoiceNo,
             driver: child.val().driver,
@@ -114,26 +120,31 @@ export default class DriverViewCollected extends Component {
 
       const onPress = () => {
         Alert.alert(
-          'Details for '+ item.name,
-          'Address: '+ item.address 
-            + '\nName: ' + item.name 
-            + "\nContactNo: " + item.contactNo
-            + "\nTitle: " + item.title
+         'Details for Job ID: '+ item.jobId,
+          'Customer Name: '+ item.name 
+            + '\nAddress: ' + item.address             
+            + "\nContact Number: " + item.contactNo
+            // + "\nTitle: " + item.title
             + "\nTurnaround: " + item.turnaround
             + "\nType: " + item.type
             + "\nItem: " + item.item
+            + "\nPreferred Pickup Date: " + item.preferredPickupDate
+            + "\nPreferred Pickup Time: " + item.preferredPickupTime
             + "\nRemarks: " + item.remarks
-            + "\nEmail: " + item.email
-            + "\nInvoiceNo: " + item.invoiceNo
-            + "\nDriver: " + item.driver
+
+            // + "\nEmail: " + item.email
+            // + "\nDriver: " + item.driver
+            + "\nInvoice Number: " + item.invoiceNo
             + "\nAmount: " + item.amount
+            + "\nPreferred Return Date: " + item.preferredReturnDate
+            + "\nPreferred Return Time: " + item.preferredReturnTime
 
             //Do we need to display the completed date of the job?
             ,
           [
-            // {text: 'Reject', onPress: (text) => console.log('Cancel')}
+            {text: 'Un-collect', onPress: () => this._popupUncollectReasonInput(item)},
 
-            {text: 'Cancel', onPress: (text) => console.log('Cancel')},
+            // {text: 'Cancel', onPress: (text) => console.log('Cancel')},
             {text: 'Navigate', onPress: (text) => Linking.openURL('https://maps.google.com?q='+item.address)},
             {text: 'Complete', onPress: () => this._completePrompt(item)}
           ],
@@ -174,6 +185,33 @@ export default class DriverViewCollected extends Component {
 
 
   // ACTIONS
+  _uncollectJob(item, reason){
+
+    this.itemsRef.child(item._key).update({status: 'Accepted', reason: 'Uncollected: '+reason})
+
+    ToastAndroid.show('A job has been un-collected!', ToastAndroid.LONG);
+    
+    this.setState({selectedMarker: this.defaultMarker})
+
+  }
+
+  _popupUncollectReasonInput(item){
+     prompt(
+      // 'What is the problem?',
+      'What\'s the reason for un-collecting ' + item.name +'?',
+      'Note there will be demerit points awarded if the reason is invalid.',
+      [
+       {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+       {text: 'OK', onPress: reason => this._uncollectJob(item, reason)},
+      ],
+      {
+          type: 'default',
+          cancelable: false,
+          defaultValue: '',
+          placeholder: 'Reason?'
+      }
+    );
+  }
    _completePrompt(item){
       Alert.alert(
         'Are you sure you want to complete '+ item.name +'?',
@@ -189,7 +227,7 @@ export default class DriverViewCollected extends Component {
 
 
   _completeJob(item){
-    this.itemsRef.child(item._key).update({status: 'Completed', driver: this.state.user.email})
+    this.itemsRef.child(item._key).update({status: 'Completed', completeDate: new Date().toString()})
 
     ToastAndroid.show('The job has been completed!', ToastAndroid.LONG);
 

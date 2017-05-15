@@ -11,6 +11,7 @@ import {
   Alert, 
   ListView, 
   ToastAndroid,
+
  } from 'react-native';
 // import {Actions} from 'react-native-router-flux';
 
@@ -21,6 +22,7 @@ import ActionButton2 from '../components/ActionButton2';
 import ListItem from '../components/ListItem';
 import styles from '../styles/styles.js';
 
+import prompt from 'react-native-prompt-android';
 import DriverViewPending from './DriverViewPending';
 import DriverViewAccepted from './DriverViewAccepted';
 import DriverViewCollected from './DriverViewCollected';
@@ -81,9 +83,10 @@ export default class DriverViewCompleted extends Component {
       snap.forEach((child) => {
         if(child.val().status=='Completed' && child.val().driver==this.state.user.email){
           items.push({
+            jobId: child.val().jobId,
             name: child.val().name, 
             contactNo:child.val().contactNo,
-            title: child.val().address + " " + child.val().postalCode,
+            address: child.val().address + " " + child.val().postalCode,
             turnaround: child.val().turnaround, //Show
             type: child.val().type, 
             item: child.val().item,
@@ -95,6 +98,7 @@ export default class DriverViewCompleted extends Component {
             invoiceNo: child.val().invoiceNo,
             driver: child.val().driver,
             amount: child.val().amount,
+            completeDate: child.val().completeDate,
             _key: child.key
           });
         }
@@ -111,26 +115,30 @@ export default class DriverViewCompleted extends Component {
 
       const onPress = () => {
         Alert.alert(
-          'Details for '+ item.name,
-          'Address: '+ item.address 
-            + '\nName: ' + item.name 
-            + "\nContactNo: " + item.contactNo
-            + "\nTitle: " + item.title
+         'Details for Job ID: '+ item.jobId,
+          'Customer Name: '+ item.name 
+            + '\nAddress: ' + item.address             
+            + "\nContact Number: " + item.contactNo
+            // + "\nTitle: " + item.title
             + "\nTurnaround: " + item.turnaround
             + "\nType: " + item.type
             + "\nItem: " + item.item
+            // + "\nPreferred Pickup Date: " + item.preferredPickupDate
+            // + "\nPreferred Pickup Time: " + item.preferredPickupTime
             + "\nRemarks: " + item.remarks
-            + "\nEmail: " + item.email
-            + "\nInvoiceNo: " + item.invoiceNo
-            + "\nDriver: " + item.driver
-            + "\nAmount: " + item.amount
 
-            //Do we need to display the completed date of the job?
+            // + "\nEmail: " + item.email
+            // + "\nDriver: " + item.driver
+            + "\nInvoice Number: " + item.invoiceNo
+            + "\nAmount: " + item.amount
+            // + "\nPreferredReturnDate: " + item.preferredReturnDate
+            // + "\nPreferredReturnTime: " + item.preferredReturnTime
+            + "\nCompleted Date: " + item.completeDate
             ,
           [
+            {text: 'Cancel', onPress: (text) => console.log('Cancel')}
             {text: 'Uncomplete', onPress: () => this._cfmUncomplete(item)},
 
-            {text: 'Cancel', onPress: (text) => console.log('Cancel')}
           ],
           'default'
         );
@@ -173,22 +181,26 @@ export default class DriverViewCompleted extends Component {
 
      // Prompt confirmation of deletion
 _cfmUncomplete(item){
-  Alert.alert(
-    'Are you sure you want to uncomplete '+ item.title +'?',
-    'Address: '+ item.title +'\ncontactNo: '+item.contactNo + '\nThere will be consequences.',
-    [
-
-      //{text: 'Navigate', onPress: (text) => Linking.openURL('https://maps.google.com?q='+item.address)},
-      {text: 'Uncomplete', onPress: (text) => this._uncomplete(item)},
-      {text: 'Cancel', onPress: (text) => console.log('Cancel')}
-    ],
-    'default'
-  );
+  prompt(
+      // 'What is the problem?',
+      'What\'s the reason for un-completing Job ID ' + item.jobId +'?',
+      'Note there will be demerit points awarded if the reason is invalid.',
+      [
+       {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+       {text: 'OK', onPress: reason => this._uncomplete(item, reason)},
+      ],
+      {
+          type: 'default',
+          cancelable: false,
+          defaultValue: '',
+          placeholder: 'Reason?'
+      }
+    );
 }
 
 // Change the job status back to unassigned
-  _uncomplete(item){
-    this.itemsRef.child(item._key).update({status: 'Collected'})
+  _uncomplete(item, reason){
+    this.itemsRef.child(item._key).update({status: 'Collected', reason: 'Uncompleted: '+reason})
 
     ToastAndroid.show('The Job has been un-completed!', ToastAndroid.LONG);
 

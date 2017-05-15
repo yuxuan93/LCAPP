@@ -66,7 +66,7 @@ export default class DriverViewPending extends Component {
                   renderRow={this._renderItem.bind(this)}
                   style={styles.listview} enableEmptySections={true}/>
         
-        <View style={{flex:1, flexDirection:'row', justifyContent:'space-between', alignItems:'flex-end'}}>
+        <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'flex-end', alignContent: 'center'}}>
          <ActionButton title="Pending"/>
           <ActionButton2 title="Accepted" onPress={this.goToDriverViewAccepted.bind(this)}/>
           <ActionButton2 title="Collected" onPress={this.goToDriverViewCollected.bind(this)}/>    
@@ -85,9 +85,10 @@ export default class DriverViewPending extends Component {
       snap.forEach((child) => {
         if(child.val().status=='Pending' && child.val().driver==this.state.user.email){
           items.push({
+            jobId: child.val().jobId,
             name: child.val().name, 
             contactNo:child.val().contactNo,
-            title: child.val().address + " " + child.val().postalCode,
+            address: child.val().address + " " + child.val().postalCode,
             turnaround: child.val().turnaround, //Show
             type: child.val().type, 
             item: child.val().item,
@@ -115,21 +116,24 @@ export default class DriverViewPending extends Component {
 
       const onPress = () => {
         Alert.alert(
-          'Details for '+ item.name,
-          'Address: '+ item.address 
-            + '\nName: ' + item.name 
-            + "\nContactNo: " + item.contactNo
-            + "\nTitle: " + item.title
+          'Details for Job ID: '+ item.jobId,
+          'Customer Name: '+ item.name 
+            + '\nAddress: ' + item.address             
+            + "\nContact Number: " + item.contactNo
+            // + "\nTitle: " + item.title
             + "\nTurnaround: " + item.turnaround
             + "\nType: " + item.type
             + "\nItem: " + item.item
+            + "\nPreferred Pickup Date: " + item.preferredPickupDate
+            + "\nPreferred Pickup Time: " + item.preferredPickupTime
             + "\nRemarks: " + item.remarks
-            + "\nEmail: " + item.email
-            + "\nInvoiceNo: " + item.invoiceNo
-            + "\nDriver: " + item.driver
-            + "\nAmount: " + item.amount
 
-            //Do we need to display the completed date of the job?
+            // + "\nEmail: " + item.email
+            // + "\nDriver: " + item.driver
+            // + "\nInvoiceNo: " + item.invoiceNo
+            // + "\nAmount: " + item.amount
+            // + "\nPreferredReturnDate: " + item.preferredReturnDate
+            // + "\nPreferredReturnTime: " + item.preferredReturnTime
             ,
           [
             {text: 'Cancel', onPress: (text) => console.log(text)},

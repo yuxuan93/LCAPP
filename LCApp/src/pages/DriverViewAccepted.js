@@ -5,7 +5,6 @@ console.ignoredYellowBox = ['Warning: ReactNative.createElement'];
 
 import Geocoder from '../Geocoder';
 Geocoder.setApiKey('AIzaSyBge0_uc7Iqv0ZxisNFabbxflD6PBm2Sm8');
-import prompt from 'react-native-prompt-android';
 
 import React, {Component, PropTypes} from 'react';
 // import {Actions} from 'react-native-router-flux';
@@ -14,6 +13,7 @@ import MapView , {Marker} from 'react-native-maps';
 import StatusBar from '../components/StatusBar';
 import ActionButton from '../components/ActionButton';
 import ActionButton2 from '../components/ActionButton2';
+import prompt from 'react-native-prompt-android';
 
 import ListItem from '../components/ListItem';
 import styles from '../styles/styles.js';
@@ -33,6 +33,7 @@ import {
   TouchableOpacity,
   ToastAndroid,
   ScrollView,
+
 } from 'react-native';
 
 import DriverViewPending from './DriverViewPending';
@@ -94,9 +95,10 @@ export default class DriverViewAccepted extends Component {
       snap.forEach((child) => {
         if(child.val().status=='Accepted' && child.val().driver==this.state.user.email){
           items.push({
+            jobId: child.val().jobId,            
             name: child.val().name, 
             contactNo:child.val().contactNo,
-            title: child.val().address + " " + child.val().postalCode,
+            address: child.val().address + " " + child.val().postalCode,
             turnaround: child.val().turnaround, //Show
             type: child.val().type, 
             item: child.val().item,
@@ -126,27 +128,30 @@ export default class DriverViewAccepted extends Component {
 
       const onPress = () => {
         Alert.alert(
-          'Details for '+ item.name,
-          'Address: '+ item.address 
-            + '\nName: ' + item.name 
-            + "\nContactNo: " + item.contactNo
-            + "\nTitle: " + item.title
+         'Details for Job ID: '+ item.jobId,
+          'Customer Name: '+ item.name 
+            + '\nAddress: ' + item.address             
+            + "\nContact Number: " + item.contactNo
+            // + "\nTitle: " + item.title
             + "\nTurnaround: " + item.turnaround
             + "\nType: " + item.type
             + "\nItem: " + item.item
+            + "\nPreferred Pickup Date: " + item.preferredPickupDate
+            + "\nPreferred Pickup Time: " + item.preferredPickupTime
             + "\nRemarks: " + item.remarks
-            + "\nEmail: " + item.email
-            + "\nInvoiceNo: " + item.invoiceNo
-            + "\nDriver: " + item.driver
-            + "\nAmount: " + item.amount
 
-            //Do we need to display the completed date of the job?
+            // + "\nEmail: " + item.email
+            // + "\nDriver: " + item.driver
+            // + "\nInvoiceNo: " + item.invoiceNo
+            // + "\nAmount: " + item.amount
+            // + "\nPreferredReturnDate: " + item.preferredReturnDate
+            // + "\nPreferredReturnTime: " + item.preferredReturnTime
             ,
           [
-            {text: 'Cancel', onPress: (text) => console.log('Cancel')},          
+            // {text: 'Cancel', onPress: (text) => console.log('Cancel')},          
             {text: 'Delete', onPress: () => this._popupRejectionReasonInput(item)},
-            // {text: 'Navigate', onPress: (text) => Linking.openURL('https://maps.google.com?q='+item.address)},
-            {text: 'Collected!', onPress: () => this._showInvoicePrompt(item)}
+            {text: 'Navigate', onPress: (text) => Linking.openURL('https://maps.google.com?q='+item.address)},
+            {text: 'Collected', onPress: () => this._showInvoicePrompt(item)}
 
           ],
           'default'
@@ -230,18 +235,51 @@ _showInvoicePrompt(item){
         type: 'default',
         cancelable: false,
         defaultValue: '',
-        placeholder: 'XXXX XXXX XXXX'
+        placeholder: '000000'
     }
   );
 }
 // Prompt for invoice
 _showAmtPrompt(item, invoiceNo){
   prompt(
-    'Enter amount collected.',
+    'Enter amount collected. (SGD)',
     null,
     [
      {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-     {text: 'OK', onPress: amt => this._collectJob(item, invoiceNo, amt)},
+     {text: 'OK', onPress: amt => this._showDatePrompt(item, invoiceNo, amt)},
+    ],
+    {
+        type: 'default',
+        cancelable: false,
+        defaultValue: '',
+        placeholder: ''
+    }
+  );
+}
+_showDatePrompt(item,invoiceNo,amt){
+   prompt(
+    'Is there a preferred return date?',
+    null,
+    [
+     {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+     {text: 'OK', onPress: date => this._showTimePrompt(item, invoiceNo, amt, date)},
+    ],
+    {
+        type: 'default',
+        cancelable: false,
+        defaultValue: '',
+        placeholder: 'DD/MM/YY'
+    }
+  );
+  
+}
+_showTimePrompt(item,invoiceNo,amt,date){
+  prompt(
+    'Is there a preferred return time?',
+    null,
+    [
+     {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+     {text: 'OK', onPress: time => this._collectJob(item, invoiceNo, amt,date,time)},
     ],
     {
         type: 'default',
@@ -253,8 +291,14 @@ _showAmtPrompt(item, invoiceNo){
 }
 
 // Update the job as complete in database
-  _collectJob(item, invoiceNo, amt){
-    this.itemsRef.child(item._key).update({status: 'Collected', invoiceNo: invoiceNo, amount: amt})
+  _collectJob(item, invoiceNo, amt, date, time){
+    this.itemsRef.child(item._key).update({
+      status: 'Collected', 
+      invoiceNo: invoiceNo, 
+      amount: '$'+amt,
+      preferredReturnDate: date,
+      preferredReturnTime: time
+      }),
 
     ToastAndroid.show('The job has been collected !', ToastAndroid.LONG);
 
