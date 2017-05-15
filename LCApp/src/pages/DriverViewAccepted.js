@@ -150,7 +150,7 @@ export default class DriverViewAccepted extends Component {
           [
             // {text: 'Cancel', onPress: (text) => console.log('Cancel')},          
             {text: 'Delete', onPress: () => this._popupRejectionReasonInput(item)},
-            {text: 'Navigate', onPress: (text) => Linking.openURL('https://maps.google.com?q='+item.address)},
+            {text: 'Map', onPress: (text) => Linking.openURL('https://maps.google.com?q='+item.address)},
             {text: 'Collected', onPress: () => this._showInvoicePrompt(item)}
 
           ],
