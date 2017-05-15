@@ -136,8 +136,8 @@ export default class DriverViewCompleted extends Component {
             + "\nCompleted Date: " + item.completeDate
             ,
           [
-            {text: 'Cancel', onPress: (text) => console.log('Cancel')}
-            {text: 'Uncomplete', onPress: () => this._cfmUncomplete(item)},
+            {text: 'Cancel', onPress: (text) => console.log('Cancel')},
+            {text: 'Uncomplete', onPress: () => this._cfmUncomplete(item)}
 
           ],
           'default'
