@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Laundry Cares Web</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+
+    </head>
+    <body>
+        <div align="right">
+            <a href="#" id="logout-btn">logout</a>
+        </div>
+        
+        <pre id="object"></pre>
+        
+        
+        
+        
+        <h1>RWD List to Table</h1>
+        
+        <div class="datagrid">
+            <table>
+                <thead><tr><th>Job Id</th><th>Name</th><th>Address</th><th>Driver</th><th>Status</th></tr></thead>
+                <tfoot><tr><td colspan="5"><div id="paging"><ul><li><a href="#"><span>Previous</span></a></li><li><a href="#" class="active"><span>1</span></a></li><li><a href="#"><span>2</span></a></li><li><a href="#"><span>3</span></a></li><li><a href="#"><span>4</span></a></li><li><a href="#"><span>5</span></a></li><li><a href="#"><span>Next</span></a></li></ul></div></tr></tfoot>
+                <tbody id="jobList"></tbody>
+
+<!--                <tbody>
+                    <tr><td>data</td><td>data</td><td>data</td><td>data</td></tr>
+                    <tr class="alt"><td>data</td><td>data</td><td>data</td><td>data</td></tr>
+                    <tr><td>data</td><td>data</td><td>data</td><td>data</td></tr>
+                    <tr class="alt"><td>data</td><td>data</td><td>data</td><td>data</td></tr>
+                    <tr><td>data</td><td>data</td><td>data</td><td>data</td></tr>
+                </tbody>-->
+            </table>
+        </div>
+          
+          
+
+        
+        <script src="app.js"></script>
+        
+    </body>
+
+</html>
+
+
