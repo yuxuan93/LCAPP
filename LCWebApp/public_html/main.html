@@ -5,24 +5,37 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/style.css">
         <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
     </head>
     <body>
-        <div align="right">
-            <a href="#" id="logout-btn">logout</a>
-        </div>
+        
+        
+        
+    <nav>
+      <ul>
+        <li><a href="#" class="active">Dashboard</a></li>          
+        <li><a href="/LCWebApp/newJob.html">Add Job</a></li>
+        <li><a href="#">Drivers</a></li>
+        <li><a href="#">History</a></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+
+        <li><a href="#" id="logout-btn">Logout</a></li>
+      </ul>
+    </nav>
         
         <pre id="object"></pre>
+                        
         
+        <h1>Current Jobs</h1>
         
-        
-        
-        <h1>RWD List to Table</h1>
-        
-        <div class="datagrid">
-            <table>
-                <thead><tr><th>Job Id</th><th>Name</th><th>Address</th><th>Driver</th><th>Status</th></tr></thead>
-                <tfoot><tr><td colspan="5"><div id="paging"><ul><li><a href="#"><span>Previous</span></a></li><li><a href="#" class="active"><span>1</span></a></li><li><a href="#"><span>2</span></a></li><li><a href="#"><span>3</span></a></li><li><a href="#"><span>4</span></a></li><li><a href="#"><span>5</span></a></li><li><a href="#"><span>Next</span></a></li></ul></div></tr></tfoot>
+        <div>
+            <table class="responstable">                   
+                <tr><th>Job Id</th><th>Client Name</th><th>Address</th><th>Driver Name</th><th>Status</th></tr>
+                <!--<tfoot><tr><td colspan="5"><div id="paging"><ul><li><a href="#"><span>Previous</span></a></li><li><a href="#" class="active"><span>1</span></a></li><li><a href="#"><span>2</span></a></li><li><a href="#"><span>3</span></a></li><li><a href="#"><span>4</span></a></li><li><a href="#"><span>5</span></a></li><li><a href="#"><span>Next</span></a></li></ul></div></tr></tfoot>-->
                 <tbody id="jobList"></tbody>
 
 <!--                <tbody>
@@ -38,7 +51,9 @@
           
 
         
-        <script src="app.js"></script>
+        <script src="js/dashboard.js"></script>
+        
+       
         
     </body>
 
