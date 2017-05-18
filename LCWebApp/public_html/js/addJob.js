@@ -1,39 +1,37 @@
 (function () {
 
+    const submitBtn = document.getElementById("submit-btn");
+    const formElements = document.getElementById("my-form").elements;
+    const dbRefList = dbRefObject.child('jobs');
 
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyCixCWgtPu4hZuWSfITWsmd_kZI2k-q3DU",
-        authDomain: "laundry-85fd1.firebaseapp.com",
-        databaseURL: "https://laundry-85fd1.firebaseio.com",
-        projectId: "laundry-85fd1",
-        storageBucket: "laundry-85fd1.appspot.com",
-        messagingSenderId: "624037065494"
-    };
-    firebase.initializeApp(config);
-
-
-
-    const btnSubmit = document.getElementById("submit-btn");
-
-    
-
-    // Logout
-    btnSubmit.addEventListener('click', e => {
-        firebase.auth().signOut();
-        console.log('logging out');
-    });
-
-    // Add a realtime listener
-    firebase.auth().onAuthStateChanged(firebaseUser => {
-        if (!firebaseUser) {
-            console.log('not logged in');
-            window.location = "/LCWebApp/index.html";
-        }
-
+    // Get previous jobId
+    var lastId;
+    dbRefObject.child('lastJobId').once("value").then(function (snapshot) {
+        lastId = snapshot.val()+1; // "ada"
     });
     
-    
-    
+    //Push to db
+
+    submitBtn.addEventListener('click', e => {
+        var job = {
+            name: formElements[0].value, //*
+            address: formElements[1].value, //Show //*
+            postalCode: formElements[2].value, //Show //*
+            contactNo: formElements[3].value, //*
+            email: formElements[4].value,
+            turnaround: formElements[5].value, //Show //*
+            type: formElements[6].value, //*
+            item: formElements[7].value, //*
+            preferredPickupDate: formElements[8].value, //Show 
+            preferredPickupTime: formElements[9].value, //Show  
+            driver: formElements[10].value,
+            remarks: formElements[11].value, //Show
+            status: 'New',
+            jobId: lastId
+
+        };
+        dbRefObject.update({lastJobId: lastId});
+        dbRefList.push(job);
+    });
 
 }());

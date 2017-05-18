@@ -16,6 +16,22 @@
     };
     firebase.initializeApp(config);
 
-
+    // Create references
+    const dbRefObject = firebase.database().ref();
 
     const btnLogout = document.getElementById("logout-btn");
+    
+    
+     // Logout
+    btnLogout.addEventListener('click', e => {
+        firebase.auth().signOut();
+        console.log('logging out');
+    });
+
+    // Add a realtime listener
+    firebase.auth().onAuthStateChanged(firebaseUser => {
+        if (!firebaseUser) {
+            console.log('not logged in');
+            window.location = "/LCWebApp/index.html";
+        }
+    });

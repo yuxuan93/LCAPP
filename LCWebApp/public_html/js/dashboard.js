@@ -1,28 +1,12 @@
 (function () {
 
 
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyCixCWgtPu4hZuWSfITWsmd_kZI2k-q3DU",
-        authDomain: "laundry-85fd1.firebaseapp.com",
-        databaseURL: "https://laundry-85fd1.firebaseio.com",
-        projectId: "laundry-85fd1",
-        storageBucket: "laundry-85fd1.appspot.com",
-        messagingSenderId: "624037065494"
-    };
-    firebase.initializeApp(config);
-
-
-
-    const btnLogout = document.getElementById("logout-btn");
-
     // Get elements
     const preObject = document.getElementById('object');
     const jobList = document.getElementById('jobList');
 
-    // Create references
-    const dbRefObject = firebase.database().ref();
     const dbRefList = dbRefObject.child('jobs');
+
 
     // Sync object changes
 //          dbRefObject.on('value', snap => {
@@ -61,32 +45,8 @@
         statusCol.appendChild(document.createTextNode(snap.val().status));
         tr.appendChild(statusCol);
 
-
-
-
-
-
-
     });
 
     console.log(items);
-
-    // Logout
-    btnLogout.addEventListener('click', e => {
-        firebase.auth().signOut();
-        console.log('logging out');
-    });
-
-    // Add a realtime listener
-    firebase.auth().onAuthStateChanged(firebaseUser => {
-        if (!firebaseUser) {
-            console.log('not logged in');
-            window.location = "/LCWebApp/index.html";
-        }
-
-    });
     
-    
-    
-
 }());
