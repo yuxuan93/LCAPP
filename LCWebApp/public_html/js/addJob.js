@@ -2,12 +2,15 @@
 
     const submitBtn = document.getElementById("submit-btn");
     const formElements = document.getElementById("my-form").elements;
+    
     const dbRefList = dbRefObject.child('jobs');
+    const driverList = dbRefObject.child('users');
+    const driverDropdown = document.getElementById('drivers');
 
     // Get previous jobId
     var lastId;
     dbRefObject.child('lastJobId').once("value").then(function (snapshot) {
-        lastId = snapshot.val()+1; // "ada"
+        lastId = snapshot.val()+1; // 
     });
     
     //Push to db
@@ -32,6 +35,14 @@
         };
         dbRefObject.update({lastJobId: lastId});
         dbRefList.push(job);
+    });
+    
+    
+    driverList.on('child_added', snap => {
+        if(snap.val().priviledge=='driver'){
+            driverDropdown.innerHTML = driverDropdown.innerHTML+"<option value='" + snap.val().name + "' class='icon-clock'>" + snap.val().name + "</option>"
+        }
+
     });
 
 }());
