@@ -16,6 +16,25 @@
     //Push to db
 
     submitBtn.addEventListener('click', e => {
+        var typeList = "";
+        if(formElements[7].checked){
+            if(typeList=="")
+                typeList=formElements[7].value;
+            else
+                typeList = typeList +", "+formElements[7].value;
+        }
+        if(formElements[8].checked){
+            if(typeList=="")
+                typeList=formElements[8].value;
+            else
+                typeList = typeList +", "+ formElements[8].value;           
+        }
+        if(formElements[9].checked){
+            if(typeList=="")
+                typeList=formElements[9].value;
+            else
+                typeList = typeList +", "+ formElements[9].value;
+        }
         var job = {
             name: formElements[0].value, //*
             address: formElements[1].value, //Show //*
@@ -23,8 +42,8 @@
             contactNo: formElements[3].value, //*
             email: formElements[4].value,
             item: formElements[5].value, //*
-            turnaround: formElements[6].value, //Show //*
-            type: formElements[7].value+", "+formElements[8].value+", "+formElements[9].value, //*
+            turnaround: formElements[6].value, //Show //*            
+            type: typeList, //*
 
             preferredPickupDate: formElements[10].value, //Show 
             preferredPickupTime: formElements[11].value, //Show  
