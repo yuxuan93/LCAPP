@@ -22,13 +22,14 @@
             postalCode: formElements[2].value, //Show //*
             contactNo: formElements[3].value, //*
             email: formElements[4].value,
-            turnaround: formElements[5].value, //Show //*
-            type: formElements[6].value, //*
-            item: formElements[7].value, //*
-            preferredPickupDate: formElements[8].value, //Show 
-            preferredPickupTime: formElements[9].value, //Show  
-            driver: formElements[10].value,
-            remarks: formElements[11].value, //Show
+            item: formElements[5].value, //*
+            turnaround: formElements[6].value, //Show //*
+            type: formElements[7].value+", "+formElements[8].value+", "+formElements[9].value, //*
+
+            preferredPickupDate: formElements[10].value, //Show 
+            preferredPickupTime: formElements[11].value, //Show  
+            driver: formElements[12].value,
+            remarks: formElements[13].value, //Show
             status: 'New',
             jobId: lastId
 
