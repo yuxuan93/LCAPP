@@ -21,6 +21,7 @@
 
         const tr = document.createElement('TR');
         tr.setAttribute("id", counter);
+
         if (counter % 2 != 0)
             tr.classList.add('alt');
         jobList.appendChild(tr);
@@ -45,8 +46,31 @@
         statusCol.appendChild(document.createTextNode(snap.val().status));
         tr.appendChild(statusCol);
 
+        tr.onclick = function () {
+//            alert("hello");
+            if (confirm("Edit this job?\n\n\
+                JobId: " + snap.val().jobId + "\n\
+                Name: " + snap.val().name + " \n\
+                Address: " + snap.val().address + " \n\
+                Postal Code: " + snap.val().postalCode + "\n\
+                Contact No: " + snap.val().contactNo + "\n\
+                Email: " + snap.val().email + "\n\
+                Item: " + snap.val().item + "\n\
+                Turnaround: " + snap.val().turnaround + "\n\
+                Type: " + snap.val().type + "\n\
+                Preferred Pickup Date: " + snap.val().preferredPickupDate + "\n\
+                Preferred Pickup Time: " + snap.val().preferredPickupTime + "\n\
+                Driver: " + snap.val().driver + "\n\
+                Remarks: " + snap.val().remarks + "\n\
+                Status: " + snap.val().status + "\n\
+            \n") == true) {
+                // Send the key over - snap.key
+                window.location = "/LCWebApp/editJob.html";
+
+            }
+        
+        };
     });
 
-    console.log(items);
-    
+
 }());

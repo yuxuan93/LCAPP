@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Laundry Cares Web</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/contactform.css">
+        <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="css/style6.css" />
+        <script src="js/modernizr.custom.63321.js"></script>
+        <link rel="shortcut icon" href="../favicon.ico"> 
+
+        <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    </head>
+    <body>
+
+
+
+        <nav>
+            <ul>
+                <li><a href="/LCWebApp/main.html">Dashboard</a></li>          
+                <li><a href="#" class="active">Add Job</a></li>
+                <li><a href="#">Drivers</a></li>
+                <li><a href="#">History</a></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+
+                <li><a href="#" id="logout-btn">Logout</a></li>
+            </ul>
+        </nav>
+
+        <h1>Add Job</h1>
+
+        <form id="my-form">
+
+            <div class="contentform">                            
+
+                <div class="leftcontact">
+                    <div class="form-group">
+                        <p>Client Name<span>*</span></p>
+                        <span class="icon-case"><i class="fa fa-male"></i></span>
+                        <input type="text" name="nom" id="nom" required/>
+                        <div class="validation"></div>
+                    </div>                     	
+
+                    <div class="form-group">
+                        <p>Address <span>*</span></p>
+                        <span class="icon-case"><i class="fa fa-home"></i></span>
+                        <input type="text" name="address" id="address" required/>
+                        <div class="validation"></div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <p>Postal Code (6 digits)<span>*</span></p>
+                        <span class="icon-case"><i class="fa fa-map-marker"></i></span>
+                        <input type="text" name="postal" id="postal" required pattern="[0-9]{6}"/>
+                        <div class="validation"></div>
+                    </div>	
+
+
+                    <div class="form-group">
+                        <p>Contact Number (+65) (8 digits) <span>*</span></p>	
+                        <span class="icon-case"><i class="fa fa-phone"></i></span>
+                        <input type="text" name="contactNo" id="contactNo" required pattern="[0-9]{8}"/>
+                        <div class="validation"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <p>E-mail <span></span></p>	
+                        <span class="icon-case"><i class="fa fa-envelope-o"></i></span>
+                        <input type="email" name="email" id="email" data-rule="email" />
+                        <div class="validation"></div>
+                    </div>
+
+
+                </div>
+
+
+                <div class="rightcontact">	                    	                    
+
+                    <div class="form-group">
+                        <p>Item <span>*</span></p>	
+                        <span class="icon-case"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+                        <input type="text" name="item" id="item" required/>
+                        <div class="validation"></div>
+                    </div>
+
+                    <!--<div class="form-group">-->
+                    <p>Turnaround <span>*</span></p>	
+                    <!--<span class="icon-case"><i class="fa fa-circle-o-notch"></i></span>-->
+                    <select id="cd-dropdown" class="cd-select" required>
+                        <option value="" selected>Choose your turnaround</option>
+                        <option value="Normal (5-6 days)" class="icon-clock">Normal (5-6 days)</option>
+                        <option value="Express (3-4 days)" class="icon-cars">Express (3-4 days)</option>
+                        <option value="Express (1-2 days)" class="icon-star">Express (1-2 days)</option>
+                        <option value="Super Express" class="icon-lightning">Super Express</option>
+                    </select>
+                    <!--</div>-->
+                    <!--<input type="tel" name="phone" id="phone" data-rule="required" data-msg="Vérifiez votre saisie sur les champs : Le champ 'Téléphone' doit être renseigné. Minimum 10 chiffres"/>-->
+                    <div class="validation"></div>
+
+
+                    <div class="checkbox-group required" id="type-group">
+                        <p>Type <span>*</span></p>
+                        <!--                        <span class="icon-case"><i class="fa fa-question-circle-o" aria-hidden="true"></i></span>
+                                                <input type="text" name="type" id="type"/>  -->
+                        <input type="checkbox" style="height:15px;width:15px;" id="normal" value="Normal Clean" required>
+                        Normal Clean<br/>
+
+                        <input type="checkbox" style="height:15px;width:15px;" id="dry" value="Dry Clean" required>
+                        Dry Clean<br/>
+
+                        <input type="checkbox" style="height:15px;width:15px;" id="load" value="Load Wash" required>
+                        Load Wash<br/>
+                        <div class="validation"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <p>Preferred Pickup Date <span></span></p>	
+                        <span class="icon-case"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                        <input type="date" name="preferredPickupDate" id="preferredPickupDate"/>
+                        <div class="validation"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <p>Preferred Pickup Time <span></span></p>	
+                        <span class="icon-case"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
+                        <input type="text" name="preferredPickupTime" id="preferredPickupTime"/>
+                        <div class="validation"></div>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <p>Assigned Driver <span>*</span></p>	
+                    <!--<span class="icon-case"><i class="fa fa-car" aria-hidden="true"></i></span>-->
+                    <select id="drivers" class="cd-select" required>
+                        <option value="" selected>Choose your driver</option>
+                    </select>                    
+                    <div class="validation"></div>
+                </div>
+
+                <div class="form-group">
+                    <p>Remarks <span></span></p>
+                    <span class="icon-case"><i class="fa fa-comments-o"></i></span>
+                    <textarea name="message" rows="14" ></textarea>
+                    <div class="validation"></div>
+                </div>	
+            </div>
+            <button type="submit" id="submit-btn" class="bouton-contact">Add</button>
+
+        </form>	
+
+
+
+        <script src="js/navBarLogout.js"></script>
+        <script src="js/addJob.js"></script>
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery.dropdown.js"></script>
+        <script type="text/javascript">
+
+            $(function () {
+
+//                $('#cd-dropdown').dropdown({
+////                                gutter : 5,
+//                    stack: false,
+//                    delay: 100,
+//                    slidingIn: 100
+//                });
+//                $('#drivers').dropdown({
+////                                gutter : 5,
+//                    stack: false,
+//                    delay: 100,
+//                    slidingIn: 100
+//                });
+                var requiredCheckboxes = $(':checkbox[required]');
+
+                requiredCheckboxes.change(function () {
+
+                    if (requiredCheckboxes.is(':checked')) {
+                        requiredCheckboxes.removeAttr('required');
+                    } else {
+                        requiredCheckboxes.attr('required', 'required');
+                    }
+                });
+
+
+            });
+
+
+
+        </script>
+    </body>
+
+
+</html>
+
+

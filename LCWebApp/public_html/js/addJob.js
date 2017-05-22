@@ -53,7 +53,6 @@
             jobId: lastId
 
         };
-        var txt;
         if (confirm("Create this job?\n\n\
             Name: "+job.name+" \n\
             Address: "+job.address+" \n\
@@ -85,5 +84,6 @@
         }
 
     });
-
+    
+    
 }());
