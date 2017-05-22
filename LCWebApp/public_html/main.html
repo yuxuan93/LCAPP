@@ -9,53 +9,55 @@
 
     </head>
     <body>
-        
-        
-        
-    <nav>
-      <ul>
-        <li><a href="#" class="active">Dashboard</a></li>          
-        <li><a href="/LCWebApp/newJob.html">Add Job</a></li>
-        <li><a href="#">Drivers</a></li>
-        <li><a href="#">History</a></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
 
-        <li><a href="#" id="logout-btn">Logout</a></li>
-      </ul>
-    </nav>
-        
+
+
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Dashboard</a></li>          
+                <li><a href="/LCWebApp/newJob.html">Add Job</a></li>
+                <li><a href="#">Drivers</a></li>
+                <li><a href="#">History</a></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+
+                <li><a href="#" id="logout-btn">Logout</a></li>
+            </ul>
+        </nav>
+
         <pre id="object"></pre>
-                        
-        
+
+
         <h1>Current Jobs</h1>
-        
+
+        <!--<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">-->
+        <div style="float:right; margin-bottom: 20px">
+            Status <select id="myInput" onChange="myFunction()">
+                <option value="">No Filter</option>
+                <option value="New">New</option>
+                <option value="Rejected">Rejected</option>
+                <option value="Collected">Collected</option>
+            </select>
+        </div>
         <div>
-            <table class="responstable">                   
-                <tr><th>Job Id</th><th>Client Name</th><th>Address</th><th>Driver Name</th><th>Status</th></tr>
+            <table class="responstable" id="myTable">                   
+                <tr><th style="width:10%;">Job Id</th><th style="width:20%;">Client Name</th><th style="width:20%;">Address</th><th style="width:20%;">Driver Name</th><th style="width:10%;">Status</th></tr>
                 <!--<tfoot><tr><td colspan="5"><div id="paging"><ul><li><a href="#"><span>Previous</span></a></li><li><a href="#" class="active"><span>1</span></a></li><li><a href="#"><span>2</span></a></li><li><a href="#"><span>3</span></a></li><li><a href="#"><span>4</span></a></li><li><a href="#"><span>5</span></a></li><li><a href="#"><span>Next</span></a></li></ul></div></tr></tfoot>-->
-                <tbody id="jobList"></tbody>
-                    
-<!--                <tbody>
-                    <tr><td>data</td><td>data</td><td>data</td><td>data</td></tr>
-                    <tr class="alt"><td>data</td><td>data</td><td>data</td><td>data</td></tr>
-                    <tr><td>data</td><td>data</td><td>data</td><td>data</td></tr>
-                    <tr class="alt"><td>data</td><td>data</td><td>data</td><td>data</td></tr>
-                    <tr><td>data</td><td>data</td><td>data</td><td>data</td></tr>
-                </tbody>-->
+                <tbody id="jobList"></tbody>                                       
             </table>
         </div>
-          
-          
+
+
 
         <script src="js/navBarLogout.js"></script>
 
         <script src="js/dashboard.js"></script>
-        
-       
-        
+        <script src="js/tableFilter.js"></script>
+
+
+
     </body>
 
 </html>
