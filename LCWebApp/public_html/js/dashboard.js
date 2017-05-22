@@ -65,7 +65,7 @@
                 Status: " + snap.val().status + "\n\
             \n") == true) {
                 // Send the key over - snap.key
-                window.location = "/LCWebApp/editJob.html";
+                window.location = "/LCWebApp/editJob.html?key="+snap.key;
 
             }
         
