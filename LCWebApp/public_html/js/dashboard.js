@@ -64,7 +64,12 @@
                 Remarks: " + snap.val().remarks + "\n\
                 Status: " + snap.val().status + "\n\
             \n") == true) {
-                // Send the key over - snap.key
+                
+                // FOR EASY DELETION
+//                dbRefList.child(snap.key).remove();
+//                window.location = "/LCWebApp/dashboard.html";
+
+//                // Send the key over - snap.key
                 window.location = "/LCWebApp/editJob.html?key="+snap.key;
 
             }

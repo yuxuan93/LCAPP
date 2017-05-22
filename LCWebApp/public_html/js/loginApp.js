@@ -32,7 +32,7 @@
           firebase.auth().onAuthStateChanged(firebaseUser => {
              if(firebaseUser){
                  console.log(firebaseUser);
-                 window.location = "/LCWebApp/main.html";
+                 window.location = "/LCWebApp/dashboard.html";
              } 
           });
 

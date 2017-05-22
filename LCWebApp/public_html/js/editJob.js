@@ -233,7 +233,7 @@
         \n\
         ")){
             dbRefList.child(key).remove();
-            window.location = "/LCWebApp/main.html";
+            window.location = "/LCWebApp/dashboard.html";
         }
         
     });
