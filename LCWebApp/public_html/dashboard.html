@@ -32,18 +32,30 @@
 
         <h1>Current Jobs</h1>
 
+        
+
         <!--<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">-->
         <div style="float:right; margin-bottom: 20px">
-            Status <select id="myInput" onChange="myFunction()">
-                <option value="">No Filter</option>
+            Status <select id="statusFilter" onChange="myFunction()">
+                <option value="">All</option>
                 <option value="New">New</option>
                 <option value="Rejected">Rejected</option>
+                <option value="Accepted">Accepted</option>
                 <option value="Collected">Collected</option>
             </select>
         </div>
+        
+        <div style="float:right; margin-bottom: 20px; margin-right:20px">
+            
+            Driver <select id="driverFilter" onChange="myFunction()">
+                <option value="">All</option>
+            </select>
+        </div>
+        
+        
         <div>
             <table class="responstable" id="myTable">                   
-                <tr><th style="width:7%;">Job Id</th><th style="width:20%;">Client Name</th><th style="width:20%;">Address</th><th style="width:20%;">Driver Name</th><th style="width:10%;">Status</th></tr>
+                <tr><th style="width:7%;">Job Id</th><th style="width:20%;">Client Name</th><th style="width:20%;">Address</th><th style="width:20%;">Driver Name</th><th style="width:20%;">Preferred Pickup Date</th><th style="width:10%;">Status</th></tr>
                 <!--<tfoot><tr><td colspan="5"><div id="paging"><ul><li><a href="#"><span>Previous</span></a></li><li><a href="#" class="active"><span>1</span></a></li><li><a href="#"><span>2</span></a></li><li><a href="#"><span>3</span></a></li><li><a href="#"><span>4</span></a></li><li><a href="#"><span>5</span></a></li><li><a href="#"><span>Next</span></a></li></ul></div></tr></tfoot>-->
                 <tbody id="jobList"></tbody>                                       
             </table>
@@ -54,8 +66,19 @@
         <script src="js/navBarLogout.js"></script>
         <script src="js/dashboard.js"></script>
         <script src="js/tableFilter.js"></script>
+        <script>
+                const driverList = dbRefObject.child('users');
+                const driverDropdown = document.getElementById('driverFilter');
 
-        
+                // populate all possible drivers
+                driverList.on('child_added', snap => {
+                    if (snap.val().priviledge == 'driver') {
+                        driverDropdown.innerHTML = driverDropdown.innerHTML + "<option value='" + snap.val().name + "' class='icon-clock'>" + snap.val().name + "</option>"
+                    }
+
+                });
+        </script>
+
 
     </body>
 

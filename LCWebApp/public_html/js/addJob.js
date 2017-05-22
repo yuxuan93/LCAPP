@@ -71,7 +71,7 @@
             Status: " + job.status + "\n\
             JobId: " + job.jobId + "\n\
             \n")) {
-//                window.location = "/LCWebApp/main.html";                
+//                window.location = "/LCWebApp/dashboard.html";                
 
                 dbRefObject.update({lastJobId: lastId});
                 dbRefList.push(job);

@@ -42,6 +42,10 @@
         driverCol.appendChild(document.createTextNode(snap.val().driver));
         tr.appendChild(driverCol);
 
+        const pickupDateCol = document.createElement('TD');
+        pickupDateCol.appendChild(document.createTextNode(snap.val().preferredPickupDate));
+        tr.appendChild(pickupDateCol);
+        
         const statusCol = document.createElement('TD');
         statusCol.appendChild(document.createTextNode(snap.val().status));
         tr.appendChild(statusCol);

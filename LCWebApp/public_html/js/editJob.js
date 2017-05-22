@@ -164,7 +164,7 @@
         \n\
         ") == true) {
 //            dbRefObject.update({lastJobId: lastId});
-//                window.location = "/LCWebApp/main.html";
+//                window.location = "/LCWebApp/dashboard.html";
 
                 dbRefList.child(key).update(job);
 
