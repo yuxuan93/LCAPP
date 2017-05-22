@@ -109,13 +109,13 @@
                         <p>Type <span>*</span></p>
                         <!--                        <span class="icon-case"><i class="fa fa-question-circle-o" aria-hidden="true"></i></span>
                                                 <input type="text" name="type" id="type"/>  -->
-                        <input type="checkbox" style="height:15px;width:15px;" id="normal" value="Normal Clean" required>
+                        <input type="checkbox" style="height:15px;width:15px;" id="normal" value="Normal Clean" >
                         Normal Clean<br/>
 
-                        <input type="checkbox" style="height:15px;width:15px;" id="dry" value="Dry Clean" required>
+                        <input type="checkbox" style="height:15px;width:15px;" id="dry" value="Dry Clean" >
                         Dry Clean<br/>
 
-                        <input type="checkbox" style="height:15px;width:15px;" id="load" value="Load Wash" required>
+                        <input type="checkbox" style="height:15px;width:15px;" id="load" value="Load Wash" >
                         Load Wash<br/>
                         <div class="validation"></div>
                     </div>
@@ -164,7 +164,7 @@
                 </select>
             </div>
 
-            <button type="submit" id="delete-btn" class="bouton-contact">Delete</button>
+            <!--            <button type="submit" id="delete-btn" class="bouton-contact">Delete</button>-->
             <button type="submit" id="edit-btn" class="bouton-contact">Update</button>
 
         </form>	
@@ -191,7 +191,11 @@
 //                    delay: 100,
 //                    slidingIn: 100
 //                });
-                var requiredCheckboxes = $(':checkbox[required]');
+//                
+// Create a new 'change' event
+
+                var requiredCheckboxes = $(':checkbox');
+                
                 requiredCheckboxes.change(function () {
 
                     if (requiredCheckboxes.is(':checked')) {
@@ -200,7 +204,7 @@
                         requiredCheckboxes.attr('required', 'required');
                     }
                 });
-                // Get the key passed through URL
+
 
 
             });
