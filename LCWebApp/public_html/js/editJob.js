@@ -100,10 +100,13 @@
     );
 
 
-    //Push to db
-
+    // Edit button pressed
     editBtn.addEventListener('click', e => {
+        
+        // Prompt for form validity check
         if (document.getElementById("my-form").checkValidity()) {
+            
+            // Form is valid
             var typeList = "";
             if (formElements[7].checked) {
                 if (typeList == "")
@@ -123,6 +126,8 @@
                 else
                     typeList = typeList + ", " + formElements[9].value;
             }
+            
+            // Form Job Object to be updated
             var job = {
                 name: formElements[0].value, //*
                 address: formElements[1].value, //Show //*
@@ -139,6 +144,8 @@
                 remarks: formElements[13].value, //Show
                 status: formElements[14].value,
             };
+            
+            // Show edit confirmation dialog
             if (confirm("Are you sure you want to edit this job?\n\n\
             Name: " + job.name + " \n\
             Address: " + job.address + " \n\
@@ -167,7 +174,69 @@
 
     });
 
+    deleteBtn.addEventListener('click', e => {
+        // Form is valid
+            var typeList = "";
+            if (formElements[7].checked) {
+                if (typeList == "")
+                    typeList = formElements[7].value;
+                else
+                    typeList = typeList + ", " + formElements[7].value;
+            }
+            if (formElements[8].checked) {
+                if (typeList == "")
+                    typeList = formElements[8].value;
+                else
+                    typeList = typeList + ", " + formElements[8].value;
+            }
+            if (formElements[9].checked) {
+                if (typeList == "")
+                    typeList = formElements[9].value;
+                else
+                    typeList = typeList + ", " + formElements[9].value;
+            }
+            
+            // Form Job Object to be updated
+            var job = {
+                name: formElements[0].value, //*
+                address: formElements[1].value, //Show //*
+                postalCode: formElements[2].value, //Show //*
+                contactNo: formElements[3].value, //*
+                email: formElements[4].value,
+                item: formElements[5].value, //*
+                turnaround: formElements[6].value, //Show //*            
+                type: typeList, //*
 
+                preferredPickupDate: formElements[10].value, //Show 
+                preferredPickupTime: formElements[11].value, //Show  
+                driver: formElements[12].value,
+                remarks: formElements[13].value, //Show
+                status: formElements[14].value,
+            };
+            
+            // Show edit confirmation dialog
+            if (confirm("Are you sure you want to delete this job?\n\n\
+            Name: " + job.name + " \n\
+            Address: " + job.address + " \n\
+            Postal Code: " + job.postalCode + "\n\
+            Contact No: " + job.contactNo + "\n\
+            Email: " + job.email + "\n\
+            Item: " + job.item + "\n\
+            Turnaround: " + job.turnaround + "\n\
+            Type: " + job.type + "\n\
+            Preferred Pickup Date: " + job.preferredPickupDate + "\n\
+            Preferred Pickup Time: " + job.preferredPickupTime + "\n\
+            Driver: " + job.driver + "\n\
+            Remarks: " + job.remarks + "\n\
+            Status: " + job.status + "\n\
+            JobId: " + jobId + "\n\
+        \n\
+        ")){
+            dbRefList.child(key).remove();
+            window.location = "/LCWebApp/main.html";
+        }
+        
+    });
 
 
 
