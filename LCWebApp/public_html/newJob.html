@@ -42,38 +42,38 @@
                     <div class="form-group">
                         <p>Client Name<span>*</span></p>
                         <span class="icon-case"><i class="fa fa-male"></i></span>
-                        <input type="text" name="nom" id="nom" data-rule="required" data-msg="Vérifiez votre saisie sur les champs : Le champ 'Nom' doit être renseigné."/>
+                        <input type="text" name="nom" id="nom" required/>
                         <div class="validation"></div>
                     </div>                     	
 
                     <div class="form-group">
                         <p>Address <span>*</span></p>
                         <span class="icon-case"><i class="fa fa-home"></i></span>
-                        <input type="text" name="address" id="address" data-rule="required" data-msg="Vérifiez votre saisie sur les champs : Le champ 'Société' doit être renseigné."/>
+                        <input type="text" name="address" id="address" required/>
                         <div class="validation"></div>
                     </div>
 
 
 
                     <div class="form-group">
-                        <p>Postal Code <span>*</span></p>
+                        <p>Postal Code (6 digits)<span>*</span></p>
                         <span class="icon-case"><i class="fa fa-map-marker"></i></span>
-                        <input type="text" name="postal" id="postal" data-rule="required" data-msg="Vérifiez votre saisie sur les champs : Le champ 'Code postal' doit être renseigné."/>
+                        <input type="text" name="postal" id="postal" required pattern="[0-9]{6}"/>
                         <div class="validation"></div>
                     </div>	
 
 
                     <div class="form-group">
-                        <p>Contact Number <span>*</span></p>	
+                        <p>Contact Number (+65) (8 digits) <span>*</span></p>	
                         <span class="icon-case"><i class="fa fa-phone"></i></span>
-                        <input type="text" name="contactNo" id="contactNo" data-rule="maxlen:10" data-msg="Vérifiez votre saisie sur les champs : Le champ 'Téléphone' doit être renseigné. Minimum 10 chiffres"/>
+                        <input type="text" name="contactNo" id="contactNo" required pattern="[0-9]{8}"/>
                         <div class="validation"></div>
                     </div>
 
                     <div class="form-group">
                         <p>E-mail <span></span></p>	
                         <span class="icon-case"><i class="fa fa-envelope-o"></i></span>
-                        <input type="email" name="email" id="email" data-rule="email" data-msg="Vérifiez votre saisie sur les champs : Le champ 'E-mail' est obligatoire."/>
+                        <input type="email" name="email" id="email" data-rule="email" />
                         <div class="validation"></div>
                     </div>
 
@@ -86,15 +86,15 @@
                     <div class="form-group">
                         <p>Item <span>*</span></p>	
                         <span class="icon-case"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
-                        <input type="text" name="item" id="item" data-rule-required="true" data-msg="Vérifiez votre saisie sur les champs : Le champ 'Téléphone' doit être renseigné. Minimum 10 chiffres"/>
+                        <input type="text" name="item" id="item" required/>
                         <div class="validation"></div>
                     </div>
 
                     <!--<div class="form-group">-->
                     <p>Turnaround <span>*</span></p>	
                     <!--<span class="icon-case"><i class="fa fa-circle-o-notch"></i></span>-->
-                    <select id="cd-dropdown" class="cd-select">
-                        <option value="-1" selected>Choose your turnaround</option>
+                    <select id="cd-dropdown" class="cd-select" required>
+                        <option value="" selected>Choose your turnaround</option>
                         <option value="Normal (5-6 days)" class="icon-clock">Normal (5-6 days)</option>
                         <option value="Express (3-4 days)" class="icon-cars">Express (3-4 days)</option>
                         <option value="Express (1-2 days)" class="icon-star">Express (1-2 days)</option>
@@ -105,17 +105,17 @@
                     <div class="validation"></div>
 
 
-                    <div class="form-group">
+                    <div class="checkbox-group required" id="type-group">
                         <p>Type <span>*</span></p>
-<!--                        <span class="icon-case"><i class="fa fa-question-circle-o" aria-hidden="true"></i></span>
-                        <input type="text" name="type" id="type"/>  -->
-                        <input type="checkbox" style="height:15px;width:15px;" id="normal" value="Normal Clean">
+                        <!--                        <span class="icon-case"><i class="fa fa-question-circle-o" aria-hidden="true"></i></span>
+                                                <input type="text" name="type" id="type"/>  -->
+                        <input type="checkbox" style="height:15px;width:15px;" id="normal" value="Normal Clean" required>
                         Normal Clean<br/>
-                        
-                        <input type="checkbox" style="height:15px;width:15px;" id="dry" value="Dry Clean">
+
+                        <input type="checkbox" style="height:15px;width:15px;" id="dry" value="Dry Clean" required>
                         Dry Clean<br/>
-                                                
-                        <input type="checkbox" style="height:15px;width:15px;" id="load" value="Load Wash">
+
+                        <input type="checkbox" style="height:15px;width:15px;" id="load" value="Load Wash" required>
                         Load Wash<br/>
                         <div class="validation"></div>
                     </div>
@@ -123,14 +123,14 @@
                     <div class="form-group">
                         <p>Preferred Pickup Date <span></span></p>	
                         <span class="icon-case"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                        <input type="date" name="preferredPickupDate" id="preferredPickupDate" data-rule="maxlen:10" data-msg="Vérifiez votre saisie sur les champs : Le champ 'Téléphone' doit être renseigné. Minimum 10 chiffres"/>
+                        <input type="date" name="preferredPickupDate" id="preferredPickupDate"/>
                         <div class="validation"></div>
                     </div>
 
                     <div class="form-group">
                         <p>Preferred Pickup Time <span></span></p>	
                         <span class="icon-case"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
-                        <input type="text" name="preferredPickupTime" id="preferredPickupTime" data-rule="maxlen:10" data-msg="Vérifiez votre saisie sur les champs : Le champ 'Téléphone' doit être renseigné. Minimum 10 chiffres"/>
+                        <input type="text" name="preferredPickupTime" id="preferredPickupTime"/>
                         <div class="validation"></div>
                     </div>
 
@@ -138,8 +138,8 @@
                 <div class="form-group">
                     <p>Assigned Driver <span>*</span></p>	
                     <!--<span class="icon-case"><i class="fa fa-car" aria-hidden="true"></i></span>-->
-                    <select id="drivers" class="cd-select">
-                        <option value="-1" selected>Choose your driver</option>
+                    <select id="drivers" class="cd-select" required>
+                        <option value="" selected>Choose your driver</option>
                     </select>                    
                     <div class="validation"></div>
                 </div>
@@ -147,7 +147,7 @@
                 <div class="form-group">
                     <p>Remarks <span></span></p>
                     <span class="icon-case"><i class="fa fa-comments-o"></i></span>
-                    <textarea name="message" rows="14" data-rule="" data-msg="Vérifiez votre saisie sur les champs : Le champ 'Message' doit être renseigné."></textarea>
+                    <textarea name="message" rows="14" ></textarea>
                     <div class="validation"></div>
                 </div>	
             </div>
@@ -166,20 +166,32 @@
 
             $(function () {
 
-                $('#cd-dropdown').dropdown({
-//                                gutter : 5,
-                    stack: false,
-                    delay: 100,
-                    slidingIn: 100
-                });
+//                $('#cd-dropdown').dropdown({
+////                                gutter : 5,
+//                    stack: false,
+//                    delay: 100,
+//                    slidingIn: 100
+//                });
 //                $('#drivers').dropdown({
 ////                                gutter : 5,
 //                    stack: false,
 //                    delay: 100,
 //                    slidingIn: 100
 //                });
+                var requiredCheckboxes = $(':checkbox[required]');
+
+                requiredCheckboxes.change(function () {
+
+                    if (requiredCheckboxes.is(':checked')) {
+                        requiredCheckboxes.removeAttr('required');
+                    } else {
+                        requiredCheckboxes.attr('required', 'required');
+                    }
+                });
+
 
             });
+
 
 
         </script>
