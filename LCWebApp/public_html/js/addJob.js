@@ -54,7 +54,7 @@
 
         };
         var txt;
-        if (confirm("Are you sure you want to create this job?\n\n\
+        if (confirm("Create this job?\n\n\
             Name: "+job.name+" \n\
             Address: "+job.address+" \n\
             Postal Code: "+job.postalCode+"\n\
