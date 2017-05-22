@@ -14,7 +14,7 @@
     });
     
     //Push to db
-
+  
     submitBtn.addEventListener('click', e => {
         var typeList = "";
         if(formElements[7].checked){
@@ -53,8 +53,29 @@
             jobId: lastId
 
         };
-        dbRefObject.update({lastJobId: lastId});
-        dbRefList.push(job);
+        var txt;
+        if (confirm("Are you sure you want to create this job?\n\n\
+            Name: "+job.name+" \n\
+            Address: "+job.address+" \n\
+            Postal Code: "+job.postalCode+"\n\
+            Contact No: "+job.contactNo+"\n\
+            Email: "+job.email+"\n\
+            Item: "+job.item+"\n\
+            Turnaround: "+job.turnaround+"\n\
+            Type: "+job.type+"\n\
+            Preferred Pickup Date: "+job.preferredPickupDate+"\n\
+            Preferred Pickup Time: "+job.preferredPickupTime+"\n\
+            Driver: "+job.driver+"\n\
+            Remarks: "+job.remarks+"\n\
+            Status: "+job.status+"\n\
+            JobId: "+job.jobId+"\n\
+        \n\
+        ") == true) {
+            dbRefObject.update({lastJobId: lastId});
+            dbRefList.push(job);
+        } else {
+        }
+        
     });
     
     
