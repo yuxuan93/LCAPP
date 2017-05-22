@@ -20,7 +20,7 @@
         <nav>
             <ul>
                 <li><a href="/LCWebApp/main.html">Dashboard</a></li>          
-                <li><a href="#">Add Job</a></li>
+                <li><a href="/LCWebApp/newJob.html">Add Job</a></li>
                 <li><a href="#">Drivers</a></li>
                 <li><a href="#">History</a></li>
                 <li></li>
@@ -34,7 +34,7 @@
 
         <h1 id="myHeader">Edit Job</h1>
 
-        <form id="my-form">
+        <form id="my-form" action="/LCWebApp/main.html">
 
             <div class="contentform">                            
 
@@ -164,9 +164,8 @@
                 </select>
             </div>
 
-            <!--            <button type="submit" id="delete-btn" class="bouton-contact">Delete</button>-->
-            <button type="submit" id="edit-btn" class="bouton-contact">Update</button>
-
+            <button type="submit" id="delete-btn" class="deleteBtn">Delete</button>
+            <button type="submit" id="edit-btn" class="editBtn">Save Changes</button>
         </form>	
 
 

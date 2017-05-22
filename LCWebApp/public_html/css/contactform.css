@@ -109,6 +109,30 @@ i {
   margin-top: 10px;
   font-size: 18px;
 }
+.deleteBtn{
+  background-color: #db7e76;
+  color: #FFF;
+  text-align: center;
+  width: 49%;
+  border:0;
+  padding: 17px 25px;
+  border-radius: 0px 0px 5px 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 18px;
+}
+.editBtn{
+  background-color: #81BDA4;
+  color: #FFF;
+  text-align: center;
+  width: 49%;
+  border:0;
+  padding: 17px 25px;
+  border-radius: 0px 0px 5px 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 18px;
+}
 
 
 .leftcontact {

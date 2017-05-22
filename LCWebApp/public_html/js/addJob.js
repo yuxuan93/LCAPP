@@ -16,24 +16,7 @@
     //Push to db
 
     submitBtn.addEventListener('click', e => {
-
-        if (confirm("Create this job?\n\n\
-            Name: " + job.name + " \n\
-            Address: " + job.address + " \n\
-            Postal Code: " + job.postalCode + "\n\
-            Contact No: " + job.contactNo + "\n\
-            Email: " + job.email + "\n\
-            Item: " + job.item + "\n\
-            Turnaround: " + job.turnaround + "\n\
-            Type: " + job.type + "\n\
-            Preferred Pickup Date: " + job.preferredPickupDate + "\n\
-            Preferred Pickup Time: " + job.preferredPickupTime + "\n\
-            Driver: " + job.driver + "\n\
-            Remarks: " + job.remarks + "\n\
-            Status: " + job.status + "\n\
-            JobId: " + job.jobId + "\n\
-        \n\
-        ") == true) {
+        if (document.getElementById("my-form").checkValidity()) {
             var typeList = "";
             if (formElements[7].checked) {
                 if (typeList == "")
@@ -71,11 +54,30 @@
                 jobId: lastId
 
             };
-            dbRefObject.update({lastJobId: lastId});
-            dbRefList.push(job);
-        } else {
-        }
 
+            if (confirm("Create this job?\n\n\
+            Name: " + job.name + " \n\
+            Address: " + job.address + " \n\
+            Postal Code: " + job.postalCode + "\n\
+            Contact No: " + job.contactNo + "\n\
+            Email: " + job.email + "\n\
+            Item: " + job.item + "\n\
+            Turnaround: " + job.turnaround + "\n\
+            Type: " + job.type + "\n\
+            Preferred Pickup Date: " + job.preferredPickupDate + "\n\
+            Preferred Pickup Time: " + job.preferredPickupTime + "\n\
+            Driver: " + job.driver + "\n\
+            Remarks: " + job.remarks + "\n\
+            Status: " + job.status + "\n\
+            JobId: " + job.jobId + "\n\
+            \n")) {
+//                window.location = "/LCWebApp/main.html";                
+
+                dbRefObject.update({lastJobId: lastId});
+                dbRefList.push(job);
+
+            }
+        }
     });
 
 

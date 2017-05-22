@@ -103,25 +103,7 @@
     //Push to db
 
     editBtn.addEventListener('click', e => {
-
-        if (confirm("Are you sure you want to edit this job?\n\n\
-            Name: " + job.name + " \n\
-            Address: " + job.address + " \n\
-            Postal Code: " + job.postalCode + "\n\
-            Contact No: " + job.contactNo + "\n\
-            Email: " + job.email + "\n\
-            Item: " + job.item + "\n\
-            Turnaround: " + job.turnaround + "\n\
-            Type: " + job.type + "\n\
-            Preferred Pickup Date: " + job.preferredPickupDate + "\n\
-            Preferred Pickup Time: " + job.preferredPickupTime + "\n\
-            Driver: " + job.driver + "\n\
-            Remarks: " + job.remarks + "\n\
-            Status: " + job.status + "\n\
-            JobId: " + jobId + "\n\
-        \n\
-        ") == true) {
-//            dbRefObject.update({lastJobId: lastId});
+        if (document.getElementById("my-form").checkValidity()) {
             var typeList = "";
             if (formElements[7].checked) {
                 if (typeList == "")
@@ -157,8 +139,30 @@
                 remarks: formElements[13].value, //Show
                 status: formElements[14].value,
             };
-            dbRefList.child(key).update(job);
-        } else {
+            if (confirm("Are you sure you want to edit this job?\n\n\
+            Name: " + job.name + " \n\
+            Address: " + job.address + " \n\
+            Postal Code: " + job.postalCode + "\n\
+            Contact No: " + job.contactNo + "\n\
+            Email: " + job.email + "\n\
+            Item: " + job.item + "\n\
+            Turnaround: " + job.turnaround + "\n\
+            Type: " + job.type + "\n\
+            Preferred Pickup Date: " + job.preferredPickupDate + "\n\
+            Preferred Pickup Time: " + job.preferredPickupTime + "\n\
+            Driver: " + job.driver + "\n\
+            Remarks: " + job.remarks + "\n\
+            Status: " + job.status + "\n\
+            JobId: " + jobId + "\n\
+        \n\
+        ") == true) {
+//            dbRefObject.update({lastJobId: lastId});
+//                window.location = "/LCWebApp/main.html";
+
+                dbRefList.child(key).update(job);
+
+            } else {
+            }
         }
 
     });
