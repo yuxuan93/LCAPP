@@ -57,3 +57,14 @@
         // After 3 seconds, remove the show class from DIV
         setTimeout(function(){ x.className = x.className.replace("snackbarshow", "snackbar"); }, 5000);
     }
+    
+    function showDeletedNotif() {
+        // Get the snackbar DIV
+        var x = document.getElementById("deletedNotif")
+
+        // Add the "show" class to DIV
+        x.className = "snackbarshow";
+
+        // After 3 seconds, remove the show class from DIV
+        setTimeout(function(){ x.className = x.className.replace("snackbarshow", "snackbar"); }, 5000);
+    }

@@ -363,10 +363,10 @@ footer p{
     visibility: hidden; /* Hidden by default. Visible on click */
     min-width: 250px; /* Set a default minimum width */
     margin-left: -125px; /* Divide value of min-width by 2 */
-    background-color: #ce2a02; /* Black background color */
+    background-color: #6b6666; /* Black background color */
     color: #fff; /* White text color */
     text-align: center; /* Centered text */
-    border-radius: 2px; /* Rounded borders */
+    border-radius: 20px; /* Rounded borders */
     padding: 16px; /* Padding */
     position: fixed; /* Sit on top of the screen */
     z-index: 1; /* Add a z-index if needed */
@@ -376,12 +376,14 @@ footer p{
 
 /* Show the snackbar when clicking on a button (class added with JavaScript) */
 .snackbarshow {
+    line-height: 75px;
+    min-height: 120px;
     min-width: 250px; /* Set a default minimum width */
     margin-left: -125px; /* Divide value of min-width by 2 */
-    background-color: #ce2a02; /* Black background color */
+    background-color: #6b6666; /* Black background color */
     color: #fff; /* White text color */
     text-align: center; /* Centered text */
-    border-radius: 2px; /* Rounded borders */
+    border-radius: 20px; /* Rounded borders */
     padding: 16px; /* Padding */
     position: fixed; /* Sit on top of the screen */
     z-index: 1; /* Add a z-index if needed */

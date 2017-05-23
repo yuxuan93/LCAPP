@@ -29,11 +29,14 @@
 
 
         <h1>Current Jobs</h1>
-        <button onclick="showEditedNotif()">Simulate edited</button>
-        <div id="editedNotif" class="snackbar">The job has been successfully changed..</div>
-        <button onclick="showAddedNotif()">Simulate added</button>
-        <div id="addedNotif" class="snackbar">The job has been successfully added..</div>
-        
+        <!--<button onclick="showEditedNotif()">Simulate edited</button>-->
+        <!--<button onclick="showAddedNotif()">Simulate added</button>-->
+        <!--<button onclick="showDeletedNotif()">Simulate deleted</button>-->
+
+        <div id="editedNotif" class="snackbar"></div>
+        <div id="addedNotif" class="snackbar"></div>
+        <div id="deletedNotif" class="snackbar"></div>
+
         <!--<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">-->
         <div style="float:right; margin-bottom: 20px">
             Status <select id="statusFilter" onChange="myFunction()">
@@ -67,6 +70,21 @@
         <script src="js/dashboard.js"></script>
         <script src="js/tableFilter.js"></script>
         <script>
+                var urlExtension = window.location.search.substring(window.location.search.indexOf("?") + 1);
+                var id = urlExtension.substring(window.location.search.indexOf("="));
+                if (urlExtension.startsWith("edited")) {
+                    document.getElementById("editedNotif").innerHTML = "<b>Job ID: " + id + "</b> has been successfully changed!";
+                    showEditedNotif();
+                } else if (urlExtension.startsWith("added")) {
+                    document.getElementById("addedNotif").innerHTML = "<b>Job ID: " + id + "</b> has been successfully added!";
+                    showAddedNotif();
+
+                } else if (urlExtension.startsWith("deleted")) {
+                    document.getElementById("deletedNotif").innerHTML = "<b>Job ID: " + id + "</b> has been successfully deleted!";                    
+                    showDeletedNotif();
+                }
+
+
                 const driverList = dbRefObject.child('users');
                 const driverDropdown = document.getElementById('driverFilter');
 
