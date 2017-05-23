@@ -164,7 +164,7 @@
         \n\
         ") == true) {
 //            dbRefObject.update({lastJobId: lastId});
-//                window.location = "/LCWebApp/dashboard.html";
+                window.location = "/LCWebApp/dashboard.html?edited&id="+jobId;
 
                 dbRefList.child(key).update(job);
 
@@ -233,7 +233,7 @@
         \n\
         ")){
             dbRefList.child(key).remove();
-            window.location = "/LCWebApp/dashboard.html";
+            window.location = "/LCWebApp/dashboard.html?deleted&id="+jobId;
         }
         
     });

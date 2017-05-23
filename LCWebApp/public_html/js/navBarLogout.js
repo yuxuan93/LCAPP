@@ -35,3 +35,25 @@
             window.location = "/LCWebApp/index.html";
         }
     });
+    
+    function showEditedNotif() {
+        // Get the snackbar DIV
+        var x = document.getElementById("editedNotif")
+
+        // Add the "show" class to DIV
+        x.className = "snackbarshow";
+
+        // After 3 seconds, remove the show class from DIV
+        setTimeout(function(){ x.className = x.className.replace("snackbarshow", "snackbar"); }, 5000);
+    }
+    
+    function showAddedNotif() {
+        // Get the snackbar DIV
+        var x = document.getElementById("addedNotif")
+
+        // Add the "show" class to DIV
+        x.className = "snackbarshow";
+
+        // After 3 seconds, remove the show class from DIV
+        setTimeout(function(){ x.className = x.className.replace("snackbarshow", "snackbar"); }, 5000);
+    }

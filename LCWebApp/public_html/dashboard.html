@@ -10,8 +10,6 @@
     </head>
     <body>
 
-
-
         <nav>
             <ul>
                 <li><a href="#" class="active">Dashboard</a></li>          
@@ -31,9 +29,11 @@
 
 
         <h1>Current Jobs</h1>
-
+        <button onclick="showEditedNotif()">Simulate edited</button>
+        <div id="editedNotif" class="snackbar">The job has been successfully changed..</div>
+        <button onclick="showAddedNotif()">Simulate added</button>
+        <div id="addedNotif" class="snackbar">The job has been successfully added..</div>
         
-
         <!--<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">-->
         <div style="float:right; margin-bottom: 20px">
             Status <select id="statusFilter" onChange="myFunction()">
@@ -44,15 +44,15 @@
                 <option value="Collected">Collected</option>
             </select>
         </div>
-        
+
         <div style="float:right; margin-bottom: 20px; margin-right:20px">
-            
+
             Driver <select id="driverFilter" onChange="myFunction()">
                 <option value="">All</option>
             </select>
         </div>
-        
-        
+
+
         <div>
             <table class="responstable" id="myTable">                   
                 <tr><th style="width:7%;">Job Id</th><th style="width:20%;">Client Name</th><th style="width:20%;">Address</th><th style="width:20%;">Driver Name</th><th style="width:20%;">Preferred Pickup Date</th><th style="width:10%;">Status</th></tr>
