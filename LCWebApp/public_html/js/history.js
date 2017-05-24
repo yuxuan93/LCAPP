@@ -33,6 +33,31 @@
             const driverCol = document.createElement('TD');
             driverCol.appendChild(document.createTextNode(snap.val().driver));
             tr.appendChild(driverCol);
+            
+            
+            const emailCol = document.createElement('TD');
+            emailCol.appendChild(document.createTextNode(snap.val().email));
+            tr.appendChild(emailCol);
+            const itemCol = document.createElement('TD');
+            itemCol.appendChild(document.createTextNode(snap.val().item));
+            tr.appendChild(itemCol);
+            const typeCol = document.createElement('TD');
+            typeCol.appendChild(document.createTextNode(snap.val().type));
+            tr.appendChild(typeCol);
+            const turnaroundCol = document.createElement('TD');
+            turnaroundCol.appendChild(document.createTextNode(snap.val().turnaround));
+            tr.appendChild(turnaroundCol);
+            const remarksCol = document.createElement('TD');
+            remarksCol.appendChild(document.createTextNode(snap.val().remarks));
+            tr.appendChild(remarksCol);
+            const amountCol = document.createElement('TD');
+            amountCol.appendChild(document.createTextNode(snap.val().amount));
+            tr.appendChild(amountCol);
+            const invoiceCol = document.createElement('TD');
+            invoiceCol.appendChild(document.createTextNode(snap.val().invoiceNo));
+            tr.appendChild(invoiceCol);
+            
+            
             const pickupDateCol = document.createElement('TD');
             pickupDateCol.appendChild(document.createTextNode(snap.val().completeDate));
             tr.appendChild(pickupDateCol);
