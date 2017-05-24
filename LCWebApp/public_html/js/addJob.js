@@ -56,6 +56,7 @@
             };
 
             if (confirm("Create this job?\n\n\
+            JobId: " + job.jobId + "\n\
             Name: " + job.name + " \n\
             Address: " + job.address + " \n\
             Postal Code: " + job.postalCode + "\n\
@@ -69,7 +70,6 @@
             Driver: " + job.driver + "\n\
             Remarks: " + job.remarks + "\n\
             Status: " + job.status + "\n\
-            JobId: " + job.jobId + "\n\
             \n")) {
                 window.location = "/LCWebApp/dashboard.html?added&id="+job.jobId;                
 

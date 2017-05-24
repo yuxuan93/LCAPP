@@ -36,6 +36,11 @@
     var remarksField = document.getElementById("remarks");
     var statusField = document.getElementById("status");
 
+    var invoiceField = document.getElementById("invoiceNo");
+    var amountField = document.getElementById("amount");
+    var preferredReturnDateField = document.getElementById("status");
+    var preferredReturnTimeField = document.getElementById("status");
+
     var jobId;
     dbRefList.child(key).on('value', (snap) => {
         jobId = snap.val().jobId;
@@ -94,18 +99,60 @@
 
         }
 
+        // Check once if status is collected, completed(wont show alr) or rejected
+        if (statusField.options[statusField.selectedIndex].value == "Collected") {
+            document.getElementById("hiddenField1").classList.remove("hide");
+            document.getElementById("hiddenField2").classList.add("hide");
+            invoiceField.required = true;
+            amountField.required = true;
+        } else if (statusField.options[statusField.selectedIndex].value == "Rejected") {
+            document.getElementById("hiddenField2").classList.remove("hide");
+            document.getElementById("hiddenField1").classList.add("hide");
+            invoiceField.required = false;
+            amountField.required = false;
+        } else {
+            document.getElementById("hiddenField1").classList.add("hide");
+            document.getElementById("hiddenField2").classList.add("hide");
+            invoiceField.required = false;
+            amountField.required = false;
+        }
+
 
     }
 
     );
 
 
+
+    //Change detected in status
+    $("#status").change(function () {
+        // Activate hidden fields if collected or rejected
+        if (statusField.options[statusField.selectedIndex].value == "Collected") {
+            document.getElementById("hiddenField1").classList.remove("hide");
+            document.getElementById("hiddenField2").classList.add("hide");
+            invoiceField.required = true;
+            amountField.required = true;
+
+        } else if (statusField.options[statusField.selectedIndex].value == "Rejected") {
+            document.getElementById("hiddenField2").classList.remove("hide");
+            document.getElementById("hiddenField1").classList.add("hide");
+            invoiceField.required = false;
+            amountField.required = false;
+        } else {
+            document.getElementById("hiddenField1").classList.add("hide");
+            document.getElementById("hiddenField2").classList.add("hide");
+            invoiceField.required = false;
+            amountField.required = false;
+        }
+    });
+
+
     // Edit button pressed
     editBtn.addEventListener('click', e => {
-        
+
         // Prompt for form validity check
         if (document.getElementById("my-form").checkValidity()) {
-            
+
             // Form is valid
             var typeList = "";
             if (formElements[7].checked) {
@@ -126,7 +173,7 @@
                 else
                     typeList = typeList + ", " + formElements[9].value;
             }
-            
+
             // Form Job Object to be updated
             var job = {
                 name: formElements[0].value, //*
@@ -143,79 +190,144 @@
                 driver: formElements[12].value,
                 remarks: formElements[13].value, //Show
                 status: formElements[14].value,
+
+                // IF status collected
+                invoiceNo: formElements[15].value,
+                amount: formElements[16].value,
+                preferredReturnDate: formElements[17].value,
+                preferredReturnTime: formElements[18].value,
+
+                reason: formElements[19].value,
+                // IF status rejected
+
             };
-            
+
             // Show edit confirmation dialog
-            if (confirm("Are you sure you want to edit this job?\n\n\
-            Name: " + job.name + " \n\
-            Address: " + job.address + " \n\
-            Postal Code: " + job.postalCode + "\n\
-            Contact No: " + job.contactNo + "\n\
-            Email: " + job.email + "\n\
-            Item: " + job.item + "\n\
-            Turnaround: " + job.turnaround + "\n\
-            Type: " + job.type + "\n\
-            Preferred Pickup Date: " + job.preferredPickupDate + "\n\
-            Preferred Pickup Time: " + job.preferredPickupTime + "\n\
-            Driver: " + job.driver + "\n\
-            Remarks: " + job.remarks + "\n\
-            Status: " + job.status + "\n\
-            JobId: " + jobId + "\n\
-        \n\
-        ") == true) {
-//            dbRefObject.update({lastJobId: lastId});
-                window.location = "/LCWebApp/dashboard.html?edited&id="+jobId;
+            if (job.status == "Collected") {
+                if (confirm("Are you sure you want to edit this job?\n\n\
+                    JobId: " + jobId + "\n\
+                    Name: " + job.name + " \n\
+                    Address: " + job.address + " \n\
+                    Postal Code: " + job.postalCode + "\n\
+                    Contact No: " + job.contactNo + "\n\
+                    Email: " + job.email + "\n\
+                    Item: " + job.item + "\n\
+                    Turnaround: " + job.turnaround + "\n\
+                    Type: " + job.type + "\n\
+                    Preferred Pickup Date: " + job.preferredPickupDate + "\n\
+                    Preferred Pickup Time: " + job.preferredPickupTime + "\n\
+                    Driver: " + job.driver + "\n\
+                    Remarks: " + job.remarks + "\n\
+                    Status: " + job.status + "\n\
+                    Invoice No: " + job.invoiceNo + "\n\
+                    Amount: " + job.amount + "\n\
+                    Preferred Return Date: " + job.preferredReturnDate + "\n\
+                    Preferred Return Time: " + job.preferredReturnTime + "\n\
+                \n") == true) {
+                    window.location = "/LCWebApp/dashboard.html?edited&id=" + jobId;
+                    dbRefList.child(key).update(job);
 
-                dbRefList.child(key).update(job);
+                } 
+            
+            } 
+            if (job.status == "Collected") {
+                if (confirm("Are you sure you want to edit this job?\n\n\
+                    JobId: " + jobId + "\n\
+                    Name: " + job.name + " \n\
+                    Address: " + job.address + " \n\
+                    Postal Code: " + job.postalCode + "\n\
+                    Contact No: " + job.contactNo + "\n\
+                    Email: " + job.email + "\n\
+                    Item: " + job.item + "\n\
+                    Turnaround: " + job.turnaround + "\n\
+                    Type: " + job.type + "\n\
+                    Preferred Pickup Date: " + job.preferredPickupDate + "\n\
+                    Preferred Pickup Time: " + job.preferredPickupTime + "\n\
+                    Driver: " + job.driver + "\n\
+                    Remarks: " + job.remarks + "\n\
+                    Status: " + job.status + "\n\
+                    Invoice No: " + job.invoiceNo + "\n\
+                    Amount: " + job.amount + "\n\
+                    Preferred Return Date: " + job.preferredReturnDate + "\n\
+                    Preferred Return Time: " + job.preferredReturnTime + "\n\
+                \n") == true) {
+                    window.location = "/LCWebApp/dashboard.html?edited&id=" + jobId;
+                    dbRefList.child(key).update(job);
 
-            } else {
+                } 
+            
             }
+            else if(job.status == "Rejected") {
+                if (confirm("Are you sure you want to edit this job?\n\n\
+                    JobId: " + jobId + "\n\
+                    Name: " + job.name + " \n\
+                    Address: " + job.address + " \n\
+                    Postal Code: " + job.postalCode + "\n\
+                    Contact No: " + job.contactNo + "\n\
+                    Email: " + job.email + "\n\
+                    Item: " + job.item + "\n\
+                    Turnaround: " + job.turnaround + "\n\
+                    Type: " + job.type + "\n\
+                    Preferred Pickup Date: " + job.preferredPickupDate + "\n\
+                    Preferred Pickup Time: " + job.preferredPickupTime + "\n\
+                    Driver: " + job.driver + "\n\
+                    Remarks: " + job.remarks + "\n\
+                    Status: " + job.status + "\n\
+                    Reason: " + job.reason + "\n\
+                ") == true) {
+                    window.location = "/LCWebApp/dashboard.html?edited&id=" + jobId;
+
+                    dbRefList.child(key).update(job);
+
+                } 
         }
+    }
+
 
     });
 
     deleteBtn.addEventListener('click', e => {
         // Form is valid
-            var typeList = "";
-            if (formElements[7].checked) {
-                if (typeList == "")
-                    typeList = formElements[7].value;
-                else
-                    typeList = typeList + ", " + formElements[7].value;
-            }
-            if (formElements[8].checked) {
-                if (typeList == "")
-                    typeList = formElements[8].value;
-                else
-                    typeList = typeList + ", " + formElements[8].value;
-            }
-            if (formElements[9].checked) {
-                if (typeList == "")
-                    typeList = formElements[9].value;
-                else
-                    typeList = typeList + ", " + formElements[9].value;
-            }
-            
-            // Form Job Object to be updated
-            var job = {
-                name: formElements[0].value, //*
-                address: formElements[1].value, //Show //*
-                postalCode: formElements[2].value, //Show //*
-                contactNo: formElements[3].value, //*
-                email: formElements[4].value,
-                item: formElements[5].value, //*
-                turnaround: formElements[6].value, //Show //*            
-                type: typeList, //*
+        var typeList = "";
+        if (formElements[7].checked) {
+            if (typeList == "")
+                typeList = formElements[7].value;
+            else
+                typeList = typeList + ", " + formElements[7].value;
+        }
+        if (formElements[8].checked) {
+            if (typeList == "")
+                typeList = formElements[8].value;
+            else
+                typeList = typeList + ", " + formElements[8].value;
+        }
+        if (formElements[9].checked) {
+            if (typeList == "")
+                typeList = formElements[9].value;
+            else
+                typeList = typeList + ", " + formElements[9].value;
+        }
 
-                preferredPickupDate: formElements[10].value, //Show 
-                preferredPickupTime: formElements[11].value, //Show  
-                driver: formElements[12].value,
-                remarks: formElements[13].value, //Show
-                status: formElements[14].value,
-            };
-            
-            // Show edit confirmation dialog
-            if (confirm("Are you sure you want to delete this job?\n\n\
+        // Form Job Object to be updated
+        var job = {
+            name: formElements[0].value, //*
+            address: formElements[1].value, //Show //*
+            postalCode: formElements[2].value, //Show //*
+            contactNo: formElements[3].value, //*
+            email: formElements[4].value,
+            item: formElements[5].value, //*
+            turnaround: formElements[6].value, //Show //*            
+            type: typeList, //*
+
+            preferredPickupDate: formElements[10].value, //Show 
+            preferredPickupTime: formElements[11].value, //Show  
+            driver: formElements[12].value,
+            remarks: formElements[13].value, //Show
+            status: formElements[14].value,
+        };
+
+        // Show edit confirmation dialog
+        if (confirm("Are you sure you want to delete this job?\n\n\
             Name: " + job.name + " \n\
             Address: " + job.address + " \n\
             Postal Code: " + job.postalCode + "\n\
@@ -231,11 +343,11 @@
             Status: " + job.status + "\n\
             JobId: " + jobId + "\n\
         \n\
-        ")){
+        ")) {
             dbRefList.child(key).remove();
-            window.location = "/LCWebApp/dashboard.html?deleted&id="+jobId;
+            window.location = "/LCWebApp/dashboard.html?deleted&id=" + jobId;
         }
-        
+
     });
 
 

@@ -145,6 +145,8 @@
                     <div class="validation"></div>
                 </div>
 
+
+
                 <div class="form-group">
                     <p>Remarks <span></span></p>
                     <span class="icon-case"><i class="fa fa-comments-o"></i></span>
@@ -162,8 +164,49 @@
                     <option value="Collected" class="icon-lightning">Collected </option>
                     <option value="Completed" class="icon-lightning">Completed </option>
                 </select>
-            </div>
+                <!--                Optional-->
+                <div class="hide" id="hiddenField1">
+                    <div class="leftcontact">	                    	                    
 
+                        <div class="form-group">
+                            <p>Invoice Number <span>*</span></p>	
+                            <span class="icon-case"><i class="fa fa-newspaper-o" aria-hidden="true"></i></span>
+                            <input type="text" name="invoiceNo" id="invoiceNo"/>
+                            <div class="validation"></div>
+                        </div>
+                        <div class="form-group">
+                            <p>Amount (SGD) <span>*</span></p>	
+                            <span class="icon-case"><i class="fa fa-usd" aria-hidden="true"></i></span>
+                            <input type="text" name="amount" id="amount"/>
+                            <div class="validation"></div>          
+                        </div>
+                    </div>
+                    <div class="rightcontact">	                    	                    
+
+                        <div class="form-group">
+                            <p>Preferred Return Date <span></span></p>	
+                            <span class="icon-case"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                            <input type="date" name="preferredReturnDate" id="preferredReturnDate"/>
+                            <div class="validation"></div>
+                        </div>
+                        <div class="form-group">
+                            <p>Preferred Return Time <span></span></p>	
+                            <span class="icon-case"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
+                            <input type="text" name="preferredReturnTime" id="preferredReturnTime"/>
+                            <div class="validation"></div>
+                        </div>
+                    </div>
+                    <!--End optional-->
+                </div>
+                <div id="hide">
+                    <div class="form-group" id="hiddenField2">
+                        <p>Reason <span></span></p>
+                        <span class="icon-case"><i class="fa fa-question-circle-o"></i></span>
+                        <textarea id="remarks" name="message" rows="14"></textarea>
+                        <div class="validation"></div>
+                    </div>	
+                </div>
+            </div>
             <button type="submit" id="delete-btn" class="deleteBtn">Delete</button>
             <button type="submit" id="edit-btn" class="editBtn">Save Changes</button>
         </form>	
@@ -194,7 +237,7 @@
 // Create a new 'change' event
 
                 var requiredCheckboxes = $(':checkbox');
-                
+
                 requiredCheckboxes.change(function () {
 
                     if (requiredCheckboxes.is(':checked')) {
@@ -205,8 +248,9 @@
                 });
 
 
-
             });
+
+
 
 
 

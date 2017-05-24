@@ -44,7 +44,7 @@
         x.className = "snackbarshow";
 
         // After 3 seconds, remove the show class from DIV
-        setTimeout(function(){ x.className = x.className.replace("snackbarshow", "snackbar"); }, 5000);
+        setTimeout(function(){ x.className = x.className.replace("snackbarshow", "hide"); }, 5000);
     }
     
     function showAddedNotif() {
@@ -55,7 +55,7 @@
         x.className = "snackbarshow";
 
         // After 3 seconds, remove the show class from DIV
-        setTimeout(function(){ x.className = x.className.replace("snackbarshow", "snackbar"); }, 5000);
+        setTimeout(function(){ x.className = x.className.replace("snackbarshow", "hide"); }, 5000);
     }
     
     function showDeletedNotif() {
@@ -66,5 +66,5 @@
         x.className = "snackbarshow";
 
         // After 3 seconds, remove the show class from DIV
-        setTimeout(function(){ x.className = x.className.replace("snackbarshow", "snackbar"); }, 5000);
+        setTimeout(function(){ x.className = x.className.replace("snackbarshow", "hide"); }, 5000);
     }

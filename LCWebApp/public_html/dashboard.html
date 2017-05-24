@@ -33,9 +33,9 @@
         <!--<button onclick="showAddedNotif()">Simulate added</button>-->
         <!--<button onclick="showDeletedNotif()">Simulate deleted</button>-->
 
-        <div id="editedNotif" class="snackbar"></div>
-        <div id="addedNotif" class="snackbar"></div>
-        <div id="deletedNotif" class="snackbar"></div>
+        <div id="editedNotif" class="hide"></div>
+        <div id="addedNotif" class="hide"></div>
+        <div id="deletedNotif" class="hide"></div>
 
         <!--<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">-->
         <div style="float:right; margin-bottom: 20px">
@@ -73,14 +73,14 @@
                 var urlExtension = window.location.search.substring(window.location.search.indexOf("?") + 1);
                 var id = urlExtension.substring(window.location.search.indexOf("="));
                 if (urlExtension.startsWith("edited")) {
-                    document.getElementById("editedNotif").innerHTML = "<b>Job ID: " + id + "</b> has been successfully changed!";
+                    document.getElementById("editedNotif").innerHTML = "Job ID: <b><u>" + id + "</u></b> has been successfully changed!";
                     showEditedNotif();
                 } else if (urlExtension.startsWith("added")) {
-                    document.getElementById("addedNotif").innerHTML = "<b>Job ID: " + id + "</b> has been successfully added!";
+                    document.getElementById("addedNotif").innerHTML = "Job ID: <b><u>" + id + "</u></b> has been successfully added!";
                     showAddedNotif();
 
                 } else if (urlExtension.startsWith("deleted")) {
-                    document.getElementById("deletedNotif").innerHTML = "<b>Job ID: " + id + "</b> has been successfully deleted!";                    
+                    document.getElementById("deletedNotif").innerHTML = "Job ID: <b><u>" + id + "</u></b> has been successfully deleted!";                    
                     showDeletedNotif();
                 }
 
