@@ -34,7 +34,7 @@
             driverCol.appendChild(document.createTextNode(snap.val().driver));
             tr.appendChild(driverCol);
             const pickupDateCol = document.createElement('TD');
-            pickupDateCol.appendChild(document.createTextNode(snap.val().preferredPickupDate));
+            pickupDateCol.appendChild(document.createTextNode(snap.val().completeDate));
             tr.appendChild(pickupDateCol);
             const statusCol = document.createElement('TD');
             statusCol.appendChild(document.createTextNode(snap.val().status));
@@ -59,6 +59,7 @@
                         Amount: " + snap.val().amount + "\n\
                         Preferred Return Date: " + snap.val().preferredReturnDate + "\n\
                         Preferred Return Time: " + snap.val().preferredReturnTime + "\n\
+                        Complete Date: " + snap.val().completeDate + "\n\
                     \n") == true) {
 
                     // FOR EASY DELETION

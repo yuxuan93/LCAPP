@@ -41,6 +41,7 @@
     var preferredReturnDateField = document.getElementById("preferredReturnDate");
     var preferredReturnTimeField = document.getElementById("preferredReturnTime");
     var reasonField = document.getElementById("reason");
+    var completeDateField = document.getElementById("completeDate");
     var jobId;
     dbRefList.child(key).on('value', (snap) => {
         jobId = snap.val().jobId;
@@ -101,6 +102,7 @@
         if (statusField.options[statusField.selectedIndex].value == "Collected" || statusField.options[statusField.selectedIndex].value == "Completed") {
             document.getElementById("hiddenField1").classList.remove("hide");
             document.getElementById("hiddenField2").classList.add("hide");
+            
             invoiceField.required = true;
             amountField.required = true;
             
@@ -108,18 +110,28 @@
             amountField.value = snap.val().amount;
             preferredReturnDateField.value = snap.val().preferredReturnDate;
             preferredReturnTimeField.value = snap.val().preferredReturnTime;
+            if(statusField.options[statusField.selectedIndex].value == "Completed"){
+                document.getElementById("hiddenField3").classList.remove("hide");
+                completeDateField.required = true;
+                completeDateField.value = snap.val().completeDate
+            }
         } else if (statusField.options[statusField.selectedIndex].value == "Rejected") {
             document.getElementById("hiddenField2").classList.remove("hide");
             document.getElementById("hiddenField1").classList.add("hide");
+            document.getElementById("hiddenField3").classList.add("hide");
             invoiceField.required = false;
             amountField.required = false;
+            completeDateField.required = false;
             reasonField.value = snap.val().reason;
 
         } else {
             document.getElementById("hiddenField1").classList.add("hide");
             document.getElementById("hiddenField2").classList.add("hide");
+            document.getElementById("hiddenField3").classList.add("hide");
             invoiceField.required = false;
             amountField.required = false;
+            completeDateField.required = false;
+
         }
         
         
@@ -136,19 +148,36 @@
         if (statusField.options[statusField.selectedIndex].value == "Collected" || statusField.options[statusField.selectedIndex].value == "Completed") {
             document.getElementById("hiddenField1").classList.remove("hide");
             document.getElementById("hiddenField2").classList.add("hide");
+            
             invoiceField.required = true;
             amountField.required = true;
-
+            
+            invoiceField.value = snap.val().invoiceNo;
+            amountField.value = snap.val().amount;
+            preferredReturnDateField.value = snap.val().preferredReturnDate;
+            preferredReturnTimeField.value = snap.val().preferredReturnTime;
+            if(statusField.options[statusField.selectedIndex].value == "Completed"){
+                document.getElementById("hiddenField3").classList.remove("hide");
+                completeDateField.required = true;
+                completeDateField.value = snap.val().completeDate
+            }
         } else if (statusField.options[statusField.selectedIndex].value == "Rejected") {
             document.getElementById("hiddenField2").classList.remove("hide");
             document.getElementById("hiddenField1").classList.add("hide");
+            document.getElementById("hiddenField3").classList.add("hide");
             invoiceField.required = false;
             amountField.required = false;
+            completeDateField.required = false;
+            reasonField.value = snap.val().reason;
+
         } else {
             document.getElementById("hiddenField1").classList.add("hide");
             document.getElementById("hiddenField2").classList.add("hide");
+            document.getElementById("hiddenField3").classList.add("hide");
             invoiceField.required = false;
             amountField.required = false;
+            completeDateField.required = false;
+
         }
     });
 
@@ -204,12 +233,13 @@
                 preferredReturnTime: formElements[18].value,
 
                 reason: formElements[19].value,
+                completeDate: formElements[20].value
                 // IF status rejected
 
             };
 
             // Show edit confirmation dialog
-            if (job.status == "Collected" || job.status == "Completed") {
+            if (job.status == "Collected") {
                 if (confirm("Are you sure you want to edit this job?\n\n\
                     JobId: " + jobId + "\n\
                     Name: " + job.name + " \n\
@@ -236,7 +266,35 @@
                 } 
             
             } 
-            if (job.status == "Rejected") {
+            else if (job.status == "Completed") {
+                if (confirm("Are you sure you want to edit this job?\n\n\
+                    JobId: " + jobId + "\n\
+                    Name: " + job.name + " \n\
+                    Address: " + job.address + " \n\
+                    Postal Code: " + job.postalCode + "\n\
+                    Contact No: " + job.contactNo + "\n\
+                    Email: " + job.email + "\n\
+                    Item: " + job.item + "\n\
+                    Turnaround: " + job.turnaround + "\n\
+                    Type: " + job.type + "\n\
+                    Preferred Pickup Date: " + job.preferredPickupDate + "\n\
+                    Preferred Pickup Time: " + job.preferredPickupTime + "\n\
+                    Driver: " + job.driver + "\n\
+                    Remarks: " + job.remarks + "\n\
+                    Status: " + job.status + "\n\
+                    Invoice No: " + job.invoiceNo + "\n\
+                    Amount: " + job.amount + "\n\
+                    Preferred Return Date: " + job.preferredReturnDate + "\n\
+                    Preferred Return Time: " + job.preferredReturnTime + "\n\
+                    Complete Date: " + job.completeDate + "\n\
+                \n") == true) {
+                    window.location = "/LCWebApp/dashboard.html?edited&id=" + jobId;
+                    dbRefList.child(key).update(job);
+
+                } 
+            
+            }
+            else if (job.status == "Rejected") {
                 if (confirm("Are you sure you want to edit this job?\n\n\
                     JobId: " + jobId + "\n\
                     Name: " + job.name + " \n\

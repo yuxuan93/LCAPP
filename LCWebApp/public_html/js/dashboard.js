@@ -2,45 +2,48 @@
 
 
 // Get elements
-const preObject = document.getElementById('object');
-        const jobList = document.getElementById('jobList');
-        const dbRefList = dbRefObject.child('jobs');
-        // Sync object changes
+    const preObject = document.getElementById('object');
+    const jobList = document.getElementById('jobList');
+    const dbRefList = dbRefObject.child('jobs');
+    // Sync object changes
 //          dbRefObject.on('value', snap => {
 //              preObject.innerText = JSON.stringify(snap.val(), null, 3)
 //          });
 
-        var items = [];
-        var counter = 1;
-        // Sync list changes
-        dbRefList.on('child_added', snap => {
-        counter = counter + 1;
-                const tr = document.createElement('TR');
-                tr.setAttribute("id", counter);
-                if (counter % 2 != 0)
+    var items = [];
+    var counter = 1;
+    // Sync list changes
+    dbRefList.on('child_added', snap => {
+        if (snap.val().status != "Completed") {
+
+
+            counter = counter + 1;
+            const tr = document.createElement('TR');
+            tr.setAttribute("id", counter);
+            if (counter % 2 != 0)
                 tr.classList.add('alt');
-                jobList.appendChild(tr);
-                const jobIdCol = document.createElement('TD');
-                jobIdCol.appendChild(document.createTextNode(snap.val().jobId));
-                tr.appendChild(jobIdCol);
-                const nameCol = document.createElement('TD');
-                nameCol.appendChild(document.createTextNode(snap.val().name));
-                tr.appendChild(nameCol);
-                const addressCol = document.createElement('TD');
-                addressCol.appendChild(document.createTextNode(snap.val().address));
-                tr.appendChild(addressCol);
-                const driverCol = document.createElement('TD');
-                driverCol.appendChild(document.createTextNode(snap.val().driver));
-                tr.appendChild(driverCol);
-                const pickupDateCol = document.createElement('TD');
-                pickupDateCol.appendChild(document.createTextNode(snap.val().preferredPickupDate));
-                tr.appendChild(pickupDateCol);
-                const statusCol = document.createElement('TD');
-                statusCol.appendChild(document.createTextNode(snap.val().status));
-                tr.appendChild(statusCol);
-                tr.onclick = function () {
+            jobList.appendChild(tr);
+            const jobIdCol = document.createElement('TD');
+            jobIdCol.appendChild(document.createTextNode(snap.val().jobId));
+            tr.appendChild(jobIdCol);
+            const nameCol = document.createElement('TD');
+            nameCol.appendChild(document.createTextNode(snap.val().name));
+            tr.appendChild(nameCol);
+            const addressCol = document.createElement('TD');
+            addressCol.appendChild(document.createTextNode(snap.val().address));
+            tr.appendChild(addressCol);
+            const driverCol = document.createElement('TD');
+            driverCol.appendChild(document.createTextNode(snap.val().driver));
+            tr.appendChild(driverCol);
+            const pickupDateCol = document.createElement('TD');
+            pickupDateCol.appendChild(document.createTextNode(snap.val().preferredPickupDate));
+            tr.appendChild(pickupDateCol);
+            const statusCol = document.createElement('TD');
+            statusCol.appendChild(document.createTextNode(snap.val().status));
+            tr.appendChild(statusCol);
+            tr.onclick = function () {
 //            alert("hello");
-                if (snap.val().status == "Collected"){
+                if (snap.val().status == "Collected") {
                     if (confirm("Edit this job?\n\n\
                         JobId: " + snap.val().jobId + "\n\
                         Name: " + snap.val().name + " \n\
@@ -62,15 +65,14 @@ const preObject = document.getElementById('object');
                         Preferred Return Time: " + snap.val().preferredReturnTime + "\n\
                     \n") == true) {
 
-                // FOR EASY DELETION
+                        // FOR EASY DELETION
 //                dbRefList.child(snap.key).remove();
 //                window.location = "/LCWebApp/dashboard.html";
 
 //                // Send the key over - snap.key
                         window.location = "/LCWebApp/editJob.html?key=" + snap.key;
                     }
-                }
-                else if (snap.val().status == "Rejected"){
+                } else if (snap.val().status == "Rejected") {
                     if (confirm("Edit this job?\n\n\
                         JobId: " + snap.val().jobId + "\n\
                         Name: " + snap.val().name + " \n\
@@ -88,16 +90,15 @@ const preObject = document.getElementById('object');
                         Reason: " + snap.val().reason + "\n\
                     \n") == true) {
 
-                // FOR EASY DELETION
+                        // FOR EASY DELETION
 //                dbRefList.child(snap.key).remove();
 //                window.location = "/LCWebApp/dashboard.html";
 
 //                // Send the key over - snap.key
                         window.location = "/LCWebApp/editJob.html?key=" + snap.key;
-                
+
                     }
-                }
-                else{
+                } else {
                     if (confirm("Edit this job?\n\n\
                         JobId: " + snap.val().jobId + "\n\
                         Name: " + snap.val().name + " \n\
@@ -115,7 +116,7 @@ const preObject = document.getElementById('object');
                         Status: " + snap.val().status + "\n\n\
                     \n") == true) {
 
-                // FOR EASY DELETION
+                        // FOR EASY DELETION
 //                dbRefList.child(snap.key).remove();
 //                window.location = "/LCWebApp/dashboard.html";
 
@@ -124,7 +125,8 @@ const preObject = document.getElementById('object');
                     }
                 }
 
-
-                };
-                });
-                }());
+            }
+        }
+        ;
+    });
+}());
