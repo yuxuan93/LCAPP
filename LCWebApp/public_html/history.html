@@ -12,10 +12,10 @@
 
         <nav>
             <ul>
-                <li><a href="#" class="active">Dashboard</a></li>          
+                <li><a href="/LCWebApp/dashboard.html" >Dashboard</a></li>          
                 <li><a href="/LCWebApp/addJob.html">Add Job</a></li>
                 <li><a href="#">Drivers</a></li>
-                <li><a href="/LCWebApp/history.html">History</a></li>
+                <li><a href="#" class="active">History</a></li>
                 <li></li>
                 <li></li>
                 <li></li>
@@ -37,16 +37,7 @@
         <div id="addedNotif" class="hide"></div>
         <div id="deletedNotif" class="hide"></div>
 
-        <!--<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">-->
-        <div style="float:right; margin-bottom: 20px">
-            Status <select id="statusFilter" onChange="myFunction()">
-                <option value="">All</option>
-                <option value="New">New</option>
-                <option value="Rejected">Rejected</option>
-                <option value="Accepted">Accepted</option>
-                <option value="Collected">Collected</option>
-            </select>
-        </div>
+       
 
         <div style="float:right; margin-bottom: 20px; margin-right:20px">
 
@@ -67,7 +58,7 @@
 
 
         <script src="js/navBarLogout.js"></script>
-        <script src="js/dashboard.js"></script>
+        <script src="js/history.js"></script>
         <script src="js/tableFilter.js"></script>
         <script>
                 var urlExtension = window.location.search.substring(window.location.search.indexOf("?") + 1);

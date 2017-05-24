@@ -38,9 +38,9 @@
 
     var invoiceField = document.getElementById("invoiceNo");
     var amountField = document.getElementById("amount");
-    var preferredReturnDateField = document.getElementById("status");
-    var preferredReturnTimeField = document.getElementById("status");
-
+    var preferredReturnDateField = document.getElementById("preferredReturnDate");
+    var preferredReturnTimeField = document.getElementById("preferredReturnTime");
+    var reasonField = document.getElementById("reason");
     var jobId;
     dbRefList.child(key).on('value', (snap) => {
         jobId = snap.val().jobId;
@@ -89,34 +89,40 @@
 
         var opts3 = statusField.options;
         for (var opt, j = 0; opt = opts3[j]; j++) {
-
             if (opt.value == snap.val().status) {
-
                 statusField.selectedIndex = j;
                 break;
 
             }
 
         }
-
+        
         // Check once if status is collected, completed(wont show alr) or rejected
-        if (statusField.options[statusField.selectedIndex].value == "Collected") {
+        if (statusField.options[statusField.selectedIndex].value == "Collected" || statusField.options[statusField.selectedIndex].value == "Completed") {
             document.getElementById("hiddenField1").classList.remove("hide");
             document.getElementById("hiddenField2").classList.add("hide");
             invoiceField.required = true;
             amountField.required = true;
+            
+            invoiceField.value = snap.val().invoiceNo;
+            amountField.value = snap.val().amount;
+            preferredReturnDateField.value = snap.val().preferredReturnDate;
+            preferredReturnTimeField.value = snap.val().preferredReturnTime;
         } else if (statusField.options[statusField.selectedIndex].value == "Rejected") {
             document.getElementById("hiddenField2").classList.remove("hide");
             document.getElementById("hiddenField1").classList.add("hide");
             invoiceField.required = false;
             amountField.required = false;
+            reasonField.value = snap.val().reason;
+
         } else {
             document.getElementById("hiddenField1").classList.add("hide");
             document.getElementById("hiddenField2").classList.add("hide");
             invoiceField.required = false;
             amountField.required = false;
         }
-
+        
+        
 
     }
 
@@ -127,7 +133,7 @@
     //Change detected in status
     $("#status").change(function () {
         // Activate hidden fields if collected or rejected
-        if (statusField.options[statusField.selectedIndex].value == "Collected") {
+        if (statusField.options[statusField.selectedIndex].value == "Collected" || statusField.options[statusField.selectedIndex].value == "Completed") {
             document.getElementById("hiddenField1").classList.remove("hide");
             document.getElementById("hiddenField2").classList.add("hide");
             invoiceField.required = true;
@@ -203,7 +209,7 @@
             };
 
             // Show edit confirmation dialog
-            if (job.status == "Collected") {
+            if (job.status == "Collected" || job.status == "Completed") {
                 if (confirm("Are you sure you want to edit this job?\n\n\
                     JobId: " + jobId + "\n\
                     Name: " + job.name + " \n\
@@ -230,7 +236,7 @@
                 } 
             
             } 
-            if (job.status == "Collected") {
+            if (job.status == "Rejected") {
                 if (confirm("Are you sure you want to edit this job?\n\n\
                     JobId: " + jobId + "\n\
                     Name: " + job.name + " \n\
@@ -246,10 +252,7 @@
                     Driver: " + job.driver + "\n\
                     Remarks: " + job.remarks + "\n\
                     Status: " + job.status + "\n\
-                    Invoice No: " + job.invoiceNo + "\n\
-                    Amount: " + job.amount + "\n\
-                    Preferred Return Date: " + job.preferredReturnDate + "\n\
-                    Preferred Return Time: " + job.preferredReturnTime + "\n\
+                    Reason: " + job.reason + "\n\
                 \n") == true) {
                     window.location = "/LCWebApp/dashboard.html?edited&id=" + jobId;
                     dbRefList.child(key).update(job);
@@ -257,7 +260,7 @@
                 } 
             
             }
-            else if(job.status == "Rejected") {
+            else {
                 if (confirm("Are you sure you want to edit this job?\n\n\
                     JobId: " + jobId + "\n\
                     Name: " + job.name + " \n\
