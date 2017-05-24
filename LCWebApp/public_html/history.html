@@ -32,12 +32,13 @@
         <!--<button onclick="showEditedNotif()">Simulate edited</button>-->
         <!--<button onclick="showAddedNotif()">Simulate added</button>-->
         <!--<button onclick="showDeletedNotif()">Simulate deleted</button>-->
+        <button id="btnExport" onclick="exportToExcel();"> EXPORT </button>
 
         <div id="editedNotif" class="hide"></div>
         <div id="addedNotif" class="hide"></div>
         <div id="deletedNotif" class="hide"></div>
 
-       <div style="float:right; margin-bottom: 20px" class="hide">
+        <div style="float:right; margin-bottom: 20px" class="hide">
             Status <select id="statusFilter" onChange="myFunction()">
                 <option value="">All</option>
                 <option value="New">New</option>
@@ -68,7 +69,18 @@
         <script src="js/navBarLogout.js"></script>
         <script src="js/history.js"></script>
         <script src="js/tableFilter.js"></script>
+
+        <!--For exporting to excel-->
+        <script src="tableExport/js/xlsx.core.js"></script>        
+        <script src="tableExport/js/FileSaver.js"></script>
+        <script src="tableExport/js/tableexport.js"></script>
+
         <script>
+                function exportToExcel() {
+//                    alert("HI");
+                    TableExport(document.getElementById("myTable"));
+
+                }
                 var urlExtension = window.location.search.substring(window.location.search.indexOf("?") + 1);
                 var id = urlExtension.substring(window.location.search.indexOf("="));
                 if (urlExtension.startsWith("edited")) {
@@ -79,7 +91,7 @@
                     showAddedNotif();
 
                 } else if (urlExtension.startsWith("deleted")) {
-                    document.getElementById("deletedNotif").innerHTML = "Job ID: <b><u>" + id + "</u></b> has been successfully deleted!";                    
+                    document.getElementById("deletedNotif").innerHTML = "Job ID: <b><u>" + id + "</u></b> has been successfully deleted!";
                     showDeletedNotif();
                 }
 

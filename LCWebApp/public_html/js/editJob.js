@@ -97,7 +97,13 @@
             }
 
         }
-        
+        invoiceField.value = snap.val().invoiceNo;
+        amountField.value = snap.val().amount;
+        preferredReturnDateField.value = snap.val().preferredReturnDate;
+        preferredReturnTimeField.value = snap.val().preferredReturnTime;
+        completeDateField.value = snap.val().completeDate;
+        reasonField.value = snap.val().reason;
+
         // Check once if status is collected, completed(wont show alr) or rejected
         if (statusField.options[statusField.selectedIndex].value == "Collected" || statusField.options[statusField.selectedIndex].value == "Completed") {
             document.getElementById("hiddenField1").classList.remove("hide");
@@ -105,15 +111,11 @@
             
             invoiceField.required = true;
             amountField.required = true;
+                        
             
-            invoiceField.value = snap.val().invoiceNo;
-            amountField.value = snap.val().amount;
-            preferredReturnDateField.value = snap.val().preferredReturnDate;
-            preferredReturnTimeField.value = snap.val().preferredReturnTime;
             if(statusField.options[statusField.selectedIndex].value == "Completed"){
                 document.getElementById("hiddenField3").classList.remove("hide");
                 completeDateField.required = true;
-                completeDateField.value = snap.val().completeDate
             }
         } else if (statusField.options[statusField.selectedIndex].value == "Rejected") {
             document.getElementById("hiddenField2").classList.remove("hide");
@@ -122,7 +124,6 @@
             invoiceField.required = false;
             amountField.required = false;
             completeDateField.required = false;
-            reasonField.value = snap.val().reason;
 
         } else {
             document.getElementById("hiddenField1").classList.add("hide");
@@ -151,15 +152,10 @@
             
             invoiceField.required = true;
             amountField.required = true;
-            
-            invoiceField.value = snap.val().invoiceNo;
-            amountField.value = snap.val().amount;
-            preferredReturnDateField.value = snap.val().preferredReturnDate;
-            preferredReturnTimeField.value = snap.val().preferredReturnTime;
+                        
             if(statusField.options[statusField.selectedIndex].value == "Completed"){
                 document.getElementById("hiddenField3").classList.remove("hide");
                 completeDateField.required = true;
-                completeDateField.value = snap.val().completeDate
             }
         } else if (statusField.options[statusField.selectedIndex].value == "Rejected") {
             document.getElementById("hiddenField2").classList.remove("hide");
@@ -168,7 +164,6 @@
             invoiceField.required = false;
             amountField.required = false;
             completeDateField.required = false;
-            reasonField.value = snap.val().reason;
 
         } else {
             document.getElementById("hiddenField1").classList.add("hide");
