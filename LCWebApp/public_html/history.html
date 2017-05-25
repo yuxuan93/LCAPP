@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="css/style.css">
         <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link rel="stylesheet" href="tableExport/css/tableexport.css">
 
     </head>
     <body>
@@ -32,7 +33,7 @@
         <!--<button onclick="showEditedNotif()">Simulate edited</button>-->
         <!--<button onclick="showAddedNotif()">Simulate added</button>-->
         <!--<button onclick="showDeletedNotif()">Simulate deleted</button>-->
-        <button id="btnExport" onclick="exportToExcel();"> EXPORT </button>
+        <button id="btnExport" class="button-default" onclick="exportToExcel();"> EXPORT </button>
 
         <div id="editedNotif" class="hide"></div>
         <div id="addedNotif" class="hide"></div>
@@ -50,7 +51,7 @@
 
         <div style="float:right; margin-bottom: 20px; margin-right:20px">
 
-            Driver <select id="driverFilter" onChange="myFunction()">
+            Driver <select id="driverFilter" onChange="filterAndResetExport()">
                 <option value="">All</option>
             </select>
         </div>
@@ -88,13 +89,24 @@
         <script src="tableExport/js/xlsx.core.js"></script>        
         <script src="tableExport/js/FileSaver.js"></script>
         <script src="tableExport/js/tableexport.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
         <script>
-                function exportToExcel() {
-//                    alert("HI");
+                function exportToExcel() {                    
+//                    var $clonedTable = $("#myTable").clone();                    
+//                    $clonedTable.find('[style*="display: none"]').remove();
+//                    $("#clonedTable").html($clonedTable);
                     TableExport(document.getElementById("myTable"));
-
+                    document.getElementById("btnExport").classList.add("hide");
                 }
+                
+                function filterAndResetExport(){
+                    // remove the export btns
+                    myFunction();
+                    $('.tableexport-caption').remove();
+                   document.getElementById("btnExport").classList.remove("hide");
+                }
+
                 var urlExtension = window.location.search.substring(window.location.search.indexOf("?") + 1);
                 var id = urlExtension.substring(window.location.search.indexOf("="));
                 if (urlExtension.startsWith("edited")) {

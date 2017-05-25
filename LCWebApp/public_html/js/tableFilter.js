@@ -1,4 +1,7 @@
 function myFunction() {
+    
+    
+
     // Declare variables
     var input, filter, ul, li, a, i;
 
@@ -16,9 +19,11 @@ function myFunction() {
         td1 = tr[i].getElementsByTagName("td")[3];
         td2 = tr[i].getElementsByTagName("td")[5];
         if (td1.innerHTML.toUpperCase().indexOf(filter1) > -1 && td2.innerHTML.toUpperCase().indexOf(filter2) > -1) {
-            tr[i].style.display = "";
+            tr[i].style.display = "";  
+            tr[i].classList.remove("tableexport-ignore")
         } else {
             tr[i].style.display = "none";
+            tr[i].classList.add("tableexport-ignore");
         }
     }
     

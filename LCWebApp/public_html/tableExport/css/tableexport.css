@@ -25,11 +25,12 @@
 }
 
 .button-default {
-    font: bold 12px sans-serif;
+    font: bold 14px roboto;
     color: #222222;
     cursor: pointer;
-    padding: 5px;
-    margin: 5px;
+    padding: 10px;
+    margin: 10px;
+    float: left;
 }
 
 .button-default.xlsx:before, .button-default.xls:before, .button-default.csv:before, .button-default.txt:before {
