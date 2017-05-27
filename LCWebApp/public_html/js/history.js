@@ -61,9 +61,9 @@
             const pickupDateCol = document.createElement('TD');
             pickupDateCol.appendChild(document.createTextNode(snap.val().completeDate));
             tr.appendChild(pickupDateCol);
-            const statusCol = document.createElement('TD');
-            statusCol.appendChild(document.createTextNode(snap.val().status));
-            tr.appendChild(statusCol);
+//            const statusCol = document.createElement('TD');
+//            statusCol.appendChild(document.createTextNode(snap.val().status));
+//            tr.appendChild(statusCol);
             tr.onclick = function () {
                 if (confirm("Edit this job?\n\n\
                         JobId: " + snap.val().jobId + "\n\
@@ -93,6 +93,7 @@
 
 //                // Send the key over - snap.key
                     window.location = "/LCWebApp/editJob.html?key=" + snap.key;
+
                 }
             };
         }
