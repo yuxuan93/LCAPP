@@ -10,7 +10,7 @@
     // populate all possible drivers
     driverList.on('child_added', snap => {
         if (snap.val().priviledge == 'driver') {
-            driverDropdown.innerHTML = driverDropdown.innerHTML + "<option value='" + snap.val().name + "' class='icon-clock'>" + snap.val().name + "</option>"
+            driverDropdown.innerHTML = driverDropdown.innerHTML + "<option value='" + snap.val().firstName + "' class='icon-clock'>" + snap.val().firstName + "</option>"
         }
 
     });
