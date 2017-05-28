@@ -15,8 +15,6 @@
     // Sync list changes
     dbRefList.on('child_added', snap => {
         if (snap.val().status != "Completed") {
-
-
             counter = counter + 1;
             const tr = document.createElement('TR');
             tr.setAttribute("id", counter);

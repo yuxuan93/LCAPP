@@ -21,7 +21,7 @@ function myFunction() {
         } else {
             tr[i].style.display = "none";
             tr[i].classList.add("tableexport-ignore");
-        }
+        }   
     }
 
 
