@@ -1,6 +1,7 @@
 package com.lcapp;
 
 import com.facebook.react.ReactActivity;
+//import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;  // <--- Import Package 
 
 public class MainActivity extends ReactActivity {
 
@@ -12,4 +13,21 @@ public class MainActivity extends ReactActivity {
     protected String getMainComponentName() {
         return "LCApp";
     }
+
+//	  private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
+//	  @Override
+//	  protected boolean getUseDeveloperSupport() {
+//	    return BuildConfig.DEBUG;
+//	  }
+//
+//	  @Override
+//	  protected List<ReactPackage> getPackages() {
+// 
+//      return Arrays.<ReactPackage>asList(
+//          new MainReactPackage(),
+//          new ReactNativePushNotificationPackage() // <---- Add the Package 
+//      );
+//    }
+//  };
+
 }

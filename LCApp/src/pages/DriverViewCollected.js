@@ -95,7 +95,7 @@ export default class DriverViewCollected extends Component {
       // get children as an array
       var items = [];
       snap.forEach((child) => {
-        if(child.val().status=='Collected' && child.val().driver==this.state.user.email){
+        if(child.val().status=='Collected' && child.val().driver==this.state.user.email.substring(0,this.state.user.email.indexOf("@"))){
           items.push({
             jobId: child.val().jobId,            
             name: child.val().name, 
@@ -162,7 +162,7 @@ export default class DriverViewCollected extends Component {
         );
       };
 
-      if(item.status=='Collected' && item.driver==this.state.user.email){
+      if(item.status=='Collected' && item.driver==this.state.user.email.substring(0,this.state.user.email.indexOf("@"))){
         return (
           <ListItem item={item} onPress={onPress}/>
         );

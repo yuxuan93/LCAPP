@@ -1,8 +1,26 @@
 {
-    "name": "LCWebApplication",
-    "version": "1.0.0",
-    "keywords": ["util", "functional", "server", "client", "browser"],
-    "author": "Xuan",
-    "contributors": [],
-    "dependencies": {}
+  "name": "lcwebapp",
+  "version": "1.0.0",
+  "keywords": [
+    "util",
+    "functional",
+    "server",
+    "client",
+    "browser"
+  ],
+  "author": "Xuan",
+  "contributors": [],
+  "dependencies": {
+    "firebase-admin": "^5.0.0"
+  },
+  "main": "Gruntfile.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "ISC",
+  "description": ""
 }

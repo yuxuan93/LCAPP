@@ -126,6 +126,11 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-push-notification')
+
+    compile ('com.google.android.gms:play-services-gcm:10.2.6') {
+        force = true;
+    }
     compile project(':react-native-maps')
     compile project(':react-native-prompt-android')
     compile fileTree(dir: "libs", include: ["*.jar"])

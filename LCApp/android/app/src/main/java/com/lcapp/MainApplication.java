@@ -3,6 +3,7 @@ package com.lcapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import im.shimo.react.prompt.RNPromptPackage;
 import com.facebook.react.ReactNativeHost;
@@ -25,8 +26,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new MapsPackage(),
-            new RNPromptPackage()
+            new ReactNativePushNotificationPackage()
+//            new MapsPackage(),
+//            new RNPromptPackage()
       );
     }
   };

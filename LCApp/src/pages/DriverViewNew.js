@@ -2,9 +2,12 @@
 
 
 console.disableYellowBox = true;
+// import PushController from '../util/PushController';
+// import PushNotification from 'react-native-push-notification';
 
 import React, { Component, PropTypes } from 'react';
 import { 
+  Platform,
   View, 
   Text, 
   TouchableHighlight, 
@@ -36,7 +39,8 @@ export default class DriverViewNew extends Component {
     super(props);
 
     this.itemsRef = this.props.firebaseApp.database().ref("jobs");
-    
+    this.usersRef = this.props.firebaseApp.database().ref("users");
+
     this.state = {
       user: this.props.firebaseApp.auth().currentUser,
       loading: true,      
@@ -44,6 +48,8 @@ export default class DriverViewNew extends Component {
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
     }
+
+    // this.handleAppStateChange = this.handleAppStateChange.bind(this);
 
   }
 
@@ -54,7 +60,29 @@ export default class DriverViewNew extends Component {
       // user: userData,
       loading: false
     });
+
+    // AppState.addEventListener('change',this.handleAppStateChange);
+
   }
+
+  // componentWillUnmount(){
+  //   AppState.removeEventListener('change',this.handleAppStateChange);
+  // }
+
+  // handleAppStateChange(appState){
+  //   let date = new Date(Date.now() + (3 * 1000));
+  //   if(Platform.OS === 'ios'){
+  //     date = date.toISOString();
+  //   }
+  //   if(appState === 'background'){
+  //     // PushNotification.localNotificationSchedule({
+  //     //   message: "My Notification Message", 
+  //     //   date,
+  //     // });
+  //     console.log('app is in background');
+  //   }
+  // }
+
 
   render() {
     return (
@@ -83,6 +111,7 @@ export default class DriverViewNew extends Component {
           <ActionButton2 title="Collected" onPress={this.goToDriverViewCollected.bind(this)}/>    
           <ActionButton2 title="Completed" onPress={this.goToDriverViewCompleted.bind(this)}/>    
         </View>
+
       </View>
 
     );
@@ -94,7 +123,8 @@ export default class DriverViewNew extends Component {
       // get children as an array
       var items = [];
       snap.forEach((child) => {
-        if(child.val().status=='New' && child.val().driver==this.state.user.email){
+
+        if(child.val().status=='New' && child.val().driver==this.state.user.email.substring(0,this.state.user.email.indexOf("@"))){
           items.push({
             jobId: child.val().jobId,
             name: child.val().name, 
@@ -156,7 +186,7 @@ export default class DriverViewNew extends Component {
         );
       };
 
-      if(item.status=='New' && item.driver==this.state.user.email){
+      if(item.status=='New' && item.driver==this.state.user.email.substring(0,this.state.user.email.indexOf("@"))){
         return (
           <ListItem item={item} onPress={onPress}/>
         );
