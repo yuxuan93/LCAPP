@@ -108,12 +108,12 @@
         if (statusField.options[statusField.selectedIndex].value == "Collected" || statusField.options[statusField.selectedIndex].value == "Completed") {
             document.getElementById("hiddenField1").classList.remove("hide");
             document.getElementById("hiddenField2").classList.add("hide");
-            
+
             invoiceField.required = true;
             amountField.required = true;
-                        
-            
-            if(statusField.options[statusField.selectedIndex].value == "Completed"){
+
+
+            if (statusField.options[statusField.selectedIndex].value == "Completed") {
                 document.getElementById("hiddenField3").classList.remove("hide");
                 completeDateField.required = true;
             }
@@ -134,8 +134,8 @@
             completeDateField.required = false;
 
         }
-        
-        
+
+
 
     }
 
@@ -149,11 +149,11 @@
         if (statusField.options[statusField.selectedIndex].value == "Collected" || statusField.options[statusField.selectedIndex].value == "Completed") {
             document.getElementById("hiddenField1").classList.remove("hide");
             document.getElementById("hiddenField2").classList.add("hide");
-            
+
             invoiceField.required = true;
             amountField.required = true;
-                        
-            if(statusField.options[statusField.selectedIndex].value == "Completed"){
+
+            if (statusField.options[statusField.selectedIndex].value == "Completed") {
                 document.getElementById("hiddenField3").classList.remove("hide");
                 completeDateField.required = true;
             }
@@ -179,7 +179,7 @@
 
     // Edit button pressed
     editBtn.addEventListener('click', e => {
-
+        
         // Prompt for form validity check
         if (document.getElementById("my-form").checkValidity()) {
 
@@ -229,7 +229,7 @@
 
                 reason: formElements[19].value,
                 completeDate: formElements[20].value
-                // IF status rejected
+                        // IF status rejected
 
             };
 
@@ -258,10 +258,9 @@
                     window.location = "/LCWebApp/dashboard.html?edited&id=" + jobId;
                     dbRefList.child(key).update(job);
 
-                } 
-            
-            } 
-            else if (job.status == "Completed") {
+                }
+
+            } else if (job.status == "Completed") {
                 if (confirm("Are you sure you want to edit this job?\n\n\
                     JobId: " + jobId + "\n\
                     Name: " + job.name + " \n\
@@ -286,10 +285,9 @@
                     window.location = "/LCWebApp/dashboard.html?edited&id=" + jobId;
                     dbRefList.child(key).update(job);
 
-                } 
-            
-            }
-            else if (job.status == "Rejected") {
+                }
+
+            } else if (job.status == "Rejected") {
                 if (confirm("Are you sure you want to edit this job?\n\n\
                     JobId: " + jobId + "\n\
                     Name: " + job.name + " \n\
@@ -310,10 +308,9 @@
                     window.location = "/LCWebApp/dashboard.html?edited&id=" + jobId;
                     dbRefList.child(key).update(job);
 
-                } 
-            
-            }
-            else {
+                }
+
+            } else {
                 if (confirm("Are you sure you want to edit this job?\n\n\
                     JobId: " + jobId + "\n\
                     Name: " + job.name + " \n\
@@ -335,9 +332,9 @@
 
                     dbRefList.child(key).update(job);
 
-                } 
+                }
+            }
         }
-    }
 
 
     });

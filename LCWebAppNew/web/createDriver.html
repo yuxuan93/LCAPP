@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Laundry Cares Web</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/contactform.css">
+        <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="css/style6.css" />
+        <script src="js/modernizr.custom.63321.js"></script>
+        <link rel="shortcut icon" href="../favicon.ico"> 
+
+        <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    </head>
+    <body>
+
+
+
+        <nav>
+            <ul>
+                <li><a href="/LCWebApp/dashboard.html">Dashboard</a></li>          
+                <li><a href="/LCWebApp/addJob.html">Add Job</a></li>
+                <li class="dropdown">
+                    <a class="dropbtn active">Drivers</a>
+                    <div class="dropdown-content">
+                        <a href="#">Create Driver</a>
+                        <a href="/LCWebApp/viewDrivers.html">View Drivers</a>
+                    </div>
+                </li> 
+                <li><a href="/LCWebApp/history.html">History</a></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+
+                <li><a href="#" id="logout-btn">Logout</a></li>
+            </ul>
+        </nav>
+
+        <h1 id="myHeader">Create Driver</h1>
+
+        <form id="my-form" onsubmit="return false;">
+
+            <div class="contentform">                            
+                <div class="form-group">
+                    <p>E-mail <span></span></p>	
+                    <span class="icon-case"><i class="fa fa-envelope-o"></i></span>
+                    <input type="email" name="email" id="email" data-rule="email" />
+                    <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                    <p>Password <span></span></p>	
+                    <span class="icon-case"><i class="fa fa-user-secret"></i></span>
+                    <input type="password" name="password" id="password" data-rule="email" />
+                    <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                    <p>First Name <span>*</span></p>	
+                    <span class="icon-case"><i class="fa fa-address-card" aria-hidden="true"></i></span>
+                    <input type="text" name="firstName" id="firstName" required/>
+                    <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                    <p>Last Name <span>*</span></p>	
+                    <span class="icon-case"><i class="fa fa-address-card" aria-hidden="true"></i></span>
+                    <input type="text" name="lastName" id="lastName" required/>
+                    <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                    <p>Contact Number (+65) (8 digits) <span>*</span></p>	
+                    <span class="icon-case"><i class="fa fa-phone"></i></span>
+                    <input type="text" name="contactNo" id="contactNo" required pattern="[0-9]{8}"/>
+                    <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                    <p>Company Name <span>*</span></p>	
+                    <span class="icon-case"><i class="fa fa-building" aria-hidden="true"></i></span>
+                    <input type="text" name="companyName" id="companyName" required/>
+                    <div class="validation"></div>
+                </div>                               
+            </div>
+            <button type="submit" id="submit-btn" class="bouton-contact">Submit</button>
+        </form>	
+
+
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery.dropdown.js"></script>
+        <script src="js/navBarLogout.js"></script>
+        <script src="js/createDriver.js"></script>        
+
+
+    </body>
+
+
+</html>
+
+

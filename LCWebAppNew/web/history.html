@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Laundry Cares Web</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link rel="stylesheet" href="tableExport/css/tableexport.css">
+
+    </head>
+    <body>
+
+        <nav>
+            <ul>
+                <li><a href="/LCWebApp/dashboard.html" >Dashboard</a></li>          
+                <li><a href="/LCWebApp/addJob.html">Add Job</a></li>
+                <li class="dropdown">
+                    <a class="dropbtn">Drivers</a>
+                    <div class="dropdown-content">
+                        <a href="/LCWebApp/createDriver.html">Create Driver</a>
+                        <a href="/LCWebApp/viewDrivers.html">View Drivers</a>
+                    </div>
+                </li>
+                <li><a href="#" class="active">History</a></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+
+                <li><a href="#" id="logout-btn">Logout</a></li>
+            </ul>
+        </nav>
+
+        <pre id="object"></pre>
+
+
+        <h1>Past Jobs</h1>
+        <!--<button onclick="showEditedNotif()">Simulate edited</button>-->
+        <!--<button onclick="showAddedNotif()">Simulate added</button>-->
+        <!--<button onclick="showDeletedNotif()">Simulate deleted</button>-->
+        <button id="btnExport" class="button-default" onclick="exportToExcel();"> EXPORT </button>
+
+        <div id="editedNotif" class="hide"></div>
+        <div id="addedNotif" class="hide"></div>
+        <div id="deletedNotif" class="hide"></div>
+
+        <div style="float:right; margin-bottom: 20px" class="hide">
+            Status <select id="statusFilter" onChange="myFunction()">
+                <option value="">All</option>
+                <option value="New">New</option>
+                <option value="Rejected">Rejected</option>
+                <option value="Accepted">Accepted</option>
+                <option value="Collected">Collected</option>
+            </select>
+        </div>
+
+        <div style="float:right; margin-bottom: 20px; margin-right:20px">
+
+            Start filter Date 	
+            <input type="date" name="startFilterDate" id="startFilterDate" onChange="filterAndResetExport()" style="margin:10px; width:23%"/>
+
+            End filter Date	
+            <input type="date" name="endFilterDate" id="endFilterDate" onChange="filterAndResetExport()" style="margin:10px; width:23%"/>
+
+            Driver <select id="driverFilter" onChange="filterAndResetExport()" style="margin:10px">
+                <option value="">All</option>
+            </select>
+
+
+        </div>
+
+
+
+
+
+        <div>
+            <table class="responstable" id="myTable">                   
+                <tr>
+                    <th style="width:5%;">Job Id</th>
+                    <th style="width:15%;">Client Name</th>
+                    <th style="width:20%;">Address</th>
+                    <th style="width:15%;">Driver Name</th> 
+                    <th style="width:10%;">Email</th>
+                    <th style="width:20%;">Item</th>
+                    <th style="width:20%;">Type</th>
+                    <th style="width:10%;">Turnaround</th>
+                    <th style="width:5%;">Remarks</th>
+                    <th style="width:10%;">Amount</th>
+                    <th style="width:10%;">Invoice No</th>
+                    <th style="width:20%;">Complete Date</th>
+                    <!--<th style="width:10%;">Status</th>-->
+                </tr>
+                <!--<tfoot><tr><td colspan="5"><div id="paging"><ul><li><a href="#"><span>Previous</span></a></li><li><a href="#" class="active"><span>1</span></a></li><li><a href="#"><span>2</span></a></li><li><a href="#"><span>3</span></a></li><li><a href="#"><span>4</span></a></li><li><a href="#"><span>5</span></a></li><li><a href="#"><span>Next</span></a></li></ul></div></tr></tfoot>-->
+                <tbody id="jobList"></tbody>                                       
+            </table>
+        </div>
+
+
+
+        <script src="js/navBarLogout.js"></script>
+        <script src="js/history.js"></script>
+        <script src="js/tableFilter.js"></script>
+
+        <!--For exporting to excel-->
+        <script src="tableExport/js/xlsx.core.js"></script>        
+        <script src="tableExport/js/FileSaver.js"></script>
+        <script src="tableExport/js/tableexport.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+        <script>
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1; //January is 0!
+
+                var yyyy = today.getFullYear();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+                if (mm < 10) {
+                    mm = '0' + mm
+                }
+                today = yyyy + '-'+mm + '-' + dd;
+
+                $('#endFilterDate').attr('value', today);
+                function exportToExcel() {
+//                    var $clonedTable = $("#myTable").clone();                    
+//                    $clonedTable.find('[style*="display: none"]').remove();
+//                    $("#clonedTable").html($clonedTable);
+                    TableExport(document.getElementById("myTable"));
+                    document.getElementById("btnExport").classList.add("hide");
+                }
+
+                function filterAndResetExport() {
+                    // remove the export btns
+                    myFunction2();
+                    $('.tableexport-caption').remove();
+                    document.getElementById("btnExport").classList.remove("hide");
+                }
+
+                var urlExtension = window.location.search.substring(window.location.search.indexOf("?") + 1);
+                var id = urlExtension.substring(window.location.search.indexOf("="));
+                if (urlExtension.startsWith("edited")) {
+                    document.getElementById("editedNotif").innerHTML = "Job ID: <b><u>" + id + "</u></b> has been successfully changed!";
+                    showEditedNotif();
+                } else if (urlExtension.startsWith("added")) {
+                    document.getElementById("addedNotif").innerHTML = "Job ID: <b><u>" + id + "</u></b> has been successfully added!";
+                    showAddedNotif();
+
+                } else if (urlExtension.startsWith("deleted")) {
+                    document.getElementById("deletedNotif").innerHTML = "Job ID: <b><u>" + id + "</u></b> has been successfully deleted!";
+                    showDeletedNotif();
+                }
+
+
+                const driverList = dbRefObject.child('users');
+                const driverDropdown = document.getElementById('driverFilter');
+
+                // populate all possible drivers
+                driverList.on('child_added', snap => {
+                    if (snap.val().priviledge == 'driver') {
+                        driverDropdown.innerHTML = driverDropdown.innerHTML + "<option value='" + snap.val().firstName + "' class='icon-clock'>" + snap.val().firstName + "</option>"
+                    }
+
+                });
+        </script>
+
+
+    </body>
+
+</html>
+
+

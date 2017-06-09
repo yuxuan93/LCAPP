@@ -2,8 +2,8 @@
 
 
 console.disableYellowBox = true;
-// import PushController from '../util/PushController';
-// import PushNotification from 'react-native-push-notification';
+import PushController from '../util/PushController';
+import PushNotification from 'react-native-push-notification';
 
 import React, { Component, PropTypes } from 'react';
 import { 
@@ -15,6 +15,7 @@ import {
   Alert, 
   ListView, 
   ToastAndroid,
+  AppState
  } from 'react-native';
 // import {Actions} from 'react-native-router-flux';
 import StatusBar from '../components/StatusBar';
@@ -61,27 +62,27 @@ export default class DriverViewNew extends Component {
       loading: false
     });
 
-    // AppState.addEventListener('change',this.handleAppStateChange);
+    AppState.addEventListener('change',this.handleAppStateChange);
 
   }
 
-  // componentWillUnmount(){
-  //   AppState.removeEventListener('change',this.handleAppStateChange);
-  // }
+  componentWillUnmount(){
+    AppState.removeEventListener('change',this.handleAppStateChange);
+  }
 
-  // handleAppStateChange(appState){
-  //   let date = new Date(Date.now() + (3 * 1000));
-  //   if(Platform.OS === 'ios'){
-  //     date = date.toISOString();
-  //   }
-  //   if(appState === 'background'){
-  //     // PushNotification.localNotificationSchedule({
-  //     //   message: "My Notification Message", 
-  //     //   date,
-  //     // });
-  //     console.log('app is in background');
-  //   }
-  // }
+  handleAppStateChange(appState){
+    let date = new Date(Date.now() + (3 * 1000));
+    if(Platform.OS === 'ios'){
+      date = date.toISOString();
+    }
+    if(appState === 'background'){
+      PushNotification.localNotificationSchedule({
+        message: "My Notification Message", 
+        date,
+      });
+      console.log('app is in background');
+    }
+  }
 
 
   render() {

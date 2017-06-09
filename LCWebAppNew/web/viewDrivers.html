@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Laundry Cares Web</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    </head>
+    <body>
+
+        <nav>
+            <ul>
+                <li><a href="/LCWebApp/dashboard.html">Dashboard</a></li>          
+                <li><a href="/LCWebApp/addJob.html">Add Job</a></li>
+                <li class="dropdown">
+                    <a class="dropbtns active">Drivers</a>
+                    <div class="dropdown-content">
+                        <a href="/LCWebApp/createDriver.html">Create Driver</a>
+                        <a href="#">View Drivers</a>
+                    </div>
+                </li>
+                <li><a href="/LCWebApp/history.html">History</a></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+
+                <li><a href="#" id="logout-btn">Logout</a></li>
+            </ul>
+        </nav>
+
+        <pre id="object"></pre>
+
+
+        <h1>View Drivers</h1>
+        <!--<button onclick="showEditedNotif()">Simulate edited</button>-->
+        <!--<button onclick="showAddedNotif()">Simulate added</button>-->
+        <!--<button onclick="showDeletedNotif()">Simulate deleted</button>-->
+
+<!--        <div id="editedNotif" class="hide"></div>
+        <div id="addedNotif" class="hide"></div>
+        <div id="deletedNotif" class="hide"></div>-->
+
+        <!--<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">-->
+<!--        <div style="float:right; margin-bottom: 20px">
+            Status <select id="statusFilter" onChange="myFunction()">
+                <option value="">All</option>
+                <option value="New">New</option>
+                <option value="Rejected">Rejected</option>
+                <option value="Accepted">Accepted</option>
+                <option value="Collected">Collected</option>
+            </select>
+        </div>
+
+        <div style="float:right; margin-bottom: 20px; margin-right:20px">
+
+            Driver <select id="driverFilter" onChange="myFunction()">
+                <option value="">All</option>
+            </select>
+        </div>-->
+
+
+        <div>
+            <table class="responstable" id="myTable">                   
+                <tr>
+                    <th style="width:7%;">Driver Id</th>
+                    <th style="width:20%;">First Name</th>
+                    <th style="width:20%;">Last Name</th>
+                    <th style="width:20%;">Email</th>
+                    <th style="width:20%;">Contact Number</th>
+                    <th style="width:20%;">Company Name</th>
+                </tr>
+                <!--<tfoot><tr><td colspan="5"><div id="paging"><ul><li><a href="#"><span>Previous</span></a></li><li><a href="#" class="active"><span>1</span></a></li><li><a href="#"><span>2</span></a></li><li><a href="#"><span>3</span></a></li><li><a href="#"><span>4</span></a></li><li><a href="#"><span>5</span></a></li><li><a href="#"><span>Next</span></a></li></ul></div></tr></tfoot>-->
+                <tbody id="driverList"></tbody>                                       
+            </table>
+        </div>
+
+
+
+        <script src="js/navBarLogout.js"></script>
+        <script src="js/viewDrivers.js"></script>
+        <!--<script data-main="js/viewDrivers.js" src="js/require.js"></script>-->
+        <script>
+//                var urlExtension = window.location.search.substring(window.location.search.indexOf("?") + 1);
+//                var id = urlExtension.substring(window.location.search.indexOf("="));
+//                if (urlExtension.startsWith("edited")) {
+//                    document.getElementById("editedNotif").innerHTML = "Job ID: <b><u>" + id + "</u></b> has been successfully changed!";
+//                    showEditedNotif();
+//                } else if (urlExtension.startsWith("added")) {
+//                    document.getElementById("addedNotif").innerHTML = "Job ID: <b><u>" + id + "</u></b> has been successfully added!";
+//                    showAddedNotif();
+//
+//                } else if (urlExtension.startsWith("deleted")) {
+//                    document.getElementById("deletedNotif").innerHTML = "Job ID: <b><u>" + id + "</u></b> has been successfully deleted!";                    
+//                    showDeletedNotif();
+//                }
+
+
+//                const driverList = dbRefObject.child('users');
+//                const driverDropdown = document.getElementById('driverFilter');
+//
+//                // populate all possible drivers
+//                driverList.on('child_added', snap => {
+//                    if (snap.val().priviledge == 'driver') {
+//                        driverDropdown.innerHTML = driverDropdown.innerHTML + "<option value='" + snap.val().name + "' class='icon-clock'>" + snap.val().firstName + "</option>"
+//                    }
+//
+//                });
+        </script>
+
+
+    </body>
+
+</html>
+
+

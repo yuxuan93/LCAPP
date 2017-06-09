@@ -40,7 +40,75 @@
             statusCol.appendChild(document.createTextNode(snap.val().status));
             tr.appendChild(statusCol);
             tr.onclick = function () {
-//            alert("hello");
+                alert("HELLO");
+
+//                $.ajax({
+//                    type: "POST",
+//                    username: "ACb8b5d43c4036b57e6fa97c05ced16e51",
+//                    password: "b6eed83aa8ae930883d08835da084c8d",
+//                    url: "https://api.twilio.com/2010-04-01/Accounts/AC67bf2dccdfe1e96411f237adab4472f1/Messages.json",
+//                    data: {
+//                        "To": "+6590937283",
+//                        "From": "+12569603664",
+//                        "Body": "From jQuery AJAX"
+//                    },
+//                    success: function (data) {
+//                        console.log(data);
+//                    },
+//                    error: function (data) {
+//                        console.log(data);
+//                    }
+//                });
+
+
+                var accountSid = "AC67bf2dccdfe1e96411f237adab4472f1";
+                var authToken = "0c28064c5dc5b65bd47da21d9b656e1b";
+                var fromNumber = "+12569603664";
+                var toNumber = "+6590937283";
+                var text = "It works!";
+
+// pure JS solution
+                var xhttp = new XMLHttpRequest();
+
+                xhttp.onreadystatechange = function (e) {
+                    if (xhttp.readyState === 4) {
+                        if (xhttp.status === 200) {
+                            console.log(xhttp.responseText)
+                        } else {
+                            console.log("Error", xhttp.statusText);
+                        }
+                    }
+                };
+
+                xhttp.open("POST", "https://" + accountSid + ":" + authToken + "@api.twilio.com/2010-04-01/Accounts/" + accountSid + "/Messages", true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.send("From=" + encodeURIComponent(fromNumber) + "&To=" + encodeURIComponent(toNumber) + "&Body=" + encodeURIComponent(text));
+
+// jQuery solution
+//                $.ajax({
+//                    url: "https://" + accountSid + ":" + authToken + "@api.twilio.com/2010-04-01/Accounts/" + accountSid + "/Messages",
+//                    type: "POST",
+//                    data: "From=" + encodeURIComponent(fromNumber) + "&To=" + encodeURIComponent(toNumber) + "&Body=" + encodeURIComponent(text),
+//                    success: function (data, textStatus, jqXHR) {
+//                        console.log(data);
+//                    },
+//                    error: function (jqXHR, textStatus, errorThrown) {
+//                        console.log(textStatus);
+//                    }
+//                });
+                
+ 
+// var twilio = require('twilio');
+//
+//// Find your account sid and auth token in your Twilio account Console.
+//var client = twilio('AC67bf2dccdfe1e96411f237adab4472f1', '0c28064c5dc5b65bd47da21d9b656e1b');
+// 
+//// Send the text message.
+//client.sendMessage({
+//  to: '+6590937283',
+//  from: '+12569603664',
+//  body: 'Hello from Twilio!'
+//});
                 if (snap.val().status == "Collected") {
                     if (confirm("Edit this job?\n\n\
                         JobId: " + snap.val().jobId + "\n\
