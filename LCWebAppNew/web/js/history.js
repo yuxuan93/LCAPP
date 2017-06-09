@@ -92,7 +92,7 @@
 //                window.location = "/LCWebApp/dashboard.html";
 
 //                // Send the key over - snap.key
-                    window.location = "/LCWebApp/editJob.html?key=" + snap.key;
+                    window.location = "editJob.html?key=" + snap.key;
 
                 }
             };

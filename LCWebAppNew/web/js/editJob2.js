@@ -256,7 +256,7 @@
                     Preferred Return Time: " + job.preferredReturnTime + "\n\
                 \n") == true) {
                     sendMsg();
-                    window.location = "/LCWebApp/dashboard.html?edited&id=" + jobId;
+                    window.location = "dashboard.html?edited&id=" + jobId;
                     dbRefList.child(key).update(job);
 
                 }
@@ -310,7 +310,7 @@
                 \n") == true) {
                     sendMsg();
 
-                    window.location = "/LCWebApp/dashboard.html?edited&id=" + jobId;
+                    window.location = "dashboard.html?edited&id=" + jobId;
                     dbRefList.child(key).update(job);
 
                 }
@@ -334,7 +334,7 @@
                     Reason: " + job.reason + "\n\
                 ") == true) {
                     sendMsg();
-                    window.location = "/LCWebApp/dashboard.html?edited&id=" + jobId;
+                    window.location = "dashboard.html?edited&id=" + jobId;
 
                     dbRefList.child(key).update(job);
 
@@ -404,7 +404,7 @@
         \n\
         ")) {
             dbRefList.child(key).remove();
-            window.location = "/LCWebApp/dashboard.html?deleted&id=" + jobId;
+            window.location = "dashboard.html?deleted&id=" + jobId;
         }
 
     });

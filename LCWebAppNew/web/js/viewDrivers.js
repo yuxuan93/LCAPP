@@ -63,7 +63,7 @@
 //                                alert("Error fetching user data:", error);
 //                            });
 
-                    window.location = "/LCWebApp/editJob.html?key=" + snap.key;
+                    window.location = "editJob.html?key=" + snap.key;
                 }
 
 

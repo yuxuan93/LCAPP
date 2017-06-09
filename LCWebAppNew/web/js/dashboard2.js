@@ -69,7 +69,7 @@
 //                window.location = "/LCWebApp/dashboard.html";
 
 //                // Send the key over - snap.key
-                            window.location = "/LCWebApp/editJob.html?key=" + snap.key;
+                            window.location = "editJob.html?key=" + snap.key;
                         }
                     } else if (snap.val().status == "Rejected") {
                         if (confirm("Edit this job?\n\n\
@@ -94,7 +94,7 @@
 //                window.location = "/LCWebApp/dashboard.html";
 
 //                // Send the key over - snap.key
-                            window.location = "/LCWebApp/editJob.html?key=" + snap.key;
+                            window.location = "editJob.html?key=" + snap.key;
 
                         }
                     } else {
@@ -120,7 +120,7 @@
 //                window.location = "/LCWebApp/dashboard.html";
 
 //                // Send the key over - snap.key
-                            window.location = "/LCWebApp/editJob.html?key=" + snap.key;
+                            window.location = "editJob.html?key=" + snap.key;
                         }
                     }
 
@@ -129,6 +129,6 @@
             ;
         });
         dbRefList.on('child_changed', snap=>{
-            window.location = "/LCWebApp/dashboard.html";
+            window.location = "dashboard.html";
         });
 }());

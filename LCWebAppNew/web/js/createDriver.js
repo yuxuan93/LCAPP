@@ -34,7 +34,7 @@
                 priviledge: "driver",
             }
             driverList.push(driver)
-            window.location = "/LCWebApp/createDriver.html";
+            window.location = "createDriver.html";
 
         })
                 .catch(e => alert(e.message));

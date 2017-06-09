@@ -32,7 +32,7 @@
     firebase.auth().onAuthStateChanged(firebaseUser => {
         if (!firebaseUser) {
             console.log('not logged in');
-            window.location = "/LCWebApp/index.html";
+            window.location = "index.html";
         }
     });
     
