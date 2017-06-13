@@ -22,7 +22,8 @@ import ActionButton2 from '../components/ActionButton2';
 import ListItem from '../components/ListItem';
 import styles from '../styles/styles.js';
 
-import prompt from 'react-native-prompt-android';
+// import prompt from 'react-native-prompt-android';
+import Prompt from 'react-native-prompt';
 
 import Login from './Login';
 import DriverViewNew from './DriverViewNew';
@@ -43,6 +44,8 @@ export default class DriverViewCompleted extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
+      promptVisible: false,
+      selectedJob: null,
     }
 
   }
@@ -59,6 +62,13 @@ export default class DriverViewCompleted extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Prompt
+            title="Enter reason for rejection"
+            placeholder=""
+            defaultValue=""
+            visible={this.state.promptVisible}
+            onCancel={() => this.setState({ promptVisible: false, })}
+            onSubmit={(value) => this._uncomplete(this.state.selectedJob, value) }/>
 
         <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
           <TouchableHighlight style={{padding: 15}}>
@@ -192,21 +202,22 @@ export default class DriverViewCompleted extends Component {
 
      // Prompt confirmation of deletion
 _cfmUncomplete(item){
-  prompt(
-      // 'What is the problem?',
-      'What\'s the reason for un-completing Job ID ' + item.jobId +'?',
-      'Note there will be demerit points awarded if the reason is invalid.',
-      [
-       {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-       {text: 'OK', onPress: reason => this._uncomplete(item, reason)},
-      ],
-      {
-          type: 'default',
-          cancelable: false,
-          defaultValue: '',
-          placeholder: 'Reason?'
-      }
-    );
+  // prompt(
+  //     // 'What is the problem?',
+  //     'What\'s the reason for un-completing Job ID ' + item.jobId +'?',
+  //     'Note there will be demerit points awarded if the reason is invalid.',
+  //     [
+  //      {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+  //      {text: 'OK', onPress: reason => this._uncomplete(item, reason)},
+  //     ],
+  //     {
+  //         type: 'default',
+  //         cancelable: false,
+  //         defaultValue: '',
+  //         placeholder: 'Reason?'
+  //     }
+  //   );
+  this.setState({ promptVisible: true, selectedJob: item});
 }
 
 // Change the job status back to unassigned
@@ -215,7 +226,7 @@ _cfmUncomplete(item){
 
     ToastAndroid.show('The Job has been un-completed!', ToastAndroid.LONG);
 
-    this.setState({selectedMarker: this.defaultMarker})
+    this.setState({ promptVisible: false});
 
   }
 

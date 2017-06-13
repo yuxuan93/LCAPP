@@ -25,7 +25,8 @@ import DriverViewNew from './DriverViewNew';
 import DriverViewAccepted from './DriverViewAccepted';
 import DriverViewCompleted from './DriverViewCompleted';
 
-import prompt from 'react-native-prompt-android';
+// import prompt from 'react-native-prompt-android';
+import Prompt from 'react-native-prompt';
 
 import Login from './Login';
 import StatusBar from '../components/StatusBar';
@@ -46,6 +47,8 @@ export default class DriverViewCollected extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
+      promptVisible: false,
+      selectedJob: null,
     }
 
   }
@@ -62,6 +65,13 @@ export default class DriverViewCollected extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Prompt
+            title="What is the reason for un-collecting?"
+            placeholder=""
+            defaultValue=""
+            visible={this.state.prompt5Visible}
+            onCancel={() => this.setState({ promptVisible: false,})}
+            onSubmit={(value) => this._uncollectJob(this.state.selectedJob, value) }/>
 
         <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
           <TouchableHighlight style={{padding: 15}}>
@@ -202,25 +212,26 @@ export default class DriverViewCollected extends Component {
     ToastAndroid.show('A job has been un-collected!', ToastAndroid.LONG);
     
     this.setState({selectedMarker: this.defaultMarker})
-
+    this.setState({ prompt5Visible: false,});
   }
 
   _popupUncollectReasonInput(item){
-     prompt(
-      // 'What is the problem?',
-      'What\'s the reason for un-collecting ' + item.name +'?',
-      'Note there will be demerit points awarded if the reason is invalid.',
-      [
-       {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-       {text: 'OK', onPress: reason => this._uncollectJob(item, reason)},
-      ],
-      {
-          type: 'default',
-          cancelable: false,
-          defaultValue: '',
-          placeholder: 'Reason?'
-      }
-    );
+    //  prompt(
+    //   // 'What is the problem?',
+    //   'What\'s the reason for un-collecting ' + item.name +'?',
+    //   'Note there will be demerit points awarded if the reason is invalid.',
+    //   [
+    //    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+    //    {text: 'OK', onPress: reason => this._uncollectJob(item, reason)},
+    //   ],
+    //   {
+    //       type: 'default',
+    //       cancelable: false,
+    //       defaultValue: '',
+    //       placeholder: 'Reason?'
+    //   }
+    // );
+    this.setState({ prompt5Visible: true, selectedJob: item});
   }
    _completePrompt(item){
       Alert.alert(
