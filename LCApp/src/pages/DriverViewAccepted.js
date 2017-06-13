@@ -13,7 +13,9 @@ import MapView , {Marker} from 'react-native-maps';
 import StatusBar from '../components/StatusBar';
 import ActionButton from '../components/ActionButton';
 import ActionButton2 from '../components/ActionButton2';
-import prompt from 'react-native-prompt-android';
+
+// import prompt from 'react-native-prompt-android';
+import Prompt from 'react-native-prompt';
 
 import ListItem from '../components/ListItem';
 import styles from '../styles/styles.js';
@@ -53,6 +55,15 @@ export default class DriverViewAccepted extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
+      selectedJob: null,
+      invoice: '',
+      amt:'',
+      date:'',
+      time:'',
+      promptVisible: false,
+      prompt2Visible: false,
+      prompt3Visible: false,
+      prompt4Visible: false
     }
 
   }
@@ -68,7 +79,41 @@ export default class DriverViewAccepted extends Component {
 
   render() {
     return (
+      
+
       <View style={styles.container}>
+               
+        <Prompt
+            title="Enter invoice number"
+            placeholder="XXXX"
+            defaultValue=""
+            visible={this.state.promptVisible}
+            onCancel={() => this.setState({ promptVisible: false, message: "You cancelled" })}
+            onSubmit={(value) => this.setState({ promptVisible: false, prompt2Visible:true, invoice: `"${value}"` })}/>
+
+        <Prompt
+            title="Enter amount (SGD)"
+            placeholder=""
+            defaultValue=""
+            visible={this.state.prompt2Visible}
+            onCancel={() => this.setState({ prompt2Visible: false, message: "You cancelled" })}
+            onSubmit={(value) => this.setState({ prompt2Visible: false, prompt3Visible:true, amt: `"${value}"` })}/>
+
+        <Prompt
+            title="Enter Preferred Return Date"
+            placeholder="DD/MM/YY"
+            defaultValue=""
+            visible={this.state.prompt3Visible}
+            onCancel={() => this.setState({ prompt3Visible: false, message: "You cancelled" })}
+            onSubmit={(value) => this.setState({ prompt3Visible: false, prompt4Visible:true, date: `"${value}"` })}/>
+
+        <Prompt
+            title="Enter Preferred Return Time"
+            placeholder=""
+            defaultValue=""
+            visible={this.state.prompt4Visible}
+            onCancel={() => this.setState({ prompt4Visible: false, message: "You cancelled" })}
+            onSubmit={(value) => this._collectJob(this.state.selectedJob, this.state.invoice,  this.state.amount, this.state.date, value) }/>
 
         <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
           <TouchableHighlight style={{padding: 15}}>
@@ -214,105 +259,112 @@ _rejectJob(item, reason){
   }
 
   _popupRejectionReasonInput(item){
-     prompt(
-      // 'What is the problem?',
-      'What\'s the reason for deleting ' + item.name +'?',
-      'Note there will be demerit points awarded if the reason is invalid.',
-      [
-       {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-       {text: 'OK', onPress: reason => this._rejectJob(item, reason)},
-      ],
-      {
-          type: 'default',
-          cancelable: false,
-          defaultValue: '',
-          placeholder: 'Reason?'
-      }
-    );
+    //  prompt(
+    //   // 'What is the problem?',
+    //   'What\'s the reason for deleting ' + item.name +'?',
+    //   'Note there will be demerit points awarded if the reason is invalid.',
+    //   [
+    //    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+    //    {text: 'OK', onPress: reason => this._rejectJob(item, reason)},
+    //   ],
+    //   {
+    //       type: 'default',
+    //       cancelable: false,
+    //       defaultValue: '',
+    //       placeholder: 'Reason?'
+    //   }
+    // );
+   
   }
 
 
 // Prompt for invoice
 _showInvoicePrompt(item){
-  prompt(
-    'Enter invoice number',
-    null,
-    [
-     {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-     {text: 'OK', onPress: invoiceNo => this._showAmtPrompt(item,invoiceNo)},
-    ],
-    {
-        type: 'default',
-        cancelable: false,
-        defaultValue: '',
-        placeholder: '000000'
-    }
-  );
+  // prompt(
+  //   'Enter invoice number',
+  //   null,
+  //   [
+  //    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+  //    {text: 'OK', onPress: invoiceNo => this._showAmtPrompt(item,invoiceNo)},
+  //   ],
+  //   {
+  //       type: 'default',
+  //       cancelable: false,
+  //       defaultValue: '',
+  //       placeholder: '000000'
+  //   }
+  // );
+  this.setState({ promptVisible: true, selectedJob: item});
 }
 // Prompt for invoice
 _showAmtPrompt(item, invoiceNo){
-  prompt(
-    'Enter amount collected. (SGD)',
-    null,
-    [
-     {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-     {text: 'OK', onPress: amt => this._showDatePrompt(item, invoiceNo, amt)},
-    ],
-    {
-        type: 'default',
-        cancelable: false,
-        defaultValue: '',
-        placeholder: ''
-    }
-  );
+  // prompt(
+  //   'Enter amount collected. (SGD)',
+  //   null,
+  //   [
+  //    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+  //    {text: 'OK', onPress: amt => this._showDatePrompt(item, invoiceNo, amt)},
+  //   ],
+  //   {
+  //       type: 'default',
+  //       cancelable: false,
+  //       defaultValue: '',
+  //       placeholder: ''
+  //   }
+  // );
 }
 _showDatePrompt(item,invoiceNo,amt){
-   prompt(
-    'Is there a preferred return date?',
-    null,
-    [
-     {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-     {text: 'OK', onPress: date => this._showTimePrompt(item, invoiceNo, amt, date)},
-    ],
-    {
-        type: 'default',
-        cancelable: false,
-        defaultValue: '',
-        placeholder: 'DD/MM/YY'
-    }
-  );
+  //  prompt(
+  //   'Is there a preferred return date?',
+  //   null,
+  //   [
+  //    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+  //    {text: 'OK', onPress: date => this._showTimePrompt(item, invoiceNo, amt, date)},
+  //   ],
+  //   {
+  //       type: 'default',
+  //       cancelable: false,
+  //       defaultValue: '',
+  //       placeholder: 'DD/MM/YY'
+  //   }
+  // );
   
 }
 _showTimePrompt(item,invoiceNo,amt,date){
-  prompt(
-    'Is there a preferred return time?',
-    null,
-    [
-     {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-     {text: 'OK', onPress: time => this._collectJob(item, invoiceNo, amt,date,time)},
-    ],
-    {
-        type: 'default',
-        cancelable: false,
-        defaultValue: '',
-        placeholder: ''
-    }
-  );
+  // prompt(
+  //   'Is there a preferred return time?',
+  //   null,
+  //   [
+  //    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+  //    {text: 'OK', onPress: time => this._collectJob(item, invoiceNo, amt,date,time)},
+  //   ],
+  //   {
+  //       type: 'default',
+  //       cancelable: false,
+  //       defaultValue: '',
+  //       placeholder: ''
+  //   }
+  // );
 }
 
 // Update the job as complete in database
-  _collectJob(item, invoiceNo, amt, date, time){
-    this.itemsRef.child(item._key).update({
+  _collectJob(selectedJob, invoiceNo, amt, date, time){
+
+
+    this.itemsRef.child(selectedJob._key).update({
       status: 'Collected', 
       invoiceNo: invoiceNo, 
       amount: '$'+amt,
       preferredReturnDate: date,
       preferredReturnTime: time
-      }),
+      });
 
     ToastAndroid.show('The job has been collected !', ToastAndroid.LONG);
 
-    this.setState({selectedMarker: this.defaultMarker})
+    // this.setState({selectedMarker: this.defaultMarker})；
+
+    //close prompt after collecting
+    this.setState({ prompt4Visible: false,});
 
   }
 
