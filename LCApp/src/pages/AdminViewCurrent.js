@@ -32,6 +32,7 @@ export default class AdminViewCurrent extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       })
+
     };
     this.itemsRef = this.props.firebaseApp.database().ref("jobs");
 
@@ -43,6 +44,8 @@ export default class AdminViewCurrent extends Component {
 
   render() {
     return (
+     
+            
       <View style={styles.container}>
 
         <StatusBar title="Current Jobs"/>

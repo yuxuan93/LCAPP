@@ -22,7 +22,8 @@ import StatusBar from '../components/StatusBar';
 
 import styles from '../styles/styles.js';
 import ListItem from '../components/ListItem';
-import prompt from 'react-native-prompt-android';
+// import prompt from 'react-native-prompt-android';
+import Prompt from 'react-native-prompt';
 
 //import AddJob from './AddJob';
 import DriverViewAccepted from './DriverViewAccepted';
@@ -48,6 +49,8 @@ export default class DriverViewNew extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
+      promptVisible: false,
+      selectedJob: null,
     }
 
     // this.handleAppStateChange = this.handleAppStateChange.bind(this);
@@ -86,9 +89,15 @@ export default class DriverViewNew extends Component {
 
 
   render() {
-    return (
+    return (      
       <View style={styles.container}>
-
+        <Prompt
+            title="Enter reason for rejection"
+            placeholder=""
+            defaultValue=""
+            visible={this.state.promptVisible}
+            onCancel={() => this.setState({ promptVisible: false, })}
+            onSubmit={(value) => this._rejectJob(this.state.selectedJob, value) }/>
         <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
           <TouchableHighlight style={{padding: 15}}>
             <Text style={styles.primaryButtonText}>            </Text>
@@ -236,26 +245,27 @@ export default class DriverViewNew extends Component {
 
     ToastAndroid.show('A job has been rejected !', ToastAndroid.LONG);
     
-    this.setState({selectedMarker: this.defaultMarker})
-
+    // this.setState({selectedMarker: this.defaultMarker})
+    this.setState({ promptVisible: false});
   }
 
   _popupRejectionReasonInput(item){
-     prompt(
-      'You have decided to reject ' + item.name +'. What is the reason?',
-      null,
-      [
-       {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-       {text: 'OK', onPress: reason => this._rejectJob(item, reason)},
-      ],
-      {
-          type: 'default',
-          cancelable: false,
-          defaultValue: '',
-          placeholder: ''
+    //  prompt(
+    //   'You have decided to reject ' + item.name +'. What is the reason?',
+    //   null,
+    //   [
+    //    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+    //    {text: 'OK', onPress: reason => this._rejectJob(item, reason)},
+    //   ],
+    //   {
+    //       type: 'default',
+    //       cancelable: false,
+    //       defaultValue: '',
+    //       placeholder: ''
+    //   }
+    // );
+        this.setState({ promptVisible: true, selectedJob: item});
       }
-    );
-  }
 
   logout() {
     // logout, once that is complete, return the user to the login screen.

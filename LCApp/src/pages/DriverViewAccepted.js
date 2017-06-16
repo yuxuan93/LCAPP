@@ -116,7 +116,7 @@ export default class DriverViewAccepted extends Component {
             onCancel={() => this.setState({ prompt4Visible: false,})}
             onSubmit={(value) => this._collectJob(this.state.selectedJob, this.state.invoice,  this.state.amount, this.state.date, `"${value}"`) }/>
         <Prompt
-            title="Enter reason for rejection"
+            title="Enter reason for rejection (There will be consequences)"
             placeholder=""
             defaultValue=""
             visible={this.state.prompt5Visible}
@@ -212,7 +212,7 @@ export default class DriverViewAccepted extends Component {
             ,
           [
             // {text: 'Cancel', onPress: (text) => console.log('Cancel')},          
-            {text: 'Delete', onPress: () => this._popupRejectionReasonInput(item)},
+            {text: 'Reject', onPress: () => this._popupRejectionReasonInput(item)},
             {text: 'Map', onPress: (text) => Linking.openURL('https://maps.google.com?q='+item.address)},
             {text: 'Collected', onPress: () => this._showInvoicePrompt(item)}
 
@@ -281,16 +281,16 @@ changeAndSetInvoice(value){
   setTimeout(
     function(){
       this.setState({prompt2Visible:true,});
-    }.bind(this),2000
+    }.bind(this),1000
   );
 }
 changeAndSetAmt(value){
   this.setState({ prompt2Visible: false, amt: value });
-  setTimeout(function(){this.setState({prompt3Visible:true,});}.bind(this),2000);
+  setTimeout(function(){this.setState({prompt3Visible:true,});}.bind(this),1000);
 }
 changeAndSetDate(value){
   this.setState({ prompt3Visible: false, date: value });
-  setTimeout(function(){this.setState({prompt4Visible:true,});}.bind(this),2000);
+  setTimeout(function(){this.setState({prompt4Visible:true,});}.bind(this),1000);
 }
 
 
