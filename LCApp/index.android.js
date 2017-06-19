@@ -60,6 +60,7 @@ class LCApp extends Component {
       // the page is the screen we want to show the user, we will determine that
       // based on what user the firebase api returns to us.
       page: null,
+      firstName: null,
     };
     this.users = firebaseApp.database().ref("users");
 
@@ -76,11 +77,11 @@ class LCApp extends Component {
             if(child.val().email==user.email){
             // if(true){
              // Check for priviledges in db
-              if(child.val().priviledge=='admin'){
-                this.setState({page: AdminMain});
+              if(child.val().priviledge=='admin'){                
+                this.setState({page: AdminMain, firstName: child.val().firstName});
               }
               else if(child.val().priviledge=='driver'){
-                this.setState({page: DriverViewNew});
+                this.setState({page: DriverViewNew, firstName: child.val().firstName});
               }
             }
             

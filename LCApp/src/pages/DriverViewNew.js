@@ -52,12 +52,22 @@ export default class DriverViewNew extends Component {
       }),
       promptVisible: false,
       selectedJob: null,
+      firstName: '',
     }
 
     // this.handleAppStateChange = this.handleAppStateChange.bind(this);
 
   }
 
+  componentWillMount(){
+      this.usersRef.on('value', (snap) => {
+        snap.forEach((child) => {
+          if(child.val().email==this.state.user.email){
+              this.setState({firstName:child.val().firstName});
+          }
+        });
+      });
+  }
   componentDidMount() {
     this.listenForItems(this.itemsRef);
     // const userData = this.props.firebaseApp.auth().currentUser;
@@ -135,7 +145,7 @@ export default class DriverViewNew extends Component {
       var items = [];
       snap.forEach((child) => {
 
-        if(child.val().status=='New' && child.val().driver==this.state.user.email.substring(0,this.state.user.email.indexOf("@"))){
+        if(child.val().status=='New' && child.val().driver==this.state.firstName){//this.state.user.email.substring(0,this.state.user.email.indexOf("@"))){
           items.push({
             jobId: child.val().jobId,
             name: child.val().name, 
@@ -197,7 +207,7 @@ export default class DriverViewNew extends Component {
         );
       };
 
-      if(item.status=='New' && item.driver==this.state.user.email.substring(0,this.state.user.email.indexOf("@"))){
+      if(item.status=='New' && item.driver==this.state.firstName){//.user.email.substring(0,this.state.user.email.indexOf("@"))){
         return (
           <ListItem item={item} onPress={onPress}/>
         );

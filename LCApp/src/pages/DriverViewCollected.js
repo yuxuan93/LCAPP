@@ -40,8 +40,10 @@ export default class DriverViewCollected extends Component {
     super(props);
 
     this.itemsRef = this.props.firebaseApp.database().ref("jobs");
-    
+    this.usersRef = this.props.firebaseApp.database().ref("users");
+
     this.state = {
+      firstName: '',
       user: this.props.firebaseApp.auth().currentUser,
       loading: true,      
       dataSource: new ListView.DataSource({
@@ -52,7 +54,15 @@ export default class DriverViewCollected extends Component {
     }
 
   }
-
+  componentWillMount(){
+      this.usersRef.on('value', (snap) => {
+        snap.forEach((child) => {
+          if(child.val().email==this.state.user.email){
+              this.setState({firstName:child.val().firstName});
+          }
+        });
+      });
+  }
   componentDidMount() {
     this.listenForItems(this.itemsRef);
     // const userData = this.props.firebaseApp.auth().currentUser;
@@ -105,7 +115,7 @@ export default class DriverViewCollected extends Component {
       // get children as an array
       var items = [];
       snap.forEach((child) => {
-        if(child.val().status=='Collected' && child.val().driver==this.state.user.email.substring(0,this.state.user.email.indexOf("@"))){
+        if(child.val().status=='Collected' && child.val().driver==this.state.firstName){//this.state.user.email.substring(0,this.state.user.email.indexOf("@"))){
           items.push({
             jobId: child.val().jobId,            
             name: child.val().name, 
@@ -172,7 +182,7 @@ export default class DriverViewCollected extends Component {
         );
       };
 
-      if(item.status=='Collected' && item.driver==this.state.user.email.substring(0,this.state.user.email.indexOf("@"))){
+      if(item.status=='Collected' && item.driver==this.state.firstName){//user.email.substring(0,this.state.user.email.indexOf("@"))){
         return (
           <ListItem item={item} onPress={onPress}/>
         );
