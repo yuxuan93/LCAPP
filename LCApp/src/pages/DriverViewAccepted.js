@@ -213,7 +213,7 @@ export default class DriverViewAccepted extends Component {
           [
             // {text: 'Cancel', onPress: (text) => console.log('Cancel')},          
             {text: 'Reject', onPress: () => this._popupRejectionReasonInput(item)},
-            {text: 'Map', onPress: (text) => Linking.openURL('https://maps.google.com?q='+item.address)},
+            {text: 'Call/Navigate', onPress: () => this._openCallMap(item)},
             {text: 'Collected', onPress: () => this._showInvoicePrompt(item)}
 
           ],
@@ -232,7 +232,21 @@ export default class DriverViewAccepted extends Component {
     }
 
 
-
+    _openCallMap(item){
+      Alert.alert(
+        'Please choose your action for job ID '+ item.jobId+',',
+        'Customer Name: '+ item.name 
+        + '\nAddress: ' + item.address  
+        + "\nContact Number: " + item.contactNo
+        ,
+        [
+          null,
+          {text: 'Call', onPress: () => Linking.openURL('tel:'+ encodeURIComponent(item.contactNo))},          
+          {text: 'Navigate', onPress: () => Linking.openURL('https://maps.google.com?q='+item.address)},
+        ],
+        'default'
+        );
+    }
     // GO TO
    
   goToDriverViewNew(){

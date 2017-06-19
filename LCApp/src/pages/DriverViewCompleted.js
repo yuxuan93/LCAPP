@@ -175,7 +175,7 @@ export default class DriverViewCompleted extends Component {
       }  
     }
 
-
+    
 
     // GO TO
     goToDriverViewNew(){

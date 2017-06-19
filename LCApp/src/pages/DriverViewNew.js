@@ -15,7 +15,8 @@ import {
   Alert, 
   ListView, 
   ToastAndroid,
-  AppState
+  AppState,
+  Linking
  } from 'react-native';
 // import {Actions} from 'react-native-router-flux';
 import StatusBar from '../components/StatusBar';
@@ -187,8 +188,8 @@ export default class DriverViewNew extends Component {
             // + "\nPreferredReturnTime: " + item.preferredReturnTime
             ,
           [
-            {text: 'Cancel', onPress: (text) => console.log(text)},
             {text: 'Reject', onPress: () => this._popupRejectionReasonInput(item)},
+            {text: 'Call/Navigate', onPress: () => this._openCallMap(item)},
             {text: 'Accept', onPress: () => this._acceptJob(item)}
 
           ],
@@ -206,6 +207,21 @@ export default class DriverViewNew extends Component {
       }  
     }
 
+    _openCallMap(item){
+      Alert.alert(
+        'Please choose your action for job ID '+ item.jobId+',',
+        'Customer Name: '+ item.name 
+        + '\nAddress: ' + item.address  
+        + "\nContact Number: " + item.contactNo
+        ,
+        [
+          null,
+          {text: 'Call', onPress: () => Linking.openURL('tel:'+ encodeURIComponent(item.contactNo))},          
+          {text: 'Navigate', onPress: () => Linking.openURL('https://maps.google.com?q='+item.address)},
+        ],
+        'default'
+        );
+    }
 // GO TO
     goToDriverViewAccepted(){
     this.props.navigator.push({
