@@ -272,7 +272,19 @@ export default class DriverViewCollected extends Component {
 
 
   _completeJob(item){
-    this.itemsRef.child(item._key).update({status: 'Completed', completeDate: new Date().toString()})
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+    today = yyyy + '-'+mm + '-' + dd;
+    this.itemsRef.child(item._key).update({status: 'Completed', completeDate: today})
 
     ToastAndroid.show('The job has been completed!', ToastAndroid.LONG);
 

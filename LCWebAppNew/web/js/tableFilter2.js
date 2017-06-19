@@ -1,6 +1,6 @@
 function myFunction() {
     // Declare variables
-    var input, filter, ul, li, a, i;
+    var input1, input2, filter1, filter2, jobList, tr, td1, td2, i;
 
 
     input1 = document.getElementById("driverFilter");
@@ -26,10 +26,9 @@ function myFunction() {
 
 
 }
-
 function myFunction2() {
     // Declare variables
-    var input, filter, ul, li, a, i;
+    var input1, input2, input3, filter1, filter2, filter3, jobList, tr, td1, td2, i;
 
 
     input1 = document.getElementById("driverFilter");
