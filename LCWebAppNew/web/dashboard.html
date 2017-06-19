@@ -43,8 +43,11 @@
         <div id="addedNotif" class="hide"></div>
         <div id="deletedNotif" class="hide"></div>
 
-        <!--<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">-->
-        <div style="float:right; margin-bottom: 20px">
+        
+         
+        <div style="float:right; margin-bottom: 20px; margin-right:20px">
+            Filter Pickup Date 	
+            <input type="date" name="filterDate" id="filterDate" onChange="myFunction()" style="margin:10px; width:30%"/>
             Status <select id="statusFilter" onChange="myFunction()">
                 <option value="">All</option>
                 <option value="New">New</option>
@@ -52,10 +55,6 @@
                 <option value="Accepted">Accepted</option>
                 <option value="Collected">Collected</option>
             </select>
-        </div>
-
-        <div style="float:right; margin-bottom: 20px; margin-right:20px">
-
             Driver <select id="driverFilter" onChange="myFunction()">
                 <option value="">All</option>
             </select>

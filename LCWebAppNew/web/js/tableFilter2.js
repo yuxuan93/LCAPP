@@ -1,12 +1,14 @@
 function myFunction() {
     // Declare variables
-    var input1, input2, filter1, filter2, jobList, tr, td1, td2, i;
+    var input1, input2, input3, filter1, filter2, filter3, jobList, tr, td1, td2, i;
 
 
     input1 = document.getElementById("driverFilter");
     filter1 = input1.value.toUpperCase();
     input2 = document.getElementById('statusFilter');
     filter2 = input2.value.toUpperCase();
+    input3 = document.getElementById("filterDate");
+    filter3 = input3.value.toUpperCase();
 
     jobList = document.getElementById("jobList");
     tr = jobList.getElementsByTagName('tr');
@@ -15,13 +17,28 @@ function myFunction() {
     for (i = 0; i < tr.length; i++) {
         td1 = tr[i].getElementsByTagName("td")[3];
         td2 = tr[i].getElementsByTagName("td")[5];
+        td3 = tr[i].getElementsByTagName("td")[4];
         if (td1.innerHTML.toUpperCase().indexOf(filter1) > -1 && td2.innerHTML.toUpperCase().indexOf(filter2) > -1) {
-            tr[i].style.display = "";
-            tr[i].classList.remove("tableexport-ignore")
+            if (filter3 != "" && td3.innerHTML.toUpperCase() == filter3) {
+                // SHOW
+                tr[i].style.display = "";
+                tr[i].classList.remove("tableexport-ignore");
+            }
+            else if( filter3==""){
+                // SHOW
+                tr[i].style.display = "";
+                tr[i].classList.remove("tableexport-ignore");
+            }
+            else {
+                // HIDE
+                tr[i].style.display = "none";
+                tr[i].classList.add("tableexport-ignore");
+            }
+            
         } else {
             tr[i].style.display = "none";
             tr[i].classList.add("tableexport-ignore");
-        }   
+        }
     }
 
 
@@ -38,7 +55,7 @@ function myFunction2() {
     input3 = document.getElementById("endFilterDate");
     filter3 = input3.value.toUpperCase();
 
-    
+
 
     jobList = document.getElementById("jobList");
     tr = jobList.getElementsByTagName('tr');
