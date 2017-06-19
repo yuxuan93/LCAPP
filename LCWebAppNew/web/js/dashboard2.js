@@ -125,8 +125,7 @@
                     }
 
                 }
-            }
-            ;
+            }            
         });
         dbRefList.on('child_changed', snap=>{
             window.location = "dashboard.html";

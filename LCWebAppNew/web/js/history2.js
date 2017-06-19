@@ -95,12 +95,10 @@
                     window.location = "editJob.html?key=" + snap.key;
 
                 }
-            };
+            }
         }
-
-
-
-
-
+    });
+    dbRefList.on('child_changed', snap=>{
+        window.location = "history.html";
     });
 }());
