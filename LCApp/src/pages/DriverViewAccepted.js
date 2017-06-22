@@ -67,6 +67,7 @@ export default class DriverViewAccepted extends Component {
       prompt3Visible: false,
       prompt4Visible: false,
       prompt5Visible: false,
+      todayDate:'',
     }
 
   }
@@ -86,6 +87,19 @@ export default class DriverViewAccepted extends Component {
       // user: userData,
       loading: false
     });
+
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+    this.setState({todayDate:yyyy + '-'+mm + '-' + dd,});
   }
 
   render() {
@@ -111,9 +125,9 @@ export default class DriverViewAccepted extends Component {
             onSubmit={(value) => this.changeAndSetAmt(value)}/>
 
         <Prompt
-            title="Enter Preferred Return Date"
-            placeholder="DD/MM/YY"
-            defaultValue=""
+            title="Enter Preferred Return Date (yyyy-mm-dd)"
+            placeholder="YYYY-MM-DD"
+            defaultValue={this.state.todayDate}
             visible={this.state.prompt3Visible}
             onCancel={() => this.setState({ prompt3Visible: false, })}
             onSubmit={(value) => this.changeAndSetDate(value)}/>
@@ -124,7 +138,7 @@ export default class DriverViewAccepted extends Component {
             defaultValue=""
             visible={this.state.prompt4Visible}
             onCancel={() => this.setState({ prompt4Visible: false,})}
-            onSubmit={(value) => this._collectJob(this.state.selectedJob, this.state.invoice,  this.state.amount, this.state.date, `"${value}"`) }/>
+            onSubmit={(value) => this._collectJob(this.state.selectedJob, this.state.invoice,  this.state.amt, this.state.date, value) }/>
         <Prompt
             title="Enter reason for rejection (There will be consequences)"
             placeholder=""

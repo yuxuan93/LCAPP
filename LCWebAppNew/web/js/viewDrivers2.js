@@ -10,9 +10,9 @@
 //          dbRefObject.on('value', snap => {
 //              preObject.innerText = JSON.stringify(snap.val(), null, 3)
 //          });
-
     var items = [];
     var counter = 1;
+
     // Sync list changes
     dbRefList.on('child_added', snap => {
         if (snap.val().priviledge == "driver") {
@@ -53,18 +53,18 @@
                         Driver Id: " + snap.val().driverId + "\n\
                         First Name: " + snap.val().firstName + " \n") == true) {
 
-//                dbRefList.child(snap.key).remove();
-//                    admin.auth().getUserByEmail(snap.val().email)
-//                            .then(function (userRecord) {
-//                                // See the UserRecord reference doc for the contents of userRecord.
-//                                alert("Successfully fetched user data:", userRecord.toJSON());
-//                            })
-//                            .catch(function (error) {
-//                                alert("Error fetching user data:", error);
-//                            });
+                dbRefList.child(snap.key).remove();
+                    admin.auth().getUserByEmail(snap.val().email)
+                            .then(function (userRecord) {
+                                // See the UserRecord reference doc for the contents of userRecord.
+                                alert("Successfully fetched user data:", userRecord.toJSON());
+                            })
+                            .catch(function (error) {
+                                alert("Error fetching user data:", error);
+                            });
 
-                    window.location = "editJob.html?key=" + snap.key;
                 }
+                window.location = "viewDrivers.html";
 
 
 

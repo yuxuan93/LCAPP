@@ -12,7 +12,6 @@
     dbRefObject.child('lastJobId').once("value").then(function (snapshot) {
         lastId = snapshot.val() + 1; // 
     });
-
     //Push to db
 
 

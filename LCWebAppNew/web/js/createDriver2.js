@@ -11,7 +11,10 @@
     const companyName = document.getElementById("companyName");
 
     const driverList = dbRefObject.child('users');
-
+    var lastId;
+    dbRefObject.child('lastDriverId').once("value").then(function (snapshot) {
+        lastId = snapshot.val() + 1; // 
+    });
     submitBtn.addEventListener('click', e => {
         // Get email and pass
         const email = txtEmail.value;
@@ -21,6 +24,7 @@
         const ln = lastName.value;
         const contactNum = contactNo.value;
         const coName = companyName.value;
+        
         // Sign in
         const promise = auth.createUserWithEmailAndPassword(email, pass);
         promise.then((authData) => {
@@ -32,8 +36,10 @@
                 contactNo: contactNum,
                 companyName: coName,
                 priviledge: "driver",
+                driverId: lastId
             }
-            driverList.push(driver)
+            driverList.push(driver);
+            dbRefObject.update({lastDriverId: lastId});
             window.location = "createDriver.html";
 
         })
