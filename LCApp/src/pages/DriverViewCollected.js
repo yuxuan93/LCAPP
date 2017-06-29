@@ -32,6 +32,7 @@ import Login from './Login';
 import StatusBar from '../components/StatusBar';
 import ActionButton from '../components/ActionButton';
 import ActionButton2 from '../components/ActionButton2';
+var Toast = require('@remobile/react-native-toast');
 
 
 export default class DriverViewCollected extends Component {
@@ -79,7 +80,7 @@ export default class DriverViewCollected extends Component {
             title="What is the reason for un-collecting?"
             placeholder=""
             defaultValue=""
-            visible={this.state.prompt5Visible}
+            visible={this.state.promptVisible}
             onCancel={() => this.setState({ promptVisible: false,})}
             onSubmit={(value) => this._uncollectJob(this.state.selectedJob, value) }/>
 
@@ -233,29 +234,17 @@ export default class DriverViewCollected extends Component {
 
     this.itemsRef.child(item._key).update({status: 'Accepted', reason: 'Uncollected: '+reason})
 
-    ToastAndroid.show('A job has been un-collected!', ToastAndroid.LONG);
-    
-    this.setState({selectedMarker: this.defaultMarker})
-    this.setState({ prompt5Visible: false,});
+    // ToastAndroid.show('The job has been un-collected!', ToastAndroid.LONG);
+      Toast.showLongBottom("The job has been un-collected!");
+
+    this.setState({promptVisible: false,});
+
   }
+ 
 
   _popupUncollectReasonInput(item){
-    //  prompt(
-    //   // 'What is the problem?',
-    //   'What\'s the reason for un-collecting ' + item.name +'?',
-    //   'Note there will be demerit points awarded if the reason is invalid.',
-    //   [
-    //    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-    //    {text: 'OK', onPress: reason => this._uncollectJob(item, reason)},
-    //   ],
-    //   {
-    //       type: 'default',
-    //       cancelable: false,
-    //       defaultValue: '',
-    //       placeholder: 'Reason?'
-    //   }
-    // );
-    this.setState({ prompt5Visible: true, selectedJob: item});
+   
+    this.setState({ promptVisible: true, selectedJob: item});
   }
    _completePrompt(item){
       Alert.alert(
@@ -286,8 +275,8 @@ export default class DriverViewCollected extends Component {
     today = yyyy + '-'+mm + '-' + dd;
     this.itemsRef.child(item._key).update({status: 'Completed', completeDate: today})
 
-    ToastAndroid.show('The job has been completed!', ToastAndroid.LONG);
-
+    // ToastAndroid.show('The job has been completed!', ToastAndroid.LONG);
+    Toast.showLongBottom("The job has been completed!");
     
     this.setState({selectedMarker: this.defaultMarker})
 

@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import React, {Component} from 'react';
 import DriverViewNew from './DriverViewNew';
-import AdminMain from './AdminMain';
+// import AdminMain from './AdminMain';
 
 import styles from '../styles/styles.js';
 
@@ -75,12 +75,13 @@ export default class Login extends Component {
         this.setState({
           loading: false
         });
-        if(this.state.priviledge=='admin'){
-          this.props.navigator.push({
-            component: AdminMain
-          });
-        }
-        else if(this.state.priviledge=='driver'){
+        // if(this.state.priviledge=='admin'){
+        //   this.props.navigator.push({
+        //     component: AdminMain
+        //   });
+        // }
+        // else 
+        if(this.state.priviledge=='driver'){
           this.props.navigator.push({
             component: DriverViewNew
           });
@@ -104,10 +105,11 @@ export default class Login extends Component {
         if(child.val().email==this.state.email){
         // if(true){
          // Check for priviledges in db
-          if(child.val().priviledge=='admin'){
-            this.state.priviledge = 'admin';
-          }
-          else if(child.val().priviledge=='driver'){
+          // if(child.val().priviledge=='admin'){
+          //   this.state.priviledge = 'admin';
+          // }
+          // else 
+          if(child.val().priviledge=='driver'){
             this.state.priviledge = 'driver';
           }
           this.login();

@@ -5,7 +5,6 @@ import {
   Navigator,
   Text,
   View,
-  ToolbarAndroid,
   ActivityIndicator
 } from 'react-native';
 
@@ -18,7 +17,7 @@ import DriverViewNew from './src/pages/DriverViewNew';
 
 //import Signup from './src/pages/Signup';
 import Login from './src/pages/Login';
-import AdminMain from './src/pages/AdminMain';
+// import AdminMain from './src/pages/AdminMain';
 //import AdminViewCompleted from './src/pages/AdminViewCompleted';
 //import AdminViewCurrent from './src/pages/AdminViewCurrent';
 
@@ -60,7 +59,6 @@ class LCApp extends Component {
       // the page is the screen we want to show the user, we will determine that
       // based on what user the firebase api returns to us.
       page: null,
-      firstName: null,
     };
     this.users = firebaseApp.database().ref("users");
 
@@ -77,11 +75,12 @@ class LCApp extends Component {
             if(child.val().email==user.email){
             // if(true){
              // Check for priviledges in db
-              if(child.val().priviledge=='admin'){                
-                this.setState({page: AdminMain, firstName: child.val().firstName});
-              }
-              else if(child.val().priviledge=='driver'){
-                this.setState({page: DriverViewNew, firstName: child.val().firstName});
+              // if(child.val().priviledge=='admin'){                
+              //   this.setState({page: AdminMain, firstName: child.val().firstName});
+              // }
+              // else 
+              if(child.val().priviledge=='driver'){
+                this.setState({page: DriverViewNew});
               }
             }
             
@@ -119,7 +118,6 @@ class LCApp extends Component {
       return (
         // Our default loading view while waiting to hear back from firebase
         <View style={styles.container}>
-          <ToolbarAndroid title="RN Firebase Auth" />
           <View style={styles.body}>
             <ActivityIndicator size="large" />
           </View>

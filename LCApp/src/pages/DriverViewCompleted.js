@@ -29,6 +29,7 @@ import Login from './Login';
 import DriverViewNew from './DriverViewNew';
 import DriverViewAccepted from './DriverViewAccepted';
 import DriverViewCollected from './DriverViewCollected';
+var Toast = require('@remobile/react-native-toast');
 
 
 export default class DriverViewCompleted extends Component {
@@ -234,7 +235,8 @@ _cfmUncomplete(item){
   _uncomplete(item, reason){
     this.itemsRef.child(item._key).update({status: 'Collected', reason: 'Uncompleted: '+reason})
 
-    ToastAndroid.show('The Job has been un-completed!', ToastAndroid.LONG);
+    // ToastAndroid.show('The job has been un-completed!', ToastAndroid.LONG);
+    Toast.showLongBottom("The job has been un-completed!");
 
     this.setState({ promptVisible: false});
 

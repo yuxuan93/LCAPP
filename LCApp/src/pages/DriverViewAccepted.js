@@ -42,6 +42,7 @@ import Login from './Login';
 import DriverViewNew from './DriverViewNew';
 import DriverViewCollected from './DriverViewCollected';
 import DriverViewCompleted from './DriverViewCompleted';
+var Toast = require('@remobile/react-native-toast');
 
 export default class DriverViewAccepted extends Component {
   constructor(props) {
@@ -299,8 +300,9 @@ _rejectJob(selectedJob, reason){
 
     this.itemsRef.child(selectedJob._key).update({status: 'Rejected', reason: reason})
 
-    ToastAndroid.show('A job has been deleted!', ToastAndroid.LONG);
-    
+    // ToastAndroid.show('The job has been deleted!', ToastAndroid.LONG);
+    Toast.showLongBottom("The job has been deleted!");
+
     // this.setState({selectedMarker: this.defaultMarker})
     this.setState({ prompt5Visible: false,});
   }
@@ -347,7 +349,8 @@ changeAndSetDate(value){
       preferredReturnTime: time
       });
 
-    ToastAndroid.show('The job has been collected !', ToastAndroid.LONG);
+    // ToastAndroid.show('The job has been collected!', ToastAndroid.LONG);
+    Toast.showLongBottom("The job has been collected!");
 
     // this.setState({selectedMarker: this.defaultMarker})；
 

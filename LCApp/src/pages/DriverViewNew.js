@@ -2,8 +2,8 @@
 
 
 console.disableYellowBox = true;
-import PushController from '../util/PushController';
-import PushNotification from 'react-native-push-notification';
+// import PushController from '../util/PushController';
+// import PushNotification from 'react-native-push-notification';
 
 import React, { Component, PropTypes } from 'react';
 import { 
@@ -16,9 +16,12 @@ import {
   ListView, 
   ToastAndroid,
   AppState,
-  Linking
+  Linking,
+  AlertIOS,
  } from 'react-native';
 // import {Actions} from 'react-native-router-flux';
+
+
 import StatusBar from '../components/StatusBar';
 
 import styles from '../styles/styles.js';
@@ -35,6 +38,7 @@ import Login from './Login';
 import ActionButton from '../components/ActionButton';
 import ActionButton2 from '../components/ActionButton2';
 
+var Toast = require('@remobile/react-native-toast');
 
 export default class DriverViewNew extends Component {
 
@@ -85,23 +89,24 @@ export default class DriverViewNew extends Component {
   }
 
   handleAppStateChange(appState){
-    let date = new Date(Date.now() + (3 * 1000));
-    if(Platform.OS === 'ios'){
-      date = date.toISOString();
-    }
-    if(appState === 'background'){
-      PushNotification.localNotificationSchedule({
-        message: "My Notification Message", 
-        date,
-      });
-      console.log('app is in background');
-    }
+    // let date = new Date(Date.now() + (3 * 1000));
+    // if(Platform.OS === 'ios'){
+    //   date = date.toISOString();
+    // }
+    // if(appState === 'background'){
+    //   PushNotification.localNotificationSchedule({
+    //     message: "My Notification Message", 
+    //     date,
+    //   });
+    //   console.log('app is in background');
+    // }
   }
 
 
   render() {
     return (      
       <View style={styles.container}>
+        
         <Prompt
             title="Enter reason for rejection"
             placeholder=""
@@ -118,6 +123,7 @@ export default class DriverViewNew extends Component {
           <TouchableHighlight onPress={this.logout.bind(this)} style={{margin: 0, padding: 15, backgroundColor: '#808080'}}>
             <Text style={styles.primaryButtonText}>Logout</Text>
           </TouchableHighlight>
+          
         </View>
 
 
@@ -189,13 +195,6 @@ export default class DriverViewNew extends Component {
             + "\nPreferred Pickup Date: " + item.preferredPickupDate
             + "\nPreferred Pickup Time: " + item.preferredPickupTime
             + "\nRemarks: " + item.remarks
-
-            // + "\nEmail: " + item.email
-            // + "\nDriver: " + item.driver
-            // + "\nInvoiceNo: " + item.invoiceNo
-            // + "\nAmount: " + item.amount
-            // + "\nPreferredReturnDate: " + item.preferredReturnDate
-            // + "\nPreferredReturnTime: " + item.preferredReturnTime
             ,
           [
             {text: 'Reject', onPress: () => this._popupRejectionReasonInput(item)},
@@ -219,18 +218,22 @@ export default class DriverViewNew extends Component {
 
     _openCallMap(item){
       Alert.alert(
-        'Please choose your action for job ID '+ item.jobId+',',
+        'Please choose your action for job ID '+ item.jobId,
         'Customer Name: '+ item.name 
         + '\nAddress: ' + item.address  
-        + "\nContact Number: " + item.contactNo
-        ,
+        + "\nContact Number: " + item.contactNo,
         [
-          null,
+          // null,
           {text: 'Call', onPress: () => Linking.openURL('tel:'+ encodeURIComponent(item.contactNo))},          
           {text: 'Navigate', onPress: () => Linking.openURL('https://maps.google.com?q='+item.address)},
         ],
         'default'
         );
+
+//       AlertIOS.alert(
+//  'Sync Complete',
+//  'All your data are belong to us.'
+// );
     }
 // GO TO
     goToDriverViewAccepted(){
@@ -258,9 +261,8 @@ export default class DriverViewNew extends Component {
     this.itemsRef.child(item._key).update({                          
                           status: 'Accepted'})
 
-    ToastAndroid.show('A job has been accepted !', ToastAndroid.LONG);
-    
-    this.setState({selectedMarker: this.defaultMarker})
+    // ToastAndroid.show('The job has been accepted !', ToastAndroid.LONG);
+    Toast.showLongBottom("The job has been accepted!");
 
   }
 
@@ -269,27 +271,14 @@ export default class DriverViewNew extends Component {
     this.itemsRef.child(item._key).update({                          
                           status: 'Rejected', reason: reason})
 
-    ToastAndroid.show('A job has been rejected !', ToastAndroid.LONG);
-    
+    // ToastAndroid.show('The job has been rejected !', ToastAndroid.LONG);
+    Toast.showLongBottom("The job has been rejected!");
+
     // this.setState({selectedMarker: this.defaultMarker})
     this.setState({ promptVisible: false});
   }
 
   _popupRejectionReasonInput(item){
-    //  prompt(
-    //   'You have decided to reject ' + item.name +'. What is the reason?',
-    //   null,
-    //   [
-    //    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-    //    {text: 'OK', onPress: reason => this._rejectJob(item, reason)},
-    //   ],
-    //   {
-    //       type: 'default',
-    //       cancelable: false,
-    //       defaultValue: '',
-    //       placeholder: ''
-    //   }
-    // );
         this.setState({ promptVisible: true, selectedJob: item});
       }
 
