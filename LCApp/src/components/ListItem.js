@@ -10,9 +10,11 @@ class ListItem extends Component {
     return (
       <TouchableHighlight onPress={this.props.onPress}>
         <View style={styles.li}>
-          <Text style={styles.liText}>Job ID: {this.props.item.jobId}</Text>
+          <Text style={styles.boldliText}>Job ID: {this.props.item.jobId}</Text>
+          <Text style={styles.liText}>Pref Pickup Date: {this.props.item.preferredPickupDate}</Text>
+          <Text style={styles.liText}>Address: {this.props.item.address}</Text>
           <Text style={styles.liText}>Cust Name: {this.props.item.name}</Text>
-
+          
         </View>
       </TouchableHighlight>
     );

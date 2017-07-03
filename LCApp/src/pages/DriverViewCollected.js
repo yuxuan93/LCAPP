@@ -18,7 +18,7 @@ import {
 // import {Actions} from 'react-native-router-flux';
 
 import styles from '../styles/styles.js';
-import ListItem from '../components/ListItem';
+import ListItem2 from '../components/ListItem2';
 
 //import AddJob from './AddJob';
 import DriverViewNew from './DriverViewNew';
@@ -40,7 +40,8 @@ export default class DriverViewCollected extends Component {
   constructor(props) {
     super(props);
 
-    this.itemsRef = this.props.firebaseApp.database().ref("jobs");
+    this.itemsRef = this.props.firebaseApp.database().ref("jobs").orderByChild("preferredReturnDate");
+    this.jobsRef = this.props.firebaseApp.database().ref("jobs");
     this.usersRef = this.props.firebaseApp.database().ref("users");
 
     this.state = {
@@ -116,7 +117,7 @@ export default class DriverViewCollected extends Component {
       // get children as an array
       var items = [];
       snap.forEach((child) => {
-        if(child.val().status=='Collected' && child.val().driver==this.state.firstName){//this.state.user.email.substring(0,this.state.user.email.indexOf("@"))){
+        if(child.val().status=='Collected' &&(child.val().driver==this.state.firstName||child.val().driver=="ALL")){//this.state.user.email.substring(0,this.state.user.email.indexOf("@"))){
           items.push({
             jobId: child.val().jobId,            
             name: child.val().name, 
@@ -173,6 +174,7 @@ export default class DriverViewCollected extends Component {
             //Do we need to display the completed date of the job?
             ,
           [
+            {text: 'Cancel'},
             {text: 'Uncollect', onPress: () => this._popupUncollectReasonInput(item)},
 
             // {text: 'Cancel', onPress: (text) => console.log('Cancel')},
@@ -183,9 +185,9 @@ export default class DriverViewCollected extends Component {
         );
       };
 
-      if(item.status=='Collected' && item.driver==this.state.firstName){//user.email.substring(0,this.state.user.email.indexOf("@"))){
+      if(item.status=='Collected' && (item.driver==this.state.firstName||item.driver=="ALL")){//user.email.substring(0,this.state.user.email.indexOf("@"))){
         return (
-          <ListItem item={item} onPress={onPress}/>
+          <ListItem2 item={item} onPress={onPress}/>
         );
       }
       else{
@@ -201,7 +203,8 @@ export default class DriverViewCollected extends Component {
         + "\nContact Number: " + item.contactNo
         ,
         [
-          null,
+          // null,
+           {text: 'Cancel'},
           {text: 'Call', onPress: () => Linking.openURL('tel:'+ encodeURIComponent(item.contactNo))},
           {text: 'Navigate', onPress: () => Linking.openURL('https://maps.google.com?q='+item.address)},
         ],
@@ -232,7 +235,7 @@ export default class DriverViewCollected extends Component {
   // ACTIONS
   _uncollectJob(item, reason){
 
-    this.itemsRef.child(item._key).update({status: 'Accepted', reason: 'Uncollected: '+reason})
+    this.jobsRef.child(item._key).update({status: 'Accepted', reason: 'Uncollected: '+reason})
 
     // ToastAndroid.show('The job has been un-collected!', ToastAndroid.LONG);
       Toast.showLongBottom("The job has been un-collected!");
@@ -273,7 +276,7 @@ export default class DriverViewCollected extends Component {
         mm = '0' + mm
     }
     today = yyyy + '-'+mm + '-' + dd;
-    this.itemsRef.child(item._key).update({status: 'Completed', completeDate: today})
+    this.jobsRef.child(item._key).update({status: 'Completed', completeDate: today})
 
     // ToastAndroid.show('The job has been completed!', ToastAndroid.LONG);
     Toast.showLongBottom("The job has been completed!");

@@ -45,7 +45,8 @@ export default class DriverViewNew extends Component {
   constructor(props) {
     super(props);
 
-    this.itemsRef = this.props.firebaseApp.database().ref("jobs");
+    this.itemsRef = this.props.firebaseApp.database().ref("jobs").orderByChild("preferredPickupDate");
+    this.jobsRef = this.props.firebaseApp.database().ref("jobs");
     this.usersRef = this.props.firebaseApp.database().ref("users");
 
     this.state = {
@@ -151,7 +152,7 @@ export default class DriverViewNew extends Component {
       var items = [];
       snap.forEach((child) => {
 
-        if(child.val().status=='New' && child.val().driver==this.state.firstName){//this.state.user.email.substring(0,this.state.user.email.indexOf("@"))){
+        if(child.val().status=='New' && (child.val().driver==this.state.firstName||child.val().driver=="ALL")){//this.state.user.email.substring(0,this.state.user.email.indexOf("@"))){
           items.push({
             jobId: child.val().jobId,
             name: child.val().name, 
@@ -197,6 +198,7 @@ export default class DriverViewNew extends Component {
             + "\nRemarks: " + item.remarks
             ,
           [
+            {text: 'Cancel'},
             {text: 'Reject', onPress: () => this._popupRejectionReasonInput(item)},
             {text: 'Call/Navigate', onPress: () => this._openCallMap(item)},
             {text: 'Accept', onPress: () => this._acceptJob(item)}
@@ -206,7 +208,7 @@ export default class DriverViewNew extends Component {
         );
       };
 
-      if(item.status=='New' && item.driver==this.state.firstName){//.user.email.substring(0,this.state.user.email.indexOf("@"))){
+      if(item.status=='New' && (item.driver==this.state.firstName||item.driver=="ALL")){//.user.email.substring(0,this.state.user.email.indexOf("@"))){
         return (
           <ListItem item={item} onPress={onPress}/>
         );
@@ -224,6 +226,7 @@ export default class DriverViewNew extends Component {
         + "\nContact Number: " + item.contactNo,
         [
           // null,
+          {text: 'Cancel'},
           {text: 'Call', onPress: () => Linking.openURL('tel:'+ encodeURIComponent(item.contactNo))},          
           {text: 'Navigate', onPress: () => Linking.openURL('https://maps.google.com?q='+item.address)},
         ],
@@ -258,7 +261,7 @@ export default class DriverViewNew extends Component {
 
   // ACTIONS
   _acceptJob(item){
-    this.itemsRef.child(item._key).update({                          
+    this.jobsRef.child(item._key).update({                          
                           status: 'Accepted'})
 
     // ToastAndroid.show('The job has been accepted !', ToastAndroid.LONG);
@@ -268,14 +271,16 @@ export default class DriverViewNew extends Component {
 
   _rejectJob(item, reason){
 
-    this.itemsRef.child(item._key).update({                          
-                          status: 'Rejected', reason: reason})
+    this.jobsRef.child(item._key).update({                          
+                          status: 'Rejected', reason: reason});
+    // Alert.alert("The job has been rejected");
+    
+    this.setState({promptVisible: false});
 
-    // ToastAndroid.show('The job has been rejected !', ToastAndroid.LONG);
     Toast.showLongBottom("The job has been rejected!");
+    
+    // ToastAndroid.show('The job has been rejected !', ToastAndroid.LONG);
 
-    // this.setState({selectedMarker: this.defaultMarker})
-    this.setState({ promptVisible: false});
   }
 
   _popupRejectionReasonInput(item){

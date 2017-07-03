@@ -19,7 +19,7 @@ import StatusBar from '../components/StatusBar';
 import ActionButton from '../components/ActionButton';
 import ActionButton2 from '../components/ActionButton2';
 
-import ListItem from '../components/ListItem';
+import ListItem3 from '../components/ListItem3';
 import styles from '../styles/styles.js';
 
 // import prompt from 'react-native-prompt-android';
@@ -37,7 +37,8 @@ export default class DriverViewCompleted extends Component {
   constructor(props) {
     super(props);
 
-    this.itemsRef = this.props.firebaseApp.database().ref("jobs");
+    this.itemsRef = this.props.firebaseApp.database().ref("jobs").orderByChild("completeDate");
+    this.jobsRef = this.props.firebaseApp.database().ref("jobs");
     this.usersRef = this.props.firebaseApp.database().ref("users");
 
     this.state = {
@@ -113,7 +114,7 @@ export default class DriverViewCompleted extends Component {
       // get children as an array
       var items = [];
       snap.forEach((child) => {
-        if(child.val().status=='Completed' && child.val().driver==this.state.firstName){//this.state.user.email.substring(0,this.state.user.email.indexOf("@"))){
+        if(child.val().status=='Completed' && (child.val().driver==this.state.firstName||child.val().driver=="ALL")){//this.state.user.email.substring(0,this.state.user.email.indexOf("@"))){
           items.push({
             jobId: child.val().jobId,
             name: child.val().name, 
@@ -176,9 +177,9 @@ export default class DriverViewCompleted extends Component {
         );
       };
 
-      if(item.status=='Completed' && item.driver==this.state.firstName){//user.email.substring(0,this.state.user.email.indexOf("@"))){
+      if(item.status=='Completed' && (item.driver==this.state.firstName||item.driver=="ALL")){//user.email.substring(0,this.state.user.email.indexOf("@"))){
         return (
-          <ListItem item={item} onPress={onPress}/>
+          <ListItem3 item={item} onPress={onPress}/>
         );
       }
       else{
@@ -213,27 +214,13 @@ export default class DriverViewCompleted extends Component {
 
      // Prompt confirmation of deletion
 _cfmUncomplete(item){
-  // prompt(
-  //     // 'What is the problem?',
-  //     'What\'s the reason for un-completing Job ID ' + item.jobId +'?',
-  //     'Note there will be demerit points awarded if the reason is invalid.',
-  //     [
-  //      {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-  //      {text: 'OK', onPress: reason => this._uncomplete(item, reason)},
-  //     ],
-  //     {
-  //         type: 'default',
-  //         cancelable: false,
-  //         defaultValue: '',
-  //         placeholder: 'Reason?'
-  //     }
-  //   );
+  
   this.setState({ promptVisible: true, selectedJob: item});
 }
 
 // Change the job status back to unassigned
   _uncomplete(item, reason){
-    this.itemsRef.child(item._key).update({status: 'Collected', reason: 'Uncompleted: '+reason})
+    this.jobsRef.child(item._key).update({status: 'Collected', reason: 'Uncompleted: '+reason})
 
     // ToastAndroid.show('The job has been un-completed!', ToastAndroid.LONG);
     Toast.showLongBottom("The job has been un-completed!");

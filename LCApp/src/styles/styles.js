@@ -13,6 +13,7 @@ var styles = StyleSheet.create({
   listview: {
     flex: 1,
   },
+  
   li: {
     backgroundColor: '#fff',
     borderBottomColor: '#eee',
@@ -28,6 +29,11 @@ var styles = StyleSheet.create({
   liText: {
     color: '#333',
     fontSize: 16,
+  },
+  boldliText:{
+    color: '#333',
+    fontSize: 16,
+    fontWeight: "800",
   },
   navbar: {
     alignItems: 'center',

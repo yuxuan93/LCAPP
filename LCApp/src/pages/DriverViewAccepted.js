@@ -48,7 +48,9 @@ export default class DriverViewAccepted extends Component {
   constructor(props) {
     super(props);
 
-    this.itemsRef = this.props.firebaseApp.database().ref("jobs");
+    this.itemsRef = this.props.firebaseApp.database().ref("jobs").orderByChild("preferredPickupDate");
+    this.jobsRef = this.props.firebaseApp.database().ref("jobs");
+
     this.usersRef = this.props.firebaseApp.database().ref("users");
 
     this.state = {
@@ -182,7 +184,7 @@ export default class DriverViewAccepted extends Component {
       var items = [];
       snap.forEach((child) => {
 
-        if(child.val().status=='Accepted' && child.val().driver==this.state.firstName){//this.state.user.email.substring(0,this.state.user.email.indexOf("@"))){
+        if(child.val().status=='Accepted' && (child.val().driver==this.state.firstName||child.val().driver=="ALL")){//this.state.user.email.substring(0,this.state.user.email.indexOf("@"))){
           items.push({
             jobId: child.val().jobId,            
             name: child.val().name, 
@@ -237,7 +239,8 @@ export default class DriverViewAccepted extends Component {
             // + "\nPreferredReturnTime: " + item.preferredReturnTime
             ,
           [
-            // {text: 'Cancel', onPress: (text) => console.log('Cancel')},          
+            // {text: 'Cancel', onPress: (text) => console.log('Cancel')},   
+            {text: 'Cancel'},       
             {text: 'Reject', onPress: () => this._popupRejectionReasonInput(item)},
             {text: 'Call/Navigate', onPress: () => this._openCallMap(item)},
             {text: 'Collected', onPress: () => this._showInvoicePrompt(item)}
@@ -247,7 +250,7 @@ export default class DriverViewAccepted extends Component {
         );
       };
 
-      if(item.status=='Accepted' && item.driver==this.state.firstName){//.user.email.substring(0,this.state.user.email.indexOf("@"))){
+      if(item.status=='Accepted' && (item.driver==this.state.firstName||item.driver=="ALL")){//.user.email.substring(0,this.state.user.email.indexOf("@"))){
         return (
           <ListItem item={item} onPress={onPress}/>
         );
@@ -266,7 +269,8 @@ export default class DriverViewAccepted extends Component {
         + "\nContact Number: " + item.contactNo
         ,
         [
-          null,
+          // null,
+          {text: 'Cancel'},
           {text: 'Call', onPress: () => Linking.openURL('tel:'+ encodeURIComponent(item.contactNo))},          
           {text: 'Navigate', onPress: () => Linking.openURL('https://maps.google.com?q='+item.address)},
         ],
@@ -298,7 +302,7 @@ export default class DriverViewAccepted extends Component {
 
 _rejectJob(selectedJob, reason){
 
-    this.itemsRef.child(selectedJob._key).update({status: 'Rejected', reason: reason})
+    this.jobsRef.child(selectedJob._key).update({status: 'Rejected', reason: reason})
 
     // ToastAndroid.show('The job has been deleted!', ToastAndroid.LONG);
     Toast.showLongBottom("The job has been deleted!");
@@ -341,7 +345,7 @@ changeAndSetDate(value){
   _collectJob(selectedJob, invoiceNo, amt, date, time){
 
 
-    this.itemsRef.child(selectedJob._key).update({
+    this.jobsRef.child(selectedJob._key).update({
       status: 'Collected', 
       invoiceNo: invoiceNo, 
       amount: '$'+amt,
