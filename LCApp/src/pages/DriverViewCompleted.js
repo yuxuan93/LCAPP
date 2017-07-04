@@ -97,7 +97,7 @@ export default class DriverViewCompleted extends Component {
                   renderRow={this._renderItem.bind(this)}
                   style={styles.listview} enableEmptySections={true}/>
         
-        <View style={{flex:1, flexDirection:'row', justifyContent:'space-between', alignItems:'flex-end'}}>
+        <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'flex-end'}}>
           <ActionButton2 title="New" onPress={this.goToDriverViewNew.bind(this)}/>
           <ActionButton2 title="Accepted" onPress={this.goToDriverViewAccepted.bind(this)}/>
           <ActionButton2 title="Collected" onPress={this.goToDriverViewCollected.bind(this)}/>
