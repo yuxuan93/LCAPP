@@ -46,30 +46,35 @@
             const companyNameCol = document.createElement('TD');
             companyNameCol.appendChild(document.createTextNode(snap.val().companyName));
             tr.appendChild(companyNameCol);
+            
+            const remarksCol = document.createElement('TD');
+            remarksCol.appendChild(document.createTextNode(snap.val().remarks));
+            tr.appendChild(remarksCol);
 
             tr.onclick = function () {
-//            alert("hello");
-                if (confirm("Delete this driver?\n\n\
-                        Driver Id: " + snap.val().driverId + "\n\
-                        First Name: " + snap.val().firstName + " \n") == true) {
+//                DELETE FUNCTION
+////            alert("hello");
+//                if (confirm("Delete this driver?\n\n\
+//Driver Id: " + snap.val().driverId + "\n\
+//Display Name: " + snap.val().firstName + " \n") == true) {
+//
+//                dbRefList.child(snap.key).remove();
+//                    admin.auth().getUserByEmail(snap.val().email).delete()
+//                            .then(function (userRecord) {
+//                                // See the UserRecord reference doc for the contents of userRecord.
+//                                alert("Successfully fetched user data:", userRecord.toJSON());
+//                            })
+//                            .catch(function (error) {
+//                                alert("Error fetching user data:", error);
+//                            });
+//
+//                }
+//                window.location = "viewDrivers.html";
 
-                dbRefList.child(snap.key).remove();
-                    admin.auth().getUserByEmail(snap.val().email)
-                            .then(function (userRecord) {
-                                // See the UserRecord reference doc for the contents of userRecord.
-                                alert("Successfully fetched user data:", userRecord.toJSON());
-                            })
-                            .catch(function (error) {
-                                alert("Error fetching user data:", error);
-                            });
-
-                }
-                window.location = "viewDrivers.html";
-
-
-
+//                EDIT FUNCTION
+                
+                window.location = "editDriver.html?id="+snap.key;
             }
-        }
-        ;
+        };
     });
 }());

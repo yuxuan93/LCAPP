@@ -38,7 +38,7 @@
             </ul>
         </nav>
 
-        <h1 id="myHeader">Create Driver</h1>
+        <h1 id="myHeader">Edit Driver</h1>
 
         <form id="my-form" onsubmit="return false;">
 
@@ -46,13 +46,13 @@
                 <div class="form-group">
                     <p>E-mail <span>* (Must be unique)</span></p>	
                     <span class="icon-case"><i class="fa fa-envelope-o"></i></span>
-                    <input type="email" name="email" id="email" data-rule="email" />
+                    <input type="email" name="email" id="email" data-rule="email" readonly/>
                     <div class="validation"></div>
                 </div>
                 <div class="form-group">
                     <p>Password <span>*</span></p>	
                     <span class="icon-case"><i class="fa fa-user-secret"></i></span>
-                    <input type="password" name="password" id="password" data-rule="email" />
+                    <input type="password" name="password" id="password" data-rule="email" readonly/>
                     <div class="validation"></div>
                 </div>
                 <div class="form-group">
@@ -86,7 +86,8 @@
                     <div class="validation"></div>
                 </div>	
             </div>
-            <button type="submit" id="submit-btn" class="bouton-contact">Submit</button>
+            <button type="submit" id="delete-btn" class="deleteBtn">Delete</button>
+            <button type="submit" id="edit-btn" class="editBtn">Save Changes</button>
         </form>	
 
 
@@ -94,7 +95,7 @@
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script type="text/javascript" src="js/jquery.dropdown.js"></script>
         <script src="js/navBarLogout.js"></script>
-        <script src="js/createDriver.js"></script>        
+        <script src="js/editDriver.js"></script>        
 
 
     </body>

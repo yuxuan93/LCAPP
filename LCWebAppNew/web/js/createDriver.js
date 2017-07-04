@@ -9,8 +9,10 @@
 
     const contactNo = document.getElementById("contactNo");
     const companyName = document.getElementById("companyName");
+    const remarks = document.getElementById('remarks');
 
     const driverList = dbRefObject.child('users');
+    
     var lastId;
     dbRefObject.child('lastDriverId').once("value").then(function (snapshot) {
         lastId = snapshot.val() + 1; // 
@@ -24,7 +26,7 @@
         const ln = lastName.value;
         const contactNum = contactNo.value;
         const coName = companyName.value;
-        
+        const rmks = remarks.value;
         // Sign in
         const promise = auth.createUserWithEmailAndPassword(email, pass);
         promise.then((authData) => {
@@ -36,11 +38,12 @@
                 contactNo: contactNum,
                 companyName: coName,
                 priviledge: "driver",
-                driverId: lastId
+                driverId: lastId,
+                remarks: rmks,
             }
             driverList.push(driver);
             dbRefObject.update({lastDriverId: lastId});
-            window.location = "createDriver.html";
+            window.location = "viewDrivers.html?edited&id="+lastId;
 
         })
                 .catch(e => alert(e.message));
