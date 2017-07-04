@@ -47,9 +47,9 @@
             const turnaroundCol = document.createElement('TD');
             turnaroundCol.appendChild(document.createTextNode(snap.val().turnaround));
             tr.appendChild(turnaroundCol);
-            const remarksCol = document.createElement('TD');
-            remarksCol.appendChild(document.createTextNode(snap.val().remarks));
-            tr.appendChild(remarksCol);
+//            const remarksCol = document.createElement('TD');
+//            remarksCol.appendChild(document.createTextNode(snap.val().remarks));
+//            tr.appendChild(remarksCol);
             const amountCol = document.createElement('TD');
             amountCol.appendChild(document.createTextNode(snap.val().amount));
             tr.appendChild(amountCol);
@@ -66,25 +66,25 @@
 //            tr.appendChild(statusCol);
             tr.onclick = function () {
                 if (confirm("Edit this job?\n\n\
-                        JobId: " + snap.val().jobId + "\n\
-                        Name: " + snap.val().name + " \n\
-                        Address: " + snap.val().address + " \n\
-                        Postal Code: " + snap.val().postalCode + "\n\
-                        Contact No: " + snap.val().contactNo + "\n\
-                        Email: " + snap.val().email + "\n\
-                        Item: " + snap.val().item + "\n\
-                        Turnaround: " + snap.val().turnaround + "\n\
-                        Type: " + snap.val().type + "\n\
-                        Preferred Pickup Date: " + snap.val().preferredPickupDate + "\n\
-                        Preferred Pickup Time: " + snap.val().preferredPickupTime + "\n\
-                        Driver: " + snap.val().driver + "\n\
-                        Remarks: " + snap.val().remarks + "\n\
-                        Status: " + snap.val().status + "\n\n\
-                        Invoice No: " + snap.val().invoiceNo + "\n\
-                        Amount: " + snap.val().amount + "\n\
-                        Preferred Return Date: " + snap.val().preferredReturnDate + "\n\
-                        Preferred Return Time: " + snap.val().preferredReturnTime + "\n\
-                        Complete Date: " + snap.val().completeDate + "\n\
+JobId: " + snap.val().jobId + "\n\
+Name: " + snap.val().name + " \n\
+Address: " + snap.val().address + " \n\
+Postal Code: " + snap.val().postalCode + "\n\
+Contact No: " + snap.val().contactNo + "\n\
+Email: " + snap.val().email + "\n\
+Item: " + snap.val().item + "\n\
+Turnaround: " + snap.val().turnaround + "\n\
+Type: " + snap.val().type + "\n\
+Preferred Pickup Date: " + snap.val().preferredPickupDate + "\n\
+Preferred Pickup Time: " + snap.val().preferredPickupTime + "\n\
+Driver: " + snap.val().driver + "\n\
+Remarks: " + snap.val().remarks + "\n\
+Status: " + snap.val().status + "\n\n\
+Invoice No: " + snap.val().invoiceNo + "\n\
+Amount: " + snap.val().amount + "\n\
+Preferred Return Date: " + snap.val().preferredReturnDate + "\n\
+Preferred Return Time: " + snap.val().preferredReturnTime + "\n\
+Complete Date: " + snap.val().completeDate + "\n\
                     \n") == true) {
 
                     // FOR EASY DELETION
