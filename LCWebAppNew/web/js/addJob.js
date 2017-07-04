@@ -36,6 +36,12 @@
                 else
                     typeList = typeList + ", " + formElements[9].value;
             }
+            if (formElements[10].checked) {
+                if (typeList == "")
+                    typeList = formElements[10].value;
+                else
+                    typeList = typeList + ", " + formElements[10].value;
+            }
             var job = {
                 name: formElements[0].value, //*
                 address: formElements[1].value, //Show //*
@@ -46,10 +52,10 @@
                 turnaround: formElements[6].value, //Show //*            
                 type: typeList, //*
 
-                preferredPickupDate: formElements[10].value, //Show 
-                preferredPickupTime: formElements[11].value, //Show  
-                driver: formElements[12].value,
-                remarks: formElements[13].value, //Show
+                preferredPickupDate: formElements[11].value, //Show 
+                preferredPickupTime: formElements[12].value, //Show  
+                driver: formElements[13].value,
+                remarks: formElements[14].value, //Show
                 status: 'New',
                 jobId: lastId
 

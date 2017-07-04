@@ -30,7 +30,8 @@
     var normal = document.getElementById("normal");
     var dry = document.getElementById("dry");
     var load = document.getElementById("load");
-
+    var iron = document.getElementById("iron");
+    
     var preferredPickupDateField = document.getElementById("preferredPickupDate");
     var preferredPickupTimeField = document.getElementById("preferredPickupTime");
     var remarksField = document.getElementById("remarks");
@@ -79,6 +80,9 @@
                 dry.checked = true;
             } else if (type.trim() == "Load Wash") {
                 load.checked = true;
+            }
+            else if (type.trim() == "Ironing") {
+                iron.checked = true;
             }
         }
 
@@ -203,6 +207,12 @@
                 else
                     typeList = typeList + ", " + formElements[9].value;
             }
+            if (formElements[10].checked) {
+                if (typeList == "")
+                    typeList = formElements[10].value;
+                else
+                    typeList = typeList + ", " + formElements[10].value;
+            }
 
             // Form Job Object to be updated
             var job = {
@@ -215,20 +225,20 @@
                 turnaround: formElements[6].value, //Show //*            
                 type: typeList, //*
 
-                preferredPickupDate: formElements[10].value, //Show 
-                preferredPickupTime: formElements[11].value, //Show  
-                driver: formElements[12].value,
-                remarks: formElements[13].value, //Show
-                status: formElements[14].value,
+                preferredPickupDate: formElements[11].value, //Show 
+                preferredPickupTime: formElements[12].value, //Show  
+                driver: formElements[13].value,
+                remarks: formElements[14].value, //Show
+                status: formElements[15].value,
 
                 // IF status collected
-                invoiceNo: formElements[15].value,
-                amount: formElements[16].value,
-                preferredReturnDate: formElements[17].value,
-                preferredReturnTime: formElements[18].value,
+                invoiceNo: formElements[16].value,
+                amount: formElements[17].value,
+                preferredReturnDate: formElements[18].value,
+                preferredReturnTime: formElements[19].value,
 
-                reason: formElements[19].value,
-                completeDate: formElements[20].value
+                reason: formElements[20].value,
+                completeDate: formElements[21].value
                         // IF status rejected
 
             };
@@ -261,35 +271,7 @@
 
                 }
             }
-//             else if (job.status == "Completed") {
-//                if (confirm("Are you sure you want to edit this job?\n\n\
-//                    JobId: " + jobId + "\n\
-//                    Name: " + job.name + " \n\
-//                    Address: " + job.address + " \n\
-//                    Postal Code: " + job.postalCode + "\n\
-//                    Contact No: " + job.contactNo + "\n\
-//                    Email: " + job.email + "\n\
-//                    Item: " + job.item + "\n\
-//                    Turnaround: " + job.turnaround + "\n\
-//                    Type: " + job.type + "\n\
-//                    Preferred Pickup Date: " + job.preferredPickupDate + "\n\
-//                    Preferred Pickup Time: " + job.preferredPickupTime + "\n\
-//                    Driver: " + job.driver + "\n\
-//                    Remarks: " + job.remarks + "\n\
-//                    Status: " + job.status + "\n\
-//                    Invoice No: " + job.invoiceNo + "\n\
-//                    Amount: " + job.amount + "\n\
-//                    Preferred Return Date: " + job.preferredReturnDate + "\n\
-//                    Preferred Return Time: " + job.preferredReturnTime + "\n\
-//                    Complete Date: " + job.completeDate + "\n\
-//                \n") == true) {
-//                    sendMsg(job.contactNo);
-//                    window.location = "/LCWebApp/dashboard.html?edited&id=" + jobId;
-//                    dbRefList.child(key).update(job);
-//
-//                }
-//
-//            } 
+
             else if (job.status == "Rejected") {
                 if (confirm("Are you sure you want to edit this job?\n\n\
                     JobId: " + jobId + "\n\
@@ -366,24 +348,41 @@
             else
                 typeList = typeList + ", " + formElements[9].value;
         }
+        if (formElements[10].checked) {
+            if (typeList == "")
+                typeList = formElements[10].value;
+            else
+                typeList = typeList + ", " + formElements[10].value;
+        }
 
         // Form Job Object to be updated
-        var job = {
-            name: formElements[0].value, //*
-            address: formElements[1].value, //Show //*
-            postalCode: formElements[2].value, //Show //*
-            contactNo: formElements[3].value, //*
-            email: formElements[4].value,
-            item: formElements[5].value, //*
-            turnaround: formElements[6].value, //Show //*            
-            type: typeList, //*
+            var job = {
+                name: formElements[0].value, //*
+                address: formElements[1].value, //Show //*
+                postalCode: formElements[2].value, //Show //*
+                contactNo: formElements[3].value, //*
+                email: formElements[4].value,
+                item: formElements[5].value, //*
+                turnaround: formElements[6].value, //Show //*            
+                type: typeList, //*
 
-            preferredPickupDate: formElements[10].value, //Show 
-            preferredPickupTime: formElements[11].value, //Show  
-            driver: formElements[12].value,
-            remarks: formElements[13].value, //Show
-            status: formElements[14].value,
-        };
+                preferredPickupDate: formElements[11].value, //Show 
+                preferredPickupTime: formElements[12].value, //Show  
+                driver: formElements[13].value,
+                remarks: formElements[14].value, //Show
+                status: formElements[15].value,
+
+                // IF status collected
+                invoiceNo: formElements[16].value,
+                amount: formElements[17].value,
+                preferredReturnDate: formElements[18].value,
+                preferredReturnTime: formElements[19].value,
+
+                reason: formElements[20].value,
+                completeDate: formElements[21].value
+                        // IF status rejected
+
+            };
 
         // Show edit confirmation dialog
         if (confirm("Are you sure you want to delete this job?\n\n\
