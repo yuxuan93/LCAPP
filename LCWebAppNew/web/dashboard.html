@@ -46,7 +46,7 @@
         
          
         <div style="margin-bottom: 20px; margin-right:20px; float:right">
-            Filter Pickup Date 	
+            Pickup/Return Date 	
             <input type="date" name="filterDate" id="filterDate" onChange="myFunction()" style="margin-right:10px; width:25%"/>
             Status <select id="statusFilter" onChange="myFunction()" style="margin-right:10px">
                 <option value="">All</option>
@@ -69,7 +69,7 @@
                     <th style="width:25%;">Address</th>
                     <th>Client Phone#</th>
                     <th style="width:15%;">Driver Name</th>
-                    <th style="width:15%;">Preferred Pickup Date</th>
+                    <th style="width:15%;">Pickup/ Return Date</th>
                     <th style="width:10%;">Status</th>
                     <th></th>
                 </tr>
@@ -82,8 +82,8 @@
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
         <script src="js/navBarLogout.js"></script>
-        <script src="js/dashboard.js"></script>
-        <script src="js/tableFilter2.js"></script>
+        <script src="js/dashboard.js?v=1"></script>
+        <script src="js/tableFilter.js"></script>
         <script>
                 var urlExtension = window.location.search.substring(window.location.search.indexOf("?") + 1);
                 var id = urlExtension.substring(window.location.search.indexOf("="));

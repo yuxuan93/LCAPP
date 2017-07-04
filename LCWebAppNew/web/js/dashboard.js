@@ -14,7 +14,6 @@
     var counter = 1;
     // Sync list changes
 
-
     dbRefList.on('child_added', snap => {
             if (snap.val().status != "Completed") {
                 counter = counter + 1;
@@ -22,28 +21,47 @@
                 tr.setAttribute("id", counter);
                 if (counter % 2 != 0)
                     tr.classList.add('alt');
+                
                 jobList.appendChild(tr);
+                
                 const jobIdCol = document.createElement('TD');
                 jobIdCol.appendChild(document.createTextNode(snap.val().jobId));
                 tr.appendChild(jobIdCol);
+                
                 const nameCol = document.createElement('TD');
                 nameCol.appendChild(document.createTextNode(snap.val().name));
                 tr.appendChild(nameCol);
+                
                 const addressCol = document.createElement('TD');
                 addressCol.appendChild(document.createTextNode(snap.val().address));
                 tr.appendChild(addressCol);
+                
                 const contactCol = document.createElement('TD');
                 contactCol.appendChild(document.createTextNode(snap.val().contactNo));
                 tr.appendChild(contactCol);
+                
                 const driverCol = document.createElement('TD');
                 driverCol.appendChild(document.createTextNode(snap.val().driver));
                 tr.appendChild(driverCol);
+                
+                
                 const pickupDateCol = document.createElement('TD');
-                pickupDateCol.appendChild(document.createTextNode(snap.val().preferredPickupDate));
+                //IF COLLECTED, show return date, 
+                if(snap.val().status=="Collected"){
+                    pickupDateCol.appendChild(document.createTextNode(snap.val().preferredReturnDate));
+                }
+//                else show pickup date
+                else{
+                    pickupDateCol.appendChild(document.createTextNode(snap.val().preferredPickupDate));
+                }
                 tr.appendChild(pickupDateCol);
+                
+                
+                
                 const statusCol = document.createElement('TD');
                 statusCol.appendChild(document.createTextNode(snap.val().status));
                 tr.appendChild(statusCol);
+                
                 const copyCol = document.createElement('TD');
                 copyCol.appendChild(document.createTextNode("COPY"));
                 tr.appendChild(copyCol);

@@ -5,8 +5,10 @@ function myFunction() {
 
     input1 = document.getElementById("driverFilter");
     filter1 = input1.value.toUpperCase();
+    
     input2 = document.getElementById('statusFilter');
     filter2 = input2.value.toUpperCase();
+    
     input3 = document.getElementById("filterDate");
     filter3 = input3.value.toUpperCase();
 
@@ -15,9 +17,9 @@ function myFunction() {
 
     // Loop through all list items, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
-        td1 = tr[i].getElementsByTagName("td")[3];
-        td2 = tr[i].getElementsByTagName("td")[5];
-        td3 = tr[i].getElementsByTagName("td")[4];
+        td1 = tr[i].getElementsByTagName("td")[4];
+        td2 = tr[i].getElementsByTagName("td")[6];
+        td3 = tr[i].getElementsByTagName("td")[5];
         if (td1.innerHTML.toUpperCase().indexOf(filter1) > -1 && td2.innerHTML.toUpperCase().indexOf(filter2) > -1) {
             if (filter3 != "" && td3.innerHTML.toUpperCase() == filter3) {
                 // SHOW
@@ -63,7 +65,7 @@ function myFunction2() {
     // Loop through all list items, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
         td1 = tr[i].getElementsByTagName("td")[3];
-        td2 = tr[i].getElementsByTagName("td")[11];
+        td2 = tr[i].getElementsByTagName("td")[10];
         if (td1.innerHTML.toUpperCase().indexOf(filter1) > -1 && td2.innerHTML.toUpperCase() >= filter2 && td2.innerHTML.toUpperCase() <= filter3) {
             tr[i].style.display = "";
             tr[i].classList.remove("tableexport-ignore")
