@@ -32,6 +32,9 @@
                 const addressCol = document.createElement('TD');
                 addressCol.appendChild(document.createTextNode(snap.val().address));
                 tr.appendChild(addressCol);
+                const contactCol = document.createElement('TD');
+                contactCol.appendChild(document.createTextNode(snap.val().contactNo));
+                tr.appendChild(contactCol);
                 const driverCol = document.createElement('TD');
                 driverCol.appendChild(document.createTextNode(snap.val().driver));
                 tr.appendChild(driverCol);
