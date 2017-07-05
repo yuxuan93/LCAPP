@@ -4,6 +4,7 @@ console.disableYellowBox = true;
 
 import React, { Component, PropTypes } from 'react';
 import { 
+  Platform,
   View, 
   Text, 
   TouchableHighlight, 
@@ -222,8 +223,12 @@ _cfmUncomplete(item){
   _uncomplete(item, reason){
     this.jobsRef.child(item._key).update({status: 'Collected', reason: 'Uncompleted: '+reason})
 
-    // ToastAndroid.show('The job has been un-completed!', ToastAndroid.LONG);
-    Toast.showLongBottom("The job has been un-completed!");
+    if(Platform.OS === 'ios'){
+      Toast.showLongBottom("The job has been un-completed!");
+    }
+    else{
+      ToastAndroid.show('The job has been un-completed !', ToastAndroid.LONG);
+    }    
 
     this.setState({ promptVisible: false});
 

@@ -3,6 +3,7 @@ package com.lcapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.remobile.toast.RCTToastPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import im.shimo.react.prompt.RNPromptPackage;
@@ -10,6 +11,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.remobile.toast.RCTToastPackage;  // <--- import
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new ReactNativePushNotificationPackage()
+            // new RCTToastPackage(),
 //            new MapsPackage(),
 //            new RNPromptPackage()
       );

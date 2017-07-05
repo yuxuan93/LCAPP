@@ -265,7 +265,12 @@ export default class DriverViewNew extends Component {
                           status: 'Accepted'})
 
     // ToastAndroid.show('The job has been accepted !', ToastAndroid.LONG);
-    Toast.showLongBottom("The job has been accepted!");
+    if(Platform.OS === 'ios'){
+      Toast.showLongBottom("The job has been accepted!");
+    }
+    else{
+      ToastAndroid.show('The job has been accepted !', ToastAndroid.LONG);
+    }
 
   }
 
@@ -277,9 +282,12 @@ export default class DriverViewNew extends Component {
     
     this.setState({promptVisible: false});
 
-    Toast.showLongBottom("The job has been rejected!");
-    
-    // ToastAndroid.show('The job has been rejected !', ToastAndroid.LONG);
+    if(Platform.OS === 'ios'){
+      Toast.showLongBottom("The job has been rejected!");
+    }
+    else{
+      ToastAndroid.show('The job has been rejected !', ToastAndroid.LONG);
+    }
 
   }
 

@@ -2,7 +2,6 @@
 
 console.ignoredYellowBox = ['Warning: ReactNative.createElement'];
 
-
 import Geocoder from '../Geocoder';
 Geocoder.setApiKey('AIzaSyBge0_uc7Iqv0ZxisNFabbxflD6PBm2Sm8');
 
@@ -21,6 +20,7 @@ import ListItem from '../components/ListItem';
 import styles from '../styles/styles.js';
 
 import {
+  Platform,
   AppRegistry,
   ListView,
   StyleSheet,
@@ -155,7 +155,7 @@ export default class DriverViewAccepted extends Component {
         <Prompt
             title="Edit Preferred Pickup Date (yyyy-mm-dd)"
             placeholder="YYYY-MM-DD"
-            defaultValue=""
+            defaultValue={this.state.date}
             visible={this.state.prompt6Visible}
             onCancel={() => this.setState({ prompt6Visible: false, })}
             onSubmit={(value) => this._popupDateEdit(value)}/>
@@ -163,7 +163,7 @@ export default class DriverViewAccepted extends Component {
         <Prompt
             title="Edit Preferred Pickup Time"
             placeholder=""
-            defaultValue=""
+            defaultValue={this.state.time}
             visible={this.state.prompt7Visible}
             onCancel={() => this.setState({ prompt7Visible: false,})}
             onSubmit={(value) => this._editJob(this.state.selectedJob, this.state.date, value) }/>
@@ -279,7 +279,7 @@ export default class DriverViewAccepted extends Component {
     }
 
     _popupEdit(item){
-      this.setState({ prompt6Visible: true, selectedJob: item});
+      this.setState({ prompt6Visible: true, selectedJob: item, date: item.preferredPickupDate, time: item.preferredPickupTime});
     }
     _popupDateEdit(date){
       this.setState({ prompt6Visible: false, date: date});   
@@ -290,9 +290,12 @@ export default class DriverViewAccepted extends Component {
         preferredPickupDate: date,
         preferredPickupTime: time
       });
-
-      // ToastAndroid.show('The job has been collected!', ToastAndroid.LONG);
-      Toast.showLongBottom("The job has been edited!");
+      if(Platform.OS === 'ios'){
+        Toast.showLongBottom("The job has been edited!");
+      }
+      else{
+        ToastAndroid.show('The job has been edited !', ToastAndroid.LONG);
+      }
 
       //close prompt after editing
       this.setState({ prompt7Visible: false,});
@@ -360,8 +363,12 @@ _rejectJob(selectedJob, reason){
 
     this.jobsRef.child(selectedJob._key).update({status: 'Rejected', reason: reason})
 
-    // ToastAndroid.show('The job has been deleted!', ToastAndroid.LONG);
-    Toast.showLongBottom("The job has been deleted!");
+    if(Platform.OS === 'ios'){
+      Toast.showLongBottom("The job has been deleted!");
+    }
+    else{
+      ToastAndroid.show('The job has been deleted !', ToastAndroid.LONG);
+    }    
 
     this.setState({ prompt5Visible: false,});
   }
@@ -408,10 +415,13 @@ changeAndSetDate(value){
       preferredReturnTime: time
       });
 
-    // ToastAndroid.show('The job has been collected!', ToastAndroid.LONG);
     Toast.showLongBottom("The job has been collected!");
-
-    // this.setState({selectedMarker: this.defaultMarker})；
+    if(Platform.OS === 'ios'){
+      Toast.showLongBottom("The job has been collected!");
+    }
+    else{
+      ToastAndroid.show('The job has been collected !', ToastAndroid.LONG);
+    }
 
     //close prompt after collecting
     this.setState({ prompt4Visible: false,});

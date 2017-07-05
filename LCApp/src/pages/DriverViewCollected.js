@@ -5,6 +5,7 @@ console.disableYellowBox = true;
 
 import React, { Component, PropTypes } from 'react';
 import { 
+  Platform,
   View, 
   Text, 
   TouchableHighlight, 
@@ -238,8 +239,12 @@ export default class DriverViewCollected extends Component {
 
     this.jobsRef.child(item._key).update({status: 'Accepted', reason: 'Uncollected: '+reason})
 
-    // ToastAndroid.show('The job has been un-collected!', ToastAndroid.LONG);
+    if(Platform.OS === 'ios'){
       Toast.showLongBottom("The job has been un-collected!");
+    }
+    else{
+      ToastAndroid.show('The job has been un-collected !', ToastAndroid.LONG);
+    }     
 
     this.setState({promptVisible: false,});
 
@@ -279,8 +284,12 @@ export default class DriverViewCollected extends Component {
     today = yyyy + '-'+mm + '-' + dd;
     this.jobsRef.child(item._key).update({status: 'Completed', completeDate: today})
 
-    // ToastAndroid.show('The job has been completed!', ToastAndroid.LONG);
-    Toast.showLongBottom("The job has been completed!");
+    if(Platform.OS === 'ios'){
+      Toast.showLongBottom("The job has been completed!");
+    }
+    else{
+      ToastAndroid.show('The job has been completed !', ToastAndroid.LONG);
+    }    
     
     this.setState({selectedMarker: this.defaultMarker})
 
