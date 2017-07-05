@@ -174,12 +174,13 @@ export default class DriverViewCollected extends Component {
             //Do we need to display the completed date of the job?
             ,
           [
-            {text: 'Cancel'},
             {text: 'Uncollect', onPress: () => this._popupUncollectReasonInput(item)},
 
             // {text: 'Cancel', onPress: (text) => console.log('Cancel')},
             {text: 'Call/Navigate', onPress: () => this._openCallMap(item)},
-            {text: 'Complete', onPress: () => this._completePrompt(item)}
+            {text: 'Complete', onPress: () => this._completePrompt(item)},
+            {text: 'Cancel'}
+
           ],
           'default'
         );

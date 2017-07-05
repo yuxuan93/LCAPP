@@ -198,10 +198,10 @@ export default class DriverViewNew extends Component {
             + "\nRemarks: " + item.remarks
             ,
           [
-            {text: 'Cancel'},
             {text: 'Reject', onPress: () => this._popupRejectionReasonInput(item)},
             {text: 'Call/Navigate', onPress: () => this._openCallMap(item)},
-            {text: 'Accept', onPress: () => this._acceptJob(item)}
+            {text: 'Accept', onPress: () => this._acceptJob(item)},
+            {text: 'Cancel'}
 
           ],
           'default'

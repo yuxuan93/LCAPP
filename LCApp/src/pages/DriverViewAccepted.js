@@ -70,6 +70,8 @@ export default class DriverViewAccepted extends Component {
       prompt3Visible: false,
       prompt4Visible: false,
       prompt5Visible: false,
+      prompt6Visible: false,
+      prompt7Visible: false,
       todayDate:'',
     }
 
@@ -149,6 +151,22 @@ export default class DriverViewAccepted extends Component {
             visible={this.state.prompt5Visible}
             onCancel={() => this.setState({ prompt5Visible: false, })}
             onSubmit={(value) => this._rejectJob(this.state.selectedJob, value) }/>
+
+        <Prompt
+            title="Edit Preferred Pickup Date (yyyy-mm-dd)"
+            placeholder="YYYY-MM-DD"
+            defaultValue=""
+            visible={this.state.prompt6Visible}
+            onCancel={() => this.setState({ prompt6Visible: false, })}
+            onSubmit={(value) => this._popupDateEdit(value)}/>
+
+        <Prompt
+            title="Edit Preferred Pickup Time"
+            placeholder=""
+            defaultValue=""
+            visible={this.state.prompt7Visible}
+            onCancel={() => this.setState({ prompt7Visible: false,})}
+            onSubmit={(value) => this._editJob(this.state.selectedJob, this.state.date, value) }/>
 
         <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
           <TouchableHighlight style={{padding: 15}}>
@@ -239,11 +257,11 @@ export default class DriverViewAccepted extends Component {
             // + "\nPreferredReturnTime: " + item.preferredReturnTime
             ,
           [
-            // {text: 'Cancel', onPress: (text) => console.log('Cancel')},   
-            {text: 'Cancel'},       
-            {text: 'Reject', onPress: () => this._popupRejectionReasonInput(item)},
+            // {text: 'Cancel', onPress: (text) => console.log('Cancel')}, 
+            {text: 'Status Change', onPress: () => this._popupStatusChange(item)},
             {text: 'Call/Navigate', onPress: () => this._openCallMap(item)},
-            {text: 'Collected', onPress: () => this._showInvoicePrompt(item)}
+            {text: 'Edit pickup details', onPress: () => this._popupEdit(item)},       
+            {text: 'Close Popup'}
 
           ],
           'default'
@@ -260,6 +278,44 @@ export default class DriverViewAccepted extends Component {
       }  
     }
 
+    _popupEdit(item){
+      this.setState({ prompt6Visible: true, selectedJob: item});
+    }
+    _popupDateEdit(date){
+      this.setState({ prompt6Visible: false, date: date});   
+      setTimeout(function(){this.setState({prompt7Visible:true,});}.bind(this),500);
+   }
+    _editJob(selectedJob, date, time){
+      this.jobsRef.child(selectedJob._key).update({    
+        preferredPickupDate: date,
+        preferredPickupTime: time
+      });
+
+      // ToastAndroid.show('The job has been collected!', ToastAndroid.LONG);
+      Toast.showLongBottom("The job has been edited!");
+
+      //close prompt after editing
+      this.setState({ prompt7Visible: false,});
+
+    }
+
+    _popupStatusChange(item){
+      Alert.alert(
+        'Please choose your action for job ID '+ item.jobId+',',
+        'Customer Name: '+ item.name 
+        + '\nAddress: ' + item.address  
+        + "\nContact Number: " + item.contactNo
+        ,
+        [
+          // null,
+          {text: 'Reject', onPress: () => this._popupRejectionReasonInput(item)},
+          {text: 'Collect', onPress: () => this._showInvoicePrompt(item)},
+          {text: 'Close Popup'},
+
+        ],
+        'default'
+      );
+    }
 
     _openCallMap(item){
       Alert.alert(
@@ -307,7 +363,6 @@ _rejectJob(selectedJob, reason){
     // ToastAndroid.show('The job has been deleted!', ToastAndroid.LONG);
     Toast.showLongBottom("The job has been deleted!");
 
-    // this.setState({selectedMarker: this.defaultMarker})
     this.setState({ prompt5Visible: false,});
   }
 _popupRejectionReasonInput(item){
@@ -326,16 +381,16 @@ changeAndSetInvoice(value){
   setTimeout(
     function(){
       this.setState({prompt2Visible:true,});
-    }.bind(this),1000
+    }.bind(this),500
   );
 }
 changeAndSetAmt(value){
   this.setState({ prompt2Visible: false, amt: value });
-  setTimeout(function(){this.setState({prompt3Visible:true,});}.bind(this),1000);
+  setTimeout(function(){this.setState({prompt3Visible:true,});}.bind(this),500);
 }
 changeAndSetDate(value){
   this.setState({ prompt3Visible: false, date: value });
-  setTimeout(function(){this.setState({prompt4Visible:true,});}.bind(this),1000);
+  setTimeout(function(){this.setState({prompt4Visible:true,});}.bind(this),500);
 }
 
 
