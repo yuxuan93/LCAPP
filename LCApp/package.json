@@ -17,7 +17,7 @@
     "react-native-maps": ">=0.12.4",
     "react-native-prompt": "^1.0.0",
     "react-native-prompt-android": "0.0.5",
-    "react-native-push-notification": "^3.0.0",
+    "react-native-push-notification": "^3.5.2",
     "react-native-router-flux": "3.38.0"
   },
   "devDependencies": {
